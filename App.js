@@ -1,20 +1,119 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+function HomeScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <Text>Home Screen</Text>
+      <Button
+        title="Go to Overview Screen"
+        onPress={() => navigation.navigate('Overview')}
+      />
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+function OverviewScreen({ navigation }) {
+  return (
+    <View style={styles.overviewContainer}>
+      <View style={styles.hStack}>
+        {/* <View style={styles.buttonContainer}>
+          <Button
+            title="Go back to Home"
+            onPress={() => navigation.navigate('Home')}
+          />
+        </View> */}
+        <View style={styles.textContainer}>
+          <Text style={styles.textStyle}>Flashcards Overview</Text>
+        </View>
+      </View>
+      <TouchableOpacity
+        style={styles.plusButton}
+        onPress={() => { navigation.navigate('AddCard') }}
+      >
+        <Text style={styles.plusButtonText}>+</Text>
+      </TouchableOpacity>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+function AddCardScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <Text>Add Card Screen</Text>
+      <Button
+        title="Go back to Overview"
+        onPress={() => navigation.navigate('Overview')}
+      />
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Overview" component={OverviewScreen} />
+        <Stack.Screen name="AddCard" component={AddCardScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFBBE0',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  buttonContainer: {
+    alignItems: 'flex-start',
+    justifyContent: 'left',
+    marginTop: 20,
+  },
+  overviewContainer: {
+    flex: 1,
+    backgroundColor: '#FFBBE0',
+  },
+  textStyle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'black',
+    textAlign: 'center',
+    fontFamily: 'Arial',
+    borderRadius: 10,
+    backgroundColor: 'white',
+    padding: 10,
+    margin: 10,
+  },
+  hStack: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  plusButton: {
+    position: 'absolute',
+    bottom: 10,
+    right: 20,
+    backgroundColor: 'white',
+    borderRadius: 50,
+    padding: 15,
+  },
+  plusButtonText: {
+    fontSize: 40,
+    color: '#E14D9D',
   },
 });
