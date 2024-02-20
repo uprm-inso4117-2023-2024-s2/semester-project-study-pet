@@ -26,7 +26,6 @@ function OverviewScreen({ navigation }) {
       </View>
       <TouchableOpacity
         style={styles.plusButton}
-        onPress={() => { navigation.navigate('AddCard') }}
       >
         <Text style={styles.plusButtonText}>+</Text>
       </TouchableOpacity>
