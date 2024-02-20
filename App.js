@@ -20,12 +20,6 @@ function OverviewScreen({ navigation }) {
   return (
     <View style={styles.overviewContainer}>
       <View style={styles.hStack}>
-        {/* <View style={styles.buttonContainer}>
-          <Button
-            title="Go back to Home"
-            onPress={() => navigation.navigate('Home')}
-          />
-        </View> */}
         <View style={styles.textContainer}>
           <Text style={styles.textStyle}>Flashcards Overview</Text>
         </View>
@@ -41,19 +35,6 @@ function OverviewScreen({ navigation }) {
   );
 }
 
-function AddCardScreen({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <Text>Add Card Screen</Text>
-      <Button
-        title="Go back to Overview"
-        onPress={() => navigation.navigate('Overview')}
-      />
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -62,7 +43,6 @@ export default function App() {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Overview" component={OverviewScreen} />
-        <Stack.Screen name="AddCard" component={AddCardScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
