@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     width: 135,
   },
   cardFront: {
-    backgroundColor: '#fff',
+    backgroundColor: '#e1eefb',
   },
   cardBack: {
     backgroundColor: '#fbf36c',
