@@ -15,7 +15,7 @@ export default function FlashCardCreator(props) {
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <Text style={styles.legend}>New Flashcards</Text>
+        <Text style={styles.legend}>New Flashcard</Text>
         <TextInput
             style={[styles.input, styles.textInput]}
             placeholder="Study Set"
@@ -50,7 +50,7 @@ export default function FlashCardCreator(props) {
 const styles = StyleSheet.create({
   formContainer: {
       alignSelf: 'center',
-      backgroundColor: '#ffbbe0',
+      backgroundColor: '#fff',
       padding: 30,
       width: 300,
       borderRadius: 20,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   button: {
       display: 'inline-block',
       alignSelf: 'center',
-      backgroundColor: '#fff',
+      backgroundColor: '#ffbbe0',
       paddingVertical: 10,
       paddingHorizontal: 50,
       fontSize: 20,
