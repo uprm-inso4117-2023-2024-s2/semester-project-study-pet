@@ -1,25 +1,13 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function StudySet({ title, children }) {
-  const [isCollapsed, setIsCollapsed] = useState(true);
-
-  const toggleCollapse = () => {
-      setIsCollapsed(!isCollapsed);
-  };
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={toggleCollapse}>
-        <Text style={styles.title}>{[title]}
-          [Study Set placeholder]
-        </Text>
-      </TouchableOpacity>
-      {!isCollapsed && (
-        <View style={styles.content}>
-          {children}
-        </View>
-      )}
+      <Text style={styles.title}>[Study Set placeholder]</Text>
+      <View style={styles.content}>
+        {children}
+      </View>
     </View>
   );
 }
@@ -28,11 +16,9 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 35,
     marginBottom: 35,
-    backgroundColor: '#afeeee',
-    borderRadius: 5,
+    backgroundColor: '#ffbbe0',
     padding: 5,
     maxWidth: 500,
-    maxHeight: 'auto',
     width: 330,
     borderRadius: 20,
     shadowColor: '#000',
@@ -45,10 +31,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     maxWidth: 600,
     textAlign: 'center',
-    margin: 10
+    marginTop: 20,
   },
   content: {
-    overflow: 'auto',
     marginTop: 20,
     marginBottom: 20,
   },

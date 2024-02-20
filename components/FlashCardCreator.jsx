@@ -50,7 +50,7 @@ export default function FlashCardCreator(props) {
 const styles = StyleSheet.create({
   formContainer: {
       alignSelf: 'center',
-      backgroundColor: '#f5f5dc',
+      backgroundColor: '#ffbbe0',
       padding: 30,
       width: 300,
       borderRadius: 20,
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
       paddingBottom: 15,
   },
   input: {
+      backgroundColor: '#fff',
       borderColor: '#000',
       borderRadius: 5,
       padding: 3,
@@ -78,10 +79,14 @@ const styles = StyleSheet.create({
   button: {
       display: 'inline-block',
       alignSelf: 'center',
-      backgroundColor: '#ffa07a',
+      backgroundColor: '#fff',
       paddingVertical: 10,
       paddingHorizontal: 50,
       fontSize: 20,
       borderRadius: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 5, height: 5 },
+      shadowOpacity:  0.4,
+      shadowRadius: 3,
   },
 });
