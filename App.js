@@ -1,11 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useState } from 'react';
+
+import StudySet from './components/StudySet';
+import Flashcard from './components/Flashcard';
+import FlashCardCreator from './components/FlashCardCreator';
 
 function HomeScreen({ navigation }) {
   return (
-    <View style={styles.container}>
+    <View style={homePage.container}>
       <Text>Home Screen</Text>
       <Button
         title="Go to Overview Screen"
@@ -17,17 +22,39 @@ function HomeScreen({ navigation }) {
 }
 
 function OverviewScreen({ navigation }) {
+  const data = Array.from({ length: 8 }, (_, index) => ({ key: String(index) }));
+  const [isFlashCardCreatorVisible, setFlashCardCreatorVisible] = useState(false);
+
   return (
-    <View style={styles.overviewContainer}>
-      <View style={styles.hStack}>
-        <View style={styles.textContainer}>
-          <Text style={styles.textStyle}>Flashcards Overview</Text>
+
+    <View style={overviewPage.container}>
+
+      <View style={overviewPage.hStack}>
+        <View style={overviewPage.textContainer}>
+          <Text style={overviewPage.textStyle}>Flashcards Overview</Text>
         </View>
       </View>
+      {isFlashCardCreatorVisible && <FlashCardCreator />}
+
+      <ScrollView>
+        <View style={overviewPage.testy}>
+          <StudySet>
+            <View style={overviewPage.flashcards}>
+              {data.map(item => (
+                <View key={item.key} style={overviewPage.flashcardWrapper}>
+                  <Flashcard />
+                </View>
+              ))}
+            </View>
+          </StudySet>
+        </View>
+      </ScrollView>
+
       <TouchableOpacity
-        style={styles.plusButton}
+        style={overviewPage.plusButton}
+        onPress={() => setFlashCardCreatorVisible(true)}
       >
-        <Text style={styles.plusButtonText}>+</Text>
+        <Text style={overviewPage.plusButtonText}>+</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
@@ -47,19 +74,13 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFBBE0',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const overviewPage = StyleSheet.create({
   buttonContainer: {
     alignItems: 'flex-start',
     justifyContent: 'left',
     marginTop: 20,
   },
-  overviewContainer: {
+  container: {
     flex: 1,
     backgroundColor: '#FFBBE0',
   },
@@ -94,5 +115,28 @@ const styles = StyleSheet.create({
   plusButtonText: {
     fontSize: 40,
     color: '#E14D9D',
+  },
+  flashcards: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  flashcardWrapper: {
+    width: '50%',
+  },
+  testy: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+});
+
+const homePage = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFBBE0',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
