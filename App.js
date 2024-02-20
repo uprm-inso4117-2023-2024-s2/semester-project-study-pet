@@ -34,7 +34,6 @@ function OverviewScreen({ navigation }) {
           <Text style={overviewPage.textStyle}>Flashcards Overview</Text>
         </View>
       </View>
-      {isFlashCardCreatorVisible && <FlashCardCreator />}
 
       <ScrollView>
         <View style={overviewPage.testy}>
@@ -47,6 +46,7 @@ function OverviewScreen({ navigation }) {
               ))}
             </View>
           </StudySet>
+          {isFlashCardCreatorVisible && <FlashCardCreator />}
         </View>
       </ScrollView>
 
