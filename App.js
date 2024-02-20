@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useState } from 'react';
 
 import StudySet from './components/StudySet';
-import Flashcard from './components/Flashcard';
+import Flashcard from './components/FlashCard';
 import FlashCardCreator from './components/FlashCardCreator';
 
 function HomeScreen({ navigation }) {
