@@ -1,33 +1,20 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import MiniGame from './components/minigame';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
 
-const App = () => {
+export default function App() {
   return (
     <View style={styles.container}>
-      <View style={styles.overlay}>
-        <MiniGame />
-      </View>
+      <Text>Open up App.js to start working on your app!</Text>
+      <StatusBar style="auto" />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7CAC9', // Rose color
-  },
-  overlay: {
-    flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    backgroundColor: 'transparent',
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
+    justifyContent: 'center',
   },
 });
-
-export default App;
