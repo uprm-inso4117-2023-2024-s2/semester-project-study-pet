@@ -1,7 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useFonts } from "expo-font";
 
 export default function StudySet({ title, children }) {
+  const [dummy] = useFonts({
+    "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
+  });
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>[Study Set placeholder]</Text>
@@ -23,7 +28,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: { width: 5, height: 5 },
-    shadowOpacity:  0.4,
+    shadowOpacity: 0.4,
     shadowRadius: 3,
   },
   title: {
@@ -32,6 +37,7 @@ const styles = StyleSheet.create({
     maxWidth: 600,
     textAlign: 'center',
     marginTop: 20,
+    fontFamily: 'Jua-Regular',
   },
   content: {
     marginTop: 20,

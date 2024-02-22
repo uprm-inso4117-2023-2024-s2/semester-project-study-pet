@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView } from 're
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useState } from 'react';
+import { useFonts } from "expo-font";
 
 import StudySet from './components/StudySet';
 import Flashcard from './components/FlashCard';
@@ -24,6 +25,9 @@ function HomeScreen({ navigation }) {
 function OverviewScreen({ navigation }) {
   const data = Array.from({ length: 8 }, (_, index) => ({ key: String(index) }));
   const [isFlashCardCreatorVisible, setFlashCardCreatorVisible] = useState(false);
+  const [dummy] = useFonts({
+    "Jua-Regular": require("./assets/fonts/Jua-Regular.ttf"),
+  });
 
   return (
 
@@ -89,7 +93,7 @@ const overviewPage = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     textAlign: 'center',
-    fontFamily: 'Arial',
+    fontFamily: 'Jua-Regular',
     borderRadius: 10,
     backgroundColor: 'white',
     padding: 10,
