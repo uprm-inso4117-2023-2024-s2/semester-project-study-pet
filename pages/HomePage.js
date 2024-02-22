@@ -19,17 +19,17 @@ const VerticalStripes = ({ numberOfStripes }) => {
   );
 };
 
-const HomePage = () => {
+const HomePage = ({ navigation }) => {
 
   return (
     <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7'}}>
       <LinearGradient colors={['#f7ffe7', '#edf5ff']} style={styles.container}>
         
         <View style={styles.topButtons}>
-          <TouchableOpacity style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
-          <TouchableOpacity style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
+          <TouchableOpacity onPress={() => navigation.navigate('Stats')} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Flashcards')} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
         </View>
 
         <View style={styles.petContainer}>
