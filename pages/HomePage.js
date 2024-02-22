@@ -38,9 +38,9 @@ const HomePage = ({ navigation }) => {
         </View>
 
         <View style={styles.bottomButtons}>
-          <TouchableOpacity style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Bath')} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
         </View>
       </LinearGradient>
     </View>
