@@ -29,7 +29,7 @@ const questionsData = [
   },
 ];
 
-const MiniGame = () => {
+const MiniGame = ({ returnToMainMenu }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -41,7 +41,6 @@ const MiniGame = () => {
       setScore(score + 1);
     }
 
-    // Move to the next question or finish the game
     if (currentQuestionIndex === questionsData.length - 1) {
       setGameOver(true);
     } else {
@@ -55,16 +54,14 @@ const MiniGame = () => {
     setGameOver(false);
   };
 
-  const currentQuestion = questionsData[currentQuestionIndex];
-
   if (gameOver) {
     return (
       <View style={styles.container}>
         <Text style={styles.gameOverText}>
-          Game Over! You got {score} out of {questionsData.length} correct!
+          You Did It! You got {score} out of {questionsData.length} correct!
         </Text>
-        <TouchableOpacity style={styles.button} onPress={restartGame}>
-          <Text style={styles.buttonText}>Restart</Text>
+        <TouchableOpacity style={styles.button} onPress={returnToMainMenu}>
+          <Text style={styles.buttonText}>Return to Main Menu</Text>
         </TouchableOpacity>
       </View>
     );
@@ -72,21 +69,23 @@ const MiniGame = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.questionContainer}>
-        <Text style={styles.question}>{currentQuestion.question}</Text>
+      <View style={styles.gameContainer}>
+        <View style={styles.questionContainer}>
+          <Text style={styles.question}>{questionsData[currentQuestionIndex].question}</Text>
+        </View>
+        {questionsData[currentQuestionIndex].answers.map((answer, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[styles.answerButton, index === hoveredIndex && styles.answerButtonHover]}
+            activeOpacity={0.7}
+            onPress={() => handleAnswerSelection(index)}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
+            <Text style={styles.answerText}>{answer}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
-      {currentQuestion.answers.map((answer, index) => (
-        <TouchableOpacity
-          key={index}
-          style={[styles.answerButton, index === hoveredIndex && styles.answerButtonHover]}
-          activeOpacity={0.7}
-          onPress={() => handleAnswerSelection(index)}
-          onMouseEnter={() => setHoveredIndex(index)}
-          onMouseLeave={() => setHoveredIndex(null)}
-        >
-          <Text style={styles.answerText}>{answer}</Text>
-        </TouchableOpacity>
-      ))}
     </View>
   );
 };
@@ -97,20 +96,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
-    backgroundColor: 'transparent',
-    borderColor: 'black',
-    borderWidth: 2,
-    height: 200,
+    backgroundColor: 'transparent', // Rose color
   },
-  questionContainer: {
+  gameContainer: {
     backgroundColor: 'white',
     padding: 20,
-    borderRadius: 10,
-    borderColor: 'black',
-    borderWidth: 2,
-    marginBottom: 20,
-    width: '80%',
+    borderRadius: 15,
+    width: '100%',
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 4, // Change shadow offset to add shadow on the right
+      height: 4, // Change shadow offset to add shadow on the bottom
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  questionContainer: {
+    marginBottom: 20,
   },
   question: {
     fontSize: 24,
@@ -122,7 +126,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 10,
     marginVertical: 5,
-    width: '60%',
+    width: '80%',
     borderColor: 'black',
     borderWidth: 2,
   },
@@ -131,13 +135,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   answerButtonHover: {
-    backgroundColor: '#6C99BB',
-  },
-  feedback: {
-    marginTop: 20,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    backgroundColor: '#e1eefb',
   },
   gameOverText: {
     fontSize: 24,
@@ -146,10 +144,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#6C99BB',
+    backgroundColor: '#e1eefb',
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 10,
+    marginTop: 20,
   },
   buttonText: {
     fontSize: 16,
