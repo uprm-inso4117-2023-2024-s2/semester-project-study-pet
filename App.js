@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useState } from 'react';
 import { useFonts } from "expo-font";
+import { Font } from 'expo';
 
 import StudySet from './components/StudySet';
 import Flashcard from './components/FlashCard';
@@ -25,9 +26,13 @@ function HomeScreen({ navigation }) {
 function OverviewScreen({ navigation }) {
   const data = Array.from({ length: 8 }, (_, index) => ({ key: String(index) }));
   const [isFlashCardCreatorVisible, setFlashCardCreatorVisible] = useState(false);
-  const [dummy] = useFonts({
+  const [isFontLoaded] = useFonts({
     "Jua-Regular": require("./assets/fonts/Jua-Regular.ttf"),
   });
+
+  if (!isFontLoaded) {
+    return null; // or render a loading indicator
+  }
 
   return (
 
@@ -68,6 +73,15 @@ function OverviewScreen({ navigation }) {
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [isFontLoaded] = useFonts({
+    "Jua-Regular": require("./assets/fonts/Jua-Regular.ttf"),
+  });
+
+  if (!isFontLoaded) {
+    return null; // or render a loading indicator
+  }
+
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
