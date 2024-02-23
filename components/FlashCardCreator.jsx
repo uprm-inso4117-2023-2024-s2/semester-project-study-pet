@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-// I wannt to import the font Jua from the /assests/fonts folder
 import { useFonts } from "expo-font";
 
 export default function FlashCardCreator(props) {
@@ -45,7 +44,8 @@ export default function FlashCardCreator(props) {
           multiline={true}
         />
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text>Create</Text>
+          <Text
+            style={{ fontFamily: "Jua-Regular", }}>Create</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 15,
     borderWidth: 1,
+    fontFamily: "Jua-Regular",
   },
   button: {
     display: 'inline-block',

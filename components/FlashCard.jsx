@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import FlipCard from 'react-native-flip-card';
+import { useFonts } from "expo-font";
 
 export default function FlashCard() {
   const [isFlipped, setIsFlipped] = useState(false);
   function flipCard() { setIsFlipped(!isFlipped); }
+  const [dummy] = useFonts({
+    "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
+  });
 
   return (
     <FlipCard
@@ -16,11 +20,11 @@ export default function FlashCard() {
       clickable={true}
     >
       <TouchableOpacity style={[styles.card, styles.cardFront]} onPress={flipCard}>
-        <Text>[Question placeholder]</Text> 
+        <Text style={{ fontFamily: "Jua-Regular" }}>[Question placeholder]</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={[styles.card, styles.cardBack]} onPress={flipCard}>
-        <Text>[Answer placeholder]</Text>
+        <Text style={{ fontFamily: 'Jua-Regular' }}>[Answer placeholder]</Text>
       </TouchableOpacity>
     </FlipCard>
   );
@@ -35,7 +39,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: { width: 5, height: 5 },
-    shadowOpacity:  0.4,
+    shadowOpacity: 0.4,
     shadowRadius: 3,
     margin: 10,
     padding: 15,
