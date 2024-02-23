@@ -28,7 +28,7 @@ const HomePage = ({ navigation }) => {
         <View style={styles.topButtons}>
           <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
           <TouchableOpacity onPress={() => navigation.navigate('Stats')} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Flashcards')} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Overview')} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
         </View>
 
