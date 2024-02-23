@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   question: {
     fontSize: 24,
     textAlign: 'center',
+    fontFamily: 'Jua-Regular',
   },
   answerButton: {
     backgroundColor: 'white',
@@ -133,6 +134,7 @@ const styles = StyleSheet.create({
   answerText: {
     fontSize: 18,
     textAlign: 'center',
+    fontFamily: 'Jua-Regular',
   },
   answerButtonHover: {
     backgroundColor: '#e1eefb',
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#e1eefb',
+    backgroundColor: '#6C99BB',
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 10,
@@ -153,7 +155,8 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
+    fontFamily: 'Jua-Regular',
   },
 });
 
