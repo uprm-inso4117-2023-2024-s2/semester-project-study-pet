@@ -32,11 +32,12 @@ class Pet extends Component {
 
     return (
       <View >
-        <Image source={require('./frogyoung.png')} style={styles.image} />
+        <Image source={require('./adultfrog.png')} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
-        <ProgressBar title={'growth'} progress={this.state.growthlvl} />
-        <ProgressBar title={'hunger'} progress={this.state.hunger} />
-        <ProgressBar title={'happiness'} progress={happiness} />
+        {/* <ProgressBar title={'growth'} progress={this.state.growthlvl} />
+        <ProgressBar title={'hunger'} progress={this.state.hunger} /> 
+        <ProgressBar title={'happiness'} progress={happiness} /> */}
+
       </View>
     );
   }
@@ -51,11 +52,11 @@ const styles = StyleSheet.create({
   },
   name: {
     alignItems: 'center',
-    color: 'pink',
+    color: '#288a42',
     fontSize: 30
   },
   image: {
-    width: 100,
+    width: 200,
     height: 200,
     marginTop: 50,
     marginBottom: 50,
