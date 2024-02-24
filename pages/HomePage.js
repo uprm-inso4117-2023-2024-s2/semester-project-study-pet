@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
+import Pet from '../components/Pet';
 
 const VerticalStripes = ({ numberOfStripes }) => {
   return (
@@ -34,7 +35,7 @@ const HomePage = ({ navigation }) => {
 
         <View style={styles.petContainer}>
           <VerticalStripes numberOfStripes={7} />
-          <Text style={styles.petPlaceholder}>Firulai vive aqui</Text>
+          <Pet />
         </View>
 
         <View style={styles.bottomButtons}>
