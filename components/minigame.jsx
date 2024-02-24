@@ -29,7 +29,7 @@ const questionsData = [
   },
 ];
 
-const MiniGame = ({ returnToMainMenu }) => {
+const MiniGame = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -57,12 +57,17 @@ const MiniGame = ({ returnToMainMenu }) => {
   if (gameOver) {
     return (
       <View style={styles.container}>
-        <Text style={styles.gameOverText}>
-          You Did It! You got {score} out of {questionsData.length} correct!
-        </Text>
-        <TouchableOpacity style={styles.button} onPress={returnToMainMenu}>
-          <Text style={styles.buttonText}>Return to Main Menu</Text>
-        </TouchableOpacity>
+        <View style={styles.gameContainer}>
+          <View style={styles.gameOverContainer}>
+              <Text style={styles.finishedText}>Finished!</Text>
+              <Text style={styles.resultText}>
+                You got {score} out of {questionsData.length} correct!
+              </Text>
+              <TouchableOpacity style={styles.button} onPress={restartGame}>
+                <Text style={styles.buttonText}>Play Again</Text>
+              </TouchableOpacity>
+          </View>
+        </View>
       </View>
     );
   }
@@ -93,21 +98,21 @@ const MiniGame = ({ returnToMainMenu }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'top',
     justifyContent: 'center',
     paddingHorizontal: 20,
-    backgroundColor: 'transparent', // Rose color
+    backgroundColor: 'transparent', 
   },
   gameContainer: {
     backgroundColor: 'white',
-    padding: 20,
+    padding: 40,
     borderRadius: 15,
     width: '100%',
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
-      width: 4, // Change shadow offset to add shadow on the right
-      height: 4, // Change shadow offset to add shadow on the bottom
+      width: 4,
+      height: 4,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -139,11 +144,38 @@ const styles = StyleSheet.create({
   answerButtonHover: {
     backgroundColor: '#e1eefb',
   },
-  gameOverText: {
-    fontSize: 24,
+  gameOverContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  whiteContainer: {
+    backgroundColor: 'white',
+    padding: 40,
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  finishedText: {
+    fontSize: 48,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    fontFamily: 'Jua-Regular',
+    color: '#FF69B4', 
+  },
+  resultText: {
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: 'center',
+    fontFamily: 'Jua-Regular',
   },
   button: {
     backgroundColor: '#6C99BB',
