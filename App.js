@@ -18,18 +18,7 @@ import StudySet from './components/StudySet';
 import Flashcard from './components/FlashCard';
 import FlashCardCreator from './components/FlashCardCreator';
 
-function HomeScreen({ navigation }){
-  return (
-    <View style={homePage.container}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Overview Screen"
-        onPress={() => navigation.navigate('Overview')}
-      />
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const Stack = createStackNavigator();
 
 function OverviewScreen({ navigation }) {
   const data = Array.from({ length: 8 }, (_, index) => ({ key: String(index) }));
