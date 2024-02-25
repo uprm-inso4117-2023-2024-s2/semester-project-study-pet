@@ -1,0 +1,70 @@
+import React, { Component } from 'react';
+import { View, StyleSheet, Text, Image } from 'react-native';
+
+class Pet extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      images: [
+        require('./animatedFrog.gif'),
+        require('./animatedFrog(sad).gif'),
+        require('./animatedFrog(happy).gif'),
+        require('./animatedFrog(happy).gif'),
+        require('./animatedFrog(dead).gif'),
+      ],
+      currentImageIndex: 0,
+      name: 'firulai',
+      growthlvl: 0,
+      hunger: 0,
+      happiness: 0,
+    };
+  }
+
+  componentDidMount() {
+    // Simulate happiness increasing over time
+    const interval = setInterval(() => {
+      if (this.state.happiness < 100) {
+        this.setState((prevState) => ({
+          happiness: prevState.happiness + 10,
+        }));
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    // Switch images every 3 seconds
+    const imageInterval = setInterval(() => {
+      this.setState((prevState) => ({
+        currentImageIndex: (prevState.currentImageIndex + 1) % this.state.images.length,
+      }));
+    }, 3000);
+  }
+
+  render() {
+    const { happiness, name, images, currentImageIndex } = this.state;
+
+    return (
+      <View>
+        <Image source={images[currentImageIndex]} style={styles.image} />
+        <Text style={styles.name}>{name}</Text>
+        {/* Rest of your code */}
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  name: {
+    alignItems: 'center',
+    color: '#288a42',
+    fontSize: 30,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginTop: 50,
+    marginBottom: 50,
+  },
+});
+
+export default Pet;
