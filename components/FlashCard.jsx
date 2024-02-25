@@ -52,3 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fbf36c',
   },
 });
+const myflshcardQ = ['supermaket price of milk','how meny poptart are in a box?', 'where can i find gatorade?','whick is hotter red or green salsa','can i have some more free samples'];  
+const myListq = myflshcardQ.map((item) => <p>{item}</p>) 
+const myflshcardA = [ '$3.49','ther are 4', 'there in the back','green','yes'];  
+const myLista = myflshcardA.map((item) => <p>{item}</p>)
