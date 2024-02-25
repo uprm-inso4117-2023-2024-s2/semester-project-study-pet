@@ -10,7 +10,7 @@ export default function App() {
         <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
       </View>
       <View style={styles.miniGameContainer}>
-        <MiniGame /> {/* Render the Minigame component */}
+        <MiniGame />
       </View>
       <StatusBar style="auto" />
     </View>
