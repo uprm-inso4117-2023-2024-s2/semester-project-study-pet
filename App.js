@@ -10,7 +10,7 @@ import StudySet from './components/StudySet';
 import Flashcard from './components/FlashCard';
 import FlashCardCreator from './components/FlashCardCreator';
 
-function HomeScreen({ navigation }) {
+function HomeScreen({ navigation }){
   return (
     <View style={homePage.container}>
       <Text>Home Screen</Text>
