@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import { View,StyleSheet,Text, Image } from 'react-native';
-import ProgressBar from './Progressbar'; // Import the ProgressBar component
+import { View, StyleSheet, Text, Image } from 'react-native';
 
 class Pet extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Img: 'pet.png',
+      images: [
+        require('./animatedFrog.gif'),
+        require('./animatedFrog(sad).gif'),
+        require('./animatedFrog(happy).gif'),
+        require('./animatedFrog(happy).gif'),
+        require('./animatedFrog(dead).gif'),
+      ],
+      currentImageIndex: 0,
       name: 'firulai',
       growthlvl: 0,
       hunger: 0,
-      happiness: 0, // Initially happiness is 0%
+      happiness: 0,
     };
   }
 
@@ -19,50 +25,46 @@ class Pet extends Component {
     const interval = setInterval(() => {
       if (this.state.happiness < 100) {
         this.setState((prevState) => ({
-          happiness: prevState.happiness + 10, // Increase happiness by 10% every 1 second
+          happiness: prevState.happiness + 10,
         }));
       } else {
-        clearInterval(interval); // Stop the interval when happiness reaches 100%
+        clearInterval(interval);
       }
     }, 1000);
+
+    // Switch images every 3 seconds
+    const imageInterval = setInterval(() => {
+      this.setState((prevState) => ({
+        currentImageIndex: (prevState.currentImageIndex + 1) % this.state.images.length,
+      }));
+    }, 3000);
   }
 
   render() {
-    const { happiness, name } = this.state;
+    const { happiness, name, images, currentImageIndex } = this.state;
 
     return (
-      <View >
-        <Image source={require('./adultfrog.png')} style={styles.image} />
+      <View>
+        <Image source={images[currentImageIndex]} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
-        {/* <ProgressBar title={'growth'} progress={this.state.growthlvl} />
-        <ProgressBar title={'hunger'} progress={this.state.hunger} /> 
-        <ProgressBar title={'happiness'} progress={happiness} /> */}
-
+        {/* Rest of your code */}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  progressbarcontainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-
-  },
   name: {
     alignItems: 'center',
     color: '#288a42',
-    fontSize: 30
+    fontSize: 30,
   },
   image: {
     width: 200,
     height: 200,
     marginTop: 50,
     marginBottom: 50,
-
-  }
+  },
 });
-
 
 export default Pet;
