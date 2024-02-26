@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { useFonts } from "expo-font";
-import { StyleSheet } from 'react-native';
 
-import Flashcard from '../components/Flashcard';
+import Flashcard from '../components/FlashCard';
 import FlashCardCreator from '../components/FlashCardCreator';
 import StudySet from '../components/StudySet';
 
