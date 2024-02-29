@@ -1,15 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const Stats = () => {
+function Stats() {
   const navigation = useNavigation();
 
   const goBack = () => {
     navigation.goBack();
   };
+
 
   return (
     <LinearGradient colors={['#fcf188', '#fffbcf']} style={styles.container}>
@@ -21,42 +22,48 @@ const Stats = () => {
         </TouchableOpacity>
         <Text style={styles.headerText}>Stats</Text>
       </View>
-      
+
       {/* Dog Paw Icon */}
       <View style={styles.pawContainer}>
         <Ionicons name="paw" size={90} color="#3498db" />
       </View>
 
       {/* Stats Section */}
-      <View style={styles.statsContainer}>
-        <View style={styles.statsBox}>
-          <Text style={[styles.statsLabel, { color: '#3498db' }]}>Pet Name:</Text>
-          <Text style={[styles.statsValue, { color: '#3498db' }]}>Firulai</Text>
+      <ScrollView contentContainerStyle={styles.statsContainer}>
+        <View style={styles.statsContent}>
+          <View style={styles.statsBox}>
+            <Text style={[styles.statsLabel, { color: '#3498db' }]}>Pet Name:</Text>
+            <Text style={[styles.statsValue, { color: '#3498db' }]}>Firulai</Text>
+          </View>
+          <View style={styles.statsBox}>
+            <Text style={[styles.statsLabel, { color: '#9b59b6' }]}>Subject:</Text>
+            <Text style={[styles.statsValue, { color: '#9b59b6' }]}>Physics</Text>
+          </View>
+          <View style={styles.statsBox}>
+            <Text style={[styles.statsLabel, { color: '#e74c3c' }]}>Exam Date:</Text>
+            <Text style={[styles.statsValue, { color: '#e74c3c' }]}>2024-02-22</Text>
+          </View>
+          <View style={styles.statsBox}>
+            <Text style={[styles.statsLabel, { color: '#2ecc71' }]}>Care Difficulty:</Text>
+            <Text style={[styles.statsValue, { color: '#2ecc71' }]}>Easy</Text>
+          </View>
+          <View style={styles.statsBox}>
+            <Text style={[styles.statsLabel, { color: '#f39c12' }]}>Hunger:</Text>
+            <Text style={[styles.statsValue, { color: '#f39c12' }]}>3%</Text>
+          </View>
+          <View style={styles.statsBox}>
+            <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Happiness:</Text>
+            <Text style={[styles.statsValue, { color: '#e67e22' }]}>76%</Text>
+          </View>
+          <View style={styles.statsBox}>
+            <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Care Mistakes:</Text>
+            <Text style={[styles.statsValue, { color: '#e67e22' }]}>i should've become a mechanic</Text>
+          </View>
         </View>
-        <View style={styles.statsBox}>
-          <Text style={[styles.statsLabel, { color: '#9b59b6' }]}>Subject:</Text>
-          <Text style={[styles.statsValue, { color: '#9b59b6' }]}>Physics</Text>
-        </View>
-        <View style={styles.statsBox}>
-          <Text style={[styles.statsLabel, { color: '#e74c3c' }]}>Exam Date:</Text>
-          <Text style={[styles.statsValue, { color: '#e74c3c' }]}>2024-02-22</Text>
-        </View>
-        <View style={styles.statsBox}>
-          <Text style={[styles.statsLabel, { color: '#2ecc71' }]}>Care Difficulty:</Text>
-          <Text style={[styles.statsValue, { color: '#2ecc71' }]}>Easy</Text>
-        </View>
-        <View style={styles.statsBox}>
-          <Text style={[styles.statsLabel, { color: '#f39c12' }]}>Hunger:</Text>
-          <Text style={[styles.statsValue, { color: '#f39c12' }]}>3%</Text>
-        </View>
-        <View style={styles.statsBox}>
-          <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Happiness:</Text>
-          <Text style={[styles.statsValue, { color: '#e67e22' }]}>76%</Text>
-        </View>
-      </View>
+      </ScrollView>
     </LinearGradient>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -127,6 +134,13 @@ const styles = StyleSheet.create({
   },
   statsValue: {
     fontSize: 16,
+  },
+  statsContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  statsContent: {
+    alignItems: 'center',
   },
 });
 
