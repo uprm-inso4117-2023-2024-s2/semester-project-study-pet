@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import Pet from '../components/Pet';
 
 function Stats() {
   const navigation = useNavigation();
@@ -10,6 +11,7 @@ function Stats() {
   const goBack = () => {
     navigation.goBack();
   };
+const pet = new Pet();
 
 
   return (
@@ -33,31 +35,31 @@ function Stats() {
         <View style={styles.statsContent}>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#3498db' }]}>Pet Name:</Text>
-            <Text style={[styles.statsValue, { color: '#3498db' }]}>Firulai</Text>
+            <Text style={[styles.statsValue, { color: '#3498db' }]}>{pet.state.name}</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#9b59b6' }]}>Subject:</Text>
-            <Text style={[styles.statsValue, { color: '#9b59b6' }]}>Physics</Text>
+            <Text style={[styles.statsValue, { color: '#9b59b6' }]}>Physics (placeholder)</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e74c3c' }]}>Exam Date:</Text>
-            <Text style={[styles.statsValue, { color: '#e74c3c' }]}>2024-02-22</Text>
+            <Text style={[styles.statsValue, { color: '#e74c3c' }]}>2024-02-22 (placeholder)</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#2ecc71' }]}>Care Difficulty:</Text>
-            <Text style={[styles.statsValue, { color: '#2ecc71' }]}>Easy</Text>
+            <Text style={[styles.statsValue, { color: '#2ecc71' }]}>easy (placeholder)</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#f39c12' }]}>Hunger:</Text>
-            <Text style={[styles.statsValue, { color: '#f39c12' }]}>3%</Text>
+            <Text style={[styles.statsValue, { color: '#f39c12' }]}>{pet.state.hunger}%</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Happiness:</Text>
-            <Text style={[styles.statsValue, { color: '#e67e22' }]}>76%</Text>
+            <Text style={[styles.statsValue, { color: '#e67e22' }]}>{pet.state.happiness}%</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Care Mistakes:</Text>
-            <Text style={[styles.statsValue, { color: '#e67e22' }]}>i should've become a mechanic</Text>
+            <Text style={[styles.statsValue, { color: '#e67e22' }]}>{pet.state.careMistakes}</Text>
           </View>
         </View>
       </ScrollView>

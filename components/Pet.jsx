@@ -13,10 +13,10 @@ class Pet extends Component {
         require('./animatedFrog(dead).gif'),
       ],
       currentImageIndex: 0,
-      name: 'firulai',
+      name: 'Firulai',
       growthlvl: 0,
       hunger: 0,
-      happiness: 0,
+      happiness: 100,
       lastInteractionTime: new Date(),
       careMistakes: 0,
     };
@@ -69,8 +69,8 @@ class Pet extends Component {
       <View>
         <Image source={images[currentImageIndex]} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
-        <Text>Care Mistakes: {careMistakes}</Text>
-        {/* Rest of your code */}
+        {/* <Text>Care Mistakes: {careMistakes}</Text> */} 
+        {/*uncomment line above to show care mistakes on the screen*/}
       </View>
       
     );
@@ -90,5 +90,5 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
 });
-new Pet();
+
 export default Pet;
