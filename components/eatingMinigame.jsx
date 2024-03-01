@@ -29,7 +29,7 @@ const questionsData = [
     },
 ];
 
-const MiniGame = ({ onMinigameEnd }) => {
+const MiniGame = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -49,7 +49,6 @@ const MiniGame = ({ onMinigameEnd }) => {
     };
 
     if (gameOver) {
-        onMinigameEnd();
         return (
             <View style={styles.container}>
                 <View style={styles.gameContainer}>
@@ -212,7 +211,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         resizeMode: 'contain',
     },
-    statText: {
+    statText :{
         fontSize: 26,
         marginRight: 5,
         fontFamily: 'Jua-Regular',

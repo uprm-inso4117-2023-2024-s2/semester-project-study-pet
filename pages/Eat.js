@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { useFonts } from 'expo-font';
@@ -13,22 +13,16 @@ export default function App() {
   if (!isFontLoaded) {
     return null;
   }
-  const handleMinigameEnd = () => {
-    setMinigameEnded(false);
-  };
-
-  const [minigameEnded, setMinigameEnded] = useState(true);
 
   return (
+
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        {minigameEnded && (
-          <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
-        )}
+        <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
       </View>
       <ScrollView>
         <View style={styles.miniGameContainer}>
-          <MiniGame onMinigameEnd={handleMinigameEnd} />
+          <MiniGame />
         </View>
       </ScrollView>
       <StatusBar style="auto" />
