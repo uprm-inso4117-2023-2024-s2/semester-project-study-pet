@@ -13,12 +13,15 @@ class Pet extends Component {
         require('./animatedFrog(dead).gif'),
       ],
       currentImageIndex: 0,
-      name: 'firulai',
+      name: 'Firulai',
       growthlvl: 0,
       hunger: 0,
-      happiness: 0,
+      happiness: 100,
+      lastInteractionTime: new Date(),
+      careMistakes: 0,
     };
   }
+
 
   componentDidMount() {
     // Simulate happiness increasing over time
@@ -38,17 +41,38 @@ class Pet extends Component {
         currentImageIndex: (prevState.currentImageIndex + 1) % this.state.images.length,
       }));
     }, 3000);
+
+    // Check for care mistakes every 15 minutes
+    const careMistakeInterval = setInterval(() => {
+      const currentTime = new Date();
+      const lastInteractionTime = new Date(this.state.lastInteractionTime);
+      const timeDifference = (currentTime - lastInteractionTime) / (1000 * 60); // in minutes
+
+      if (timeDifference >= 15 && (this.state.happiness === 0 || this.state.hunger === 100)) {
+        this.setState((prevState) => ({
+          careMistakes: prevState.careMistakes + 1,
+        }));
+      }
+    }, 1000 * 60 * 15);
   }
 
+  handleInteraction = () => {
+    this.setState({
+      lastInteractionTime: new Date(),
+    });
+  };
+
   render() {
-    const { happiness, name, images, currentImageIndex } = this.state;
+    const { happiness, name, images, currentImageIndex, careMistakes } = this.state;
 
     return (
       <View>
         <Image source={images[currentImageIndex]} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
-        {/* Rest of your code */}
+        {/* <Text>Care Mistakes: {careMistakes}</Text> */} 
+        {/*uncomment line above to show care mistakes on the screen*/}
       </View>
+      
     );
   }
 }
