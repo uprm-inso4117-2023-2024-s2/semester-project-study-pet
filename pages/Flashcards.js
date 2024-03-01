@@ -1,69 +1,92 @@
-import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { Text, View, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useFonts } from "expo-font";
+import { getStudySets, createOrUpdateFlashcard } from '../components/FlashcardManagement';
 
-import Flashcard from '../components/FlashCard';
-import FlashCardCreator from '../components/FlashCardCreator';
 import StudySet from '../components/StudySet';
+import FlashCard from '../components/FlashCard';
+import FlashCardCreator from '../components/FlashCardCreator';
 
-/**
- * Flashcards component for displaying flashcards overview.
- * @component
- * @returns {JSX.Element} - Rendered Flashcards component.
- */
-export default function Flashcards({ navigation }) {
-  const data = Array.from({ length: 8 }, (_, index) => ({ key: String(index) }));
-
+export default function Flashcards({
+}) {
+  const [studySets, setStudySets] = useState([]);
   const [isFlashCardCreatorVisible, setFlashCardCreatorVisible] = useState(false);
   const [isFontLoaded] = useFonts({
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
+
+  useEffect(() => {
+    loadStudySets();
+  });
+
+  const loadStudySets = async () => {
+    try {
+      const loadedStudySets = await getStudySets();
+      setStudySets(loadedStudySets);
+    } catch (error) {
+      showAlert('Error', error.message);
+    }
+  };
+
+  const handleCreateFlashcard = async ({ studySet, question, answer }) => {
+    try {
+      await createOrUpdateFlashcard(studySets, { studySet, question, answer });
+      setFlashCardCreatorVisible(false);
+      loadStudySets();
+    } catch (error) {
+      showAlert('Error', error.message);
+    }
+  };
+  
+  const showAlert = (title, message) => {
+    Alert.alert(title, message);
+  };
 
   if (!isFontLoaded) {
     return null; // for now, render nothing
   }
 
   return (
-    <View style={flashcards.container}>
-      <View style={flashcards.hStack}>
-        <View style={flashcards.textContainer}>
-          <Text style={flashcards.textStyle}>Flashcards Overview</Text>
+    <View style={styles.container}>
+      <View style={styles.hStack}>
+        <View style={styles.textContainer}>
+          <Text style={styles.textStyle}>Flashcards Overview</Text>
         </View>
       </View>
 
-      <ScrollView>
-        <View style={flashcards.testy}>
-          <StudySet>
-            <View style={flashcards.flashcards}>
-              {data.map(item => (
-                <View key={item.key} style={flashcards.flashcardWrapper}>
-                  <Flashcard />
-                </View>
-              ))}
-            </View>
-          </StudySet>
-          {isFlashCardCreatorVisible && <FlashCardCreator />}
+      <ScrollView style={{ paddingTop: 30 }}>
+        {isFlashCardCreatorVisible && (
+            <FlashCardCreator 
+              onCreate={handleCreateFlashcard}
+              onClose={() => setFlashCardCreatorVisible(false)} 
+            />
+        )}
+        <View style={styles.testy}>
+          {studySets.map((studySet, index) => (
+            <StudySet key={index} title={studySet.title}>
+              <View style={styles.flashcards}>
+                {studySet.flashcards.map((flashcard, cardIndex) => (
+                  <View key={cardIndex} style={styles.flashcardWrapper}>
+                    <FlashCard question={flashcard.question} answer={flashcard.answer} />
+                  </View>
+                ))}
+              </View>
+            </StudySet>
+          ))}
         </View>
       </ScrollView>
 
       <TouchableOpacity
-        style={flashcards.plusButton}
+        style={styles.plusButton}
         onPress={() => setFlashCardCreatorVisible(true)}
       >
-        <Text style={flashcards.plusButtonText}>+</Text>
+        <Text style={styles.plusButtonText}>+</Text>
       </TouchableOpacity>
-      <StatusBar style="auto" />
     </View>
   );
 }
 
-const flashcards = StyleSheet.create({
-  buttonContainer: {
-    alignItems: 'flex-start',
-    justifyContent: 'left',
-    marginTop: 20,
-  },
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFBBE0',
