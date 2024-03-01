@@ -82,6 +82,12 @@ export default function Flashcards({
       >
         <Text style={styles.plusButtonText}>+</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.minusButton}
+      >
+        <Text style={styles.minusButtonText}>-</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -123,6 +129,21 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   plusButtonText: {
+    fontSize: 40,
+    color: '#E14D9D',
+  },
+  minusButton: {
+    position: 'absolute',
+    bottom: 10,
+    left: 20,
+    backgroundColor: 'white',
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#000',
+    paddingHorizontal: 19,
+    paddingVertical: 15,
+  },
+  minusButtonText: {
     fontSize: 40,
     color: '#E14D9D',
   },
