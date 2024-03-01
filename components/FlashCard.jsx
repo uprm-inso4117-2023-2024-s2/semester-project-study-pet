@@ -44,6 +44,11 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 15,
     width: 135,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.80,
+    elevation: 3,
   },
   cardFront: {
     backgroundColor: '#e1eefb',

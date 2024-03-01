@@ -19,8 +19,8 @@ export default function StudySet({ title, children }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 35,
-    marginBottom: 35,
+    marginTop: 25,
+    marginBottom: 25,
     backgroundColor: '#fff',
     padding: 5,
     maxWidth: 500,

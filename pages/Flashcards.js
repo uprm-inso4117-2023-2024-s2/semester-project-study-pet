@@ -67,11 +67,12 @@ const flashcards = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFBBE0',
+    paddingBottom: 50,
   },
   textStyle: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: 'black',
+    color: '#FF69B4',
     textAlign: 'center',
     fontFamily: 'Jua-Regular',
     borderRadius: 10,
@@ -94,6 +95,8 @@ const flashcards = StyleSheet.create({
     right: 20,
     backgroundColor: 'white',
     borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#000',
     padding: 15,
   },
   plusButtonText: {
@@ -112,6 +115,6 @@ const flashcards = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
   },
+  
 });

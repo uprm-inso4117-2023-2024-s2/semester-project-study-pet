@@ -82,6 +82,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderWidth: 1,
     fontFamily: "Jua-Regular",
+    borderWidth: 2,
+    borderColor: '#000',
   },
   button: {
     display: 'inline-block',
@@ -91,9 +93,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     fontSize: 20,
     borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 0.4,
-    shadowRadius: 3,
+    borderWidth: 2,
+    borderColor: '#000',
   },
 });
