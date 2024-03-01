@@ -1,3 +1,4 @@
+// Flashcards.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useFonts } from "expo-font";
@@ -6,18 +7,19 @@ import { getStudySets, createOrUpdateFlashcard } from '../components/FlashcardMa
 import StudySet from '../components/StudySet';
 import FlashCard from '../components/FlashCard';
 import FlashCardCreator from '../components/FlashCardCreator';
+import FlashcardRemover from '../components/FlashcardRemover';
 
-export default function Flashcards({
-}) {
+export default function Flashcards() {
   const [studySets, setStudySets] = useState([]);
   const [isFlashCardCreatorVisible, setFlashCardCreatorVisible] = useState(false);
+  const [isFlashCardRemoverVisible, setFlashCardRemoverVisible] = useState(false);
   const [isFontLoaded] = useFonts({
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
 
   useEffect(() => {
     loadStudySets();
-  });
+  }, []);
 
   const loadStudySets = async () => {
     try {
@@ -37,13 +39,17 @@ export default function Flashcards({
       showAlert('Error', error.message);
     }
   };
-  
+
+  const handleRemoveFlashcard = async ({ studySet, question, answer }) => {
+    setFlashCardRemoverVisible(false);
+  };
+
   const showAlert = (title, message) => {
     Alert.alert(title, message);
   };
 
   if (!isFontLoaded) {
-    return null; // for now, render nothing
+    return null;
   }
 
   return (
@@ -61,6 +67,14 @@ export default function Flashcards({
               onClose={() => setFlashCardCreatorVisible(false)} 
             />
         )}
+
+        {isFlashCardRemoverVisible && (
+          <FlashcardRemover
+            onRemove={handleRemoveFlashcard}
+            onClose={() => setFlashCardRemoverVisible(false)}
+          />
+        )}
+
         <View style={styles.testy}>
           {studySets.map((studySet, index) => (
             <StudySet key={index} title={studySet.title}>
@@ -85,6 +99,7 @@ export default function Flashcards({
 
       <TouchableOpacity
         style={styles.minusButton}
+        onPress={() => setFlashCardRemoverVisible(true)}
       >
         <Text style={styles.minusButtonText}>-</Text>
       </TouchableOpacity>
@@ -160,5 +175,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  
 });
