@@ -41,3 +41,37 @@ export const createOrUpdateFlashcard = async (studySets, { studySet, question, a
     await saveStudySets(updatedStudySets);
   }
 };
+
+export const removeFlashcard = async ({ studySet, question }) => {
+  try {
+    let studySets = await getStudySets();
+
+    if (!studySet.trim() && !question.trim()) {
+      studySets = [];
+    } else if (!question.trim()) {
+      const updatedStudySets = studySets.filter(set => set.title !== studySet);
+      studySets = updatedStudySets;
+    } else {
+      const updatedStudySets = studySets.map(set => {
+        if (set.title === studySet) {
+          const updatedFlashcards = set.flashcards.filter(
+            flashcard => flashcard.question !== question
+          );
+          if (updatedFlashcards.length === 0) {
+            return null;
+          }
+          return { ...set, flashcards: updatedFlashcards };
+        }
+        return set;
+      }).filter(Boolean);
+
+      studySets = updatedStudySets;
+    }
+
+    await saveStudySets(studySets);
+    return true;
+  } catch (error) {
+    console.error('Error removing flashcard:', error);
+    throw new Error('Failed to remove flashcard');
+  }
+};

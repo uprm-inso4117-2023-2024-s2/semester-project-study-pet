@@ -1,14 +1,18 @@
-// Flashcards.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useFonts } from "expo-font";
-import { getStudySets, createOrUpdateFlashcard } from '../components/FlashcardManagement';
+import { getStudySets, createOrUpdateFlashcard, removeFlashcard } from '../components/FlashcardManagement';
 
 import StudySet from '../components/StudySet';
 import FlashCard from '../components/FlashCard';
 import FlashCardCreator from '../components/FlashCardCreator';
 import FlashcardRemover from '../components/FlashcardRemover';
 
+/**
+ * Flashcards component for displaying flashcards overview.
+ * @component
+ * @returns {JSX.Element} - Rendered Flashcards component.
+ */
 export default function Flashcards() {
   const [studySets, setStudySets] = useState([]);
   const [isFlashCardCreatorVisible, setFlashCardCreatorVisible] = useState(false);
@@ -40,8 +44,35 @@ export default function Flashcards() {
     }
   };
 
-  const handleRemoveFlashcard = async ({ studySet, question, answer }) => {
-    setFlashCardRemoverVisible(false);
+  const handleRemoveFlashcard = async ({ studySet, question }) => {
+    try {
+      if (!studySetExists(studySet)) {
+        showAlert('Error', 'Study Set does not exist.');
+        return;
+      }
+  
+      await removeFlashcard({ studySet, question });
+      setFlashCardRemoverVisible(false);
+      loadStudySets();
+      Alert.alert('Removed', 'Flashcard removed successfully');
+    } catch (error) {
+      showAlert('Error', error.message);
+    }
+  };
+  
+  const studySetExists = (studySetTitle) => {
+    return studySets.some(set => set.title === studySetTitle);
+  };
+  
+  const handleRemoveAll = async () => {
+    try {
+      await removeFlashcard({ studySet: '', question: '' });
+      setFlashCardRemoverVisible(false);
+      loadStudySets();
+      Alert.alert('Removed', 'All flashcards and study sets removed successfully');
+    } catch (error) {
+      showAlert('Error', error.message);
+    }
   };
 
   const showAlert = (title, message) => {
@@ -71,6 +102,7 @@ export default function Flashcards() {
         {isFlashCardRemoverVisible && (
           <FlashcardRemover
             onRemove={handleRemoveFlashcard}
+            onRemoveAll={handleRemoveAll}
             onClose={() => setFlashCardRemoverVisible(false)}
           />
         )}

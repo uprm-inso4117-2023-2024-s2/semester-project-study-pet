@@ -2,17 +2,20 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useFonts } from "expo-font";
 
-export default function FlashcardRemover({ onRemove }) {
+export default function FlashcardRemover({ onRemove, onRemoveAll }) {
   const [studySet, setStudySet] = useState('');
   const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
   const [dummy] = useFonts({
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
 
   function handleSubmit() {
-    if (!studySet.trim() || !question.trim()) {
-      Alert.alert('Error', 'Please fill out all fields');
+    if (!studySet.trim() && !question.trim()) {
+      Alert.alert('Error', 'Please fill out at least one field to remove a flashcard or leave question blank to remove an entire set.');
+      return;
+    }
+    if (!studySet.trim()) {
+      Alert.alert('Error', 'Study Set cannot be empty.');
       return;
     }
 
@@ -26,13 +29,44 @@ export default function FlashcardRemover({ onRemove }) {
     setStudySet('');
     setQuestion('');
 
-    Alert.alert('Removed', 'Flashcard removed successfully');
+  }
+
+  function handleRemoveAll() {
+    if (studySet.trim() || question.trim()) {
+      Alert.alert('Error', 'In order to remove all flashcards and study sets, please leave both fields empty.');
+      return;
+    }
+
+    if (studySet.trim() === '' && question.trim() === '' && onRemoveAll) {
+      Alert.alert(
+        'Remove All',
+        'Are you sure you want to remove all flashcards and study sets?',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+          },
+          {
+            text: 'Remove All',
+            onPress: () => {
+              onRemoveAll();
+              setStudySet('');
+              setQuestion('');
+            }
+          }
+        ],
+        { cancelable: true }
+      );
+    } else {
+      Alert.alert('Error', 'No study sets available to remove.');
+    }
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <Text style={styles.legend}>Remove Flashcard</Text>
+        <Text style={styles.legend}>Remove Flashcard or Study Set</Text>
         <TextInput
           style={[styles.input, styles.textInput]}
           placeholder="Study Set"
@@ -51,12 +85,21 @@ export default function FlashcardRemover({ onRemove }) {
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={{ fontFamily: "Jua-Regular", }}>Remove</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.removeAllButton} onPress={handleRemoveAll}>
+          <Text style={{ fontFamily: "Jua-Regular", }}>Remove All</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFBBE0',
+  },
   formContainer: {
     alignSelf: 'center',
     backgroundColor: '#fff',
@@ -99,5 +142,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     borderColor: '#000',
+    marginBottom: 15,
   },
+  removeAllButton: {
+    alignSelf: 'center',
+    backgroundColor: '#f08080',
+    paddingVertical: 10,
+    paddingHorizontal: 50,
+    fontSize: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#000',
+  }
 });
