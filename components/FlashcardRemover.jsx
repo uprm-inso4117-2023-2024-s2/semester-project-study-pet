@@ -9,59 +9,68 @@ export default function FlashcardRemover({ onRemove, onRemoveAll }) {
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
 
-  function handleSubmit() {
-    if (!studySet.trim() && !question.trim()) {
-      Alert.alert('Error', 'Please fill out at least one field to remove a flashcard or leave question blank to remove an entire set.');
-      return;
-    }
-    if (!studySet.trim()) {
-      Alert.alert('Error', 'Study Set cannot be empty.');
-      return;
-    }
+  const handleEmptyFieldsError = () => {
+    Alert.alert('Error', 'Please fill out at least one field to remove a flashcard or leave question blank to remove an entire set.');
+  };
 
-    const removedFlashcard = {
-      studySet,
-      question,
-    };
+  const handleStudySetEmptyError = () => {
+    Alert.alert('Error', 'Study Set cannot be empty.');
+  };
 
-    onRemove(removedFlashcard);
+  const handleRemoveAllError = () => {
+    Alert.alert('Error', 'In order to remove all flashcards and study sets, please leave both fields empty.');
+  };
 
-    setStudySet('');
-    setQuestion('');
-
-  }
-
-  function handleRemoveAll() {
-    if (studySet.trim() || question.trim()) {
-      Alert.alert('Error', 'In order to remove all flashcards and study sets, please leave both fields empty.');
-      return;
-    }
-
-    if (studySet.trim() === '' && question.trim() === '' && onRemoveAll) {
-      Alert.alert(
-        'Remove All',
-        'Are you sure you want to remove all flashcards and study sets?',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel'
-          },
-          {
-            text: 'Remove All',
-            onPress: () => {
-              onRemoveAll();
-              setStudySet('');
-              setQuestion('');
-            }
+  const handleConfirmRemoveAll = () => {
+    Alert.alert(
+      'Remove All',
+      'Are you sure you want to remove all flashcards and study sets?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        {
+          text: 'Remove All',
+          onPress: () => {
+            onRemoveAll();
+            setStudySet('');
+            setQuestion('');
           }
-        ],
-        { cancelable: true }
-      );
+        }
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const handleRemoveAll = () => {
+    if (studySet.trim() || question.trim()) {
+      handleRemoveAllError();
+    } else if (studySet.trim() === '' && question.trim() === '' && onRemoveAll) {
+      handleConfirmRemoveAll();
     } else {
       Alert.alert('Error', 'No study sets available to remove.');
     }
-  }
+  };
+
+  const handleSubmit = () => {
+    if (!studySet.trim() && !question.trim()) {
+      handleEmptyFieldsError();
+    } else if (!studySet.trim()) {
+      handleStudySetEmptyError();
+    } else {
+      const removedFlashcard = {
+        studySet,
+        question,
+      };
+  
+      onRemove(removedFlashcard);
+  
+      setStudySet('');
+      setQuestion('');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -127,10 +136,8 @@ const styles = StyleSheet.create({
     padding: 3,
     fontSize: 16,
     marginBottom: 15,
-    borderWidth: 1,
-    fontFamily: "Jua-Regular",
     borderWidth: 2,
-    borderColor: '#000',
+    fontFamily: "Jua-Regular",
   },
   button: {
     display: 'inline-block',
