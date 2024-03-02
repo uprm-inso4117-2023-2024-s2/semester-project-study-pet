@@ -53,6 +53,24 @@ export default function Flashcards() {
         return;
       }
   
+      const studySetIndex = studySets.findIndex(set => set.title === studySet);
+  
+      // If question is empty, remove entire study set
+      if (!question.trim()) {
+        await removeFlashcard({ studySet, question });
+        setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
+        loadStudySets();
+        Alert.alert('Removed', 'Study Set removed successfully');
+        return;
+      }
+  
+      const existingFlashcardIndex = studySets[studySetIndex].flashcards.findIndex(card => card.question === question);
+  
+      if (existingFlashcardIndex === -1) {
+        showAlert('Error', 'Question does not exist in Study Set.');
+        return;
+      }
+  
       await removeFlashcard({ studySet, question });
       setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
       loadStudySets();
@@ -214,5 +232,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 60,
   },
 });
