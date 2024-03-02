@@ -55,9 +55,8 @@ export const removeFlashcard = async ({ studySet, question }) => {
     // Retrieve study sets from AsyncStorage
     let studySets = await getStudySets();
 
-    // Remove logic based on provided parameters
+    // Remove all study sets if both study set and question are empty
     if (!studySet.trim() && !question.trim()) {
-      // Remove all study sets if both study set and question are empty
       studySets = [];
     } else if (!question.trim()) {
       // Remove study set if only study set is provided
