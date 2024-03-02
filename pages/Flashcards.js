@@ -15,8 +15,10 @@ import FlashcardRemover from '../components/FlashcardRemover';
  */
 export default function Flashcards() {
   const [studySets, setStudySets] = useState([]);
-  const [isFlashCardCreatorVisible, setFlashCardCreatorVisible] = useState(false);
-  const [isFlashCardRemoverVisible, setFlashCardRemoverVisible] = useState(false);
+  const [{ isFlashCardCreatorVisible, isFlashCardRemoverVisible }, setVisibility] = useState({
+    isFlashCardCreatorVisible: false,
+    isFlashCardRemoverVisible: false,
+  });
   const [isFontLoaded] = useFonts({
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
@@ -37,7 +39,7 @@ export default function Flashcards() {
   const handleCreateFlashcard = async ({ studySet, question, answer }) => {
     try {
       await createOrUpdateFlashcard(studySets, { studySet, question, answer });
-      setFlashCardCreatorVisible(false);
+      setVisibility({ ...isFlashCardCreatorVisible, isFlashCardCreatorVisible: false });
       loadStudySets();
     } catch (error) {
       showAlert('Error', error.message);
@@ -52,7 +54,7 @@ export default function Flashcards() {
       }
   
       await removeFlashcard({ studySet, question });
-      setFlashCardRemoverVisible(false);
+      setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
       loadStudySets();
       Alert.alert('Removed', 'Flashcard removed successfully');
     } catch (error) {
@@ -67,7 +69,7 @@ export default function Flashcards() {
   const handleRemoveAll = async () => {
     try {
       await removeFlashcard({ studySet: '', question: '' });
-      setFlashCardRemoverVisible(false);
+      setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
       loadStudySets();
       Alert.alert('Removed', 'All flashcards and study sets removed successfully');
     } catch (error) {
@@ -95,7 +97,7 @@ export default function Flashcards() {
         {isFlashCardCreatorVisible && (
             <FlashCardCreator 
               onCreate={handleCreateFlashcard}
-              onClose={() => setFlashCardCreatorVisible(false)} 
+              onClose={() => setVisibility({ ...isFlashCardCreatorVisible, isFlashCardCreatorVisible: false })} 
             />
         )}
 
@@ -103,7 +105,7 @@ export default function Flashcards() {
           <FlashcardRemover
             onRemove={handleRemoveFlashcard}
             onRemoveAll={handleRemoveAll}
-            onClose={() => setFlashCardRemoverVisible(false)}
+            onClose={() => setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false })}
           />
         )}
 
@@ -124,14 +126,14 @@ export default function Flashcards() {
 
       <TouchableOpacity
         style={styles.plusButton}
-        onPress={() => setFlashCardCreatorVisible(true)}
+        onPress={() => setVisibility({ ...isFlashCardCreatorVisible, isFlashCardCreatorVisible: true })}
       >
         <Text style={styles.plusButtonText}>+</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.minusButton}
-        onPress={() => setFlashCardRemoverVisible(true)}
+        onPress={() => setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: true })}
       >
         <Text style={styles.minusButtonText}>-</Text>
       </TouchableOpacity>
