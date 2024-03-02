@@ -1,15 +1,16 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const handleError = (action, error) => {
+  console.error(`Error ${action}:`, error);
+  throw new Error(`Failed to ${action.toLowerCase()}`);
+};
+
 export const getStudySets = async () => {
   try {
     const storedStudySets = await AsyncStorage.getItem('studySets');
-    if (storedStudySets) {
-      return JSON.parse(storedStudySets);
-    }
-    return [];
+    return storedStudySets ? JSON.parse(storedStudySets) : [];
   } catch (error) {
-    console.error('Error retrieving study sets:', error);
-    throw new Error('Failed to retrieve study sets');
+    handleError('retrieving study sets', error);
   }
 };
 
@@ -17,29 +18,20 @@ export const saveStudySets = async (updatedStudySets) => {
   try {
     await AsyncStorage.setItem('studySets', JSON.stringify(updatedStudySets));
   } catch (error) {
-    console.error('Error saving study sets:', error);
-    throw new Error('Failed to save study sets');
+    handleError('saving study sets', error);
   }
 };
 
 export const createOrUpdateFlashcard = async (studySets, { studySet, question, answer }) => {
   const existingStudySet = studySets.find(set => set.title === studySet);
 
-  if (existingStudySet) {
-    const updatedStudySets = studySets.map(set =>
-      set.title === studySet
-        ? { ...set, flashcards: [...set.flashcards, { question, answer }] }
-        : set
-    );
-    await saveStudySets(updatedStudySets);
-  } else {
-    const newStudySet = {
-      title: studySet,
-      flashcards: [{ question, answer }],
-    };
-    const updatedStudySets = [...studySets, newStudySet];
-    await saveStudySets(updatedStudySets);
-  }
+  const updatedStudySets = existingStudySet
+    ? studySets.map(set =>
+        set.title === studySet ? { ...set, flashcards: [...set.flashcards, { question, answer }] } : set
+      )
+    : [...studySets, { title: studySet, flashcards: [{ question, answer }] }];
+
+  await saveStudySets(updatedStudySets);
 };
 
 export const removeFlashcard = async ({ studySet, question }) => {
@@ -49,29 +41,20 @@ export const removeFlashcard = async ({ studySet, question }) => {
     if (!studySet.trim() && !question.trim()) {
       studySets = [];
     } else if (!question.trim()) {
-      const updatedStudySets = studySets.filter(set => set.title !== studySet);
-      studySets = updatedStudySets;
+      studySets = studySets.filter(set => set.title !== studySet);
     } else {
-      const updatedStudySets = studySets.map(set => {
+      studySets = studySets.map(set => {
         if (set.title === studySet) {
-          const updatedFlashcards = set.flashcards.filter(
-            flashcard => flashcard.question !== question
-          );
-          if (updatedFlashcards.length === 0) {
-            return null;
-          }
-          return { ...set, flashcards: updatedFlashcards };
+          const updatedFlashcards = set.flashcards.filter(flashcard => flashcard.question !== question);
+          return updatedFlashcards.length === 0 ? null : { ...set, flashcards: updatedFlashcards };
         }
         return set;
       }).filter(Boolean);
-
-      studySets = updatedStudySets;
     }
 
     await saveStudySets(studySets);
     return true;
   } catch (error) {
-    console.error('Error removing flashcard:', error);
-    throw new Error('Failed to remove flashcard');
+    handleError('removing flashcard', error);
   }
 };
