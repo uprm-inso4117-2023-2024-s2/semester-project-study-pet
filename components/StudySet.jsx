@@ -19,7 +19,7 @@ export default function StudySet({ title, children }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 25,
+    marginTop: 20,
     marginBottom: 25,
     backgroundColor: '#fff',
     padding: 5,

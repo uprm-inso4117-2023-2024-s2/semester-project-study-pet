@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   textStyle: {
-    fontSize: 30,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#FF69B4',
     textAlign: 'center',
@@ -166,6 +166,12 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 15,
+    marginTop: 20,
+    marginVertical: 15, 
+    marginHorizontal: 20,
   },
   plusButton: {
     position: 'absolute',
