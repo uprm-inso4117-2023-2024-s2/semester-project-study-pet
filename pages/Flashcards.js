@@ -86,6 +86,12 @@ export default function Flashcards() {
   
   const handleRemoveAll = async () => {
     try {
+      // Check if there are existing study sets
+      if (studySets.length === 0) {
+        showAlert('Error', 'There are no existing study sets to remove.');
+        return;
+      }
+      // Remove all study sets
       await removeFlashcard({ studySet: '', question: '' });
       setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
       loadStudySets();
