@@ -91,6 +91,9 @@ const MiniGame = () => {
 
     return (
         <View style={styles.container}>
+            <View style={styles.titleContainer}>
+                <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
+            </View>
             <View style={styles.gameContainer}>
                 <View style={styles.questionContainer}>
                     <Text style={styles.question}>{questionsData[currentQuestionIndex].question}</Text>
@@ -119,6 +122,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 20,
         backgroundColor: 'transparent',
+    },
+    titleContainer: {
+        marginTop: 10,
+        backgroundColor: 'white',
+        padding: 10,
+        borderRadius: 15,
+        marginVertical: 10,
+        marginHorizontal: 8,
+    },
+    titleText: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        color: 'black',
+        fontFamily: 'Jua-Regular',
+        textAlign: 'center',
+        textAlignVertical: 'top',
     },
     gameContainer: {
         backgroundColor: 'white',
@@ -211,7 +230,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         resizeMode: 'contain',
     },
-    statText :{
+    statText: {
         fontSize: 26,
         marginRight: 5,
         fontFamily: 'Jua-Regular',
