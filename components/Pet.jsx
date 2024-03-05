@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
+import Global from './Global';
 
 class Pet extends Component {
   constructor(props) {
@@ -15,8 +16,8 @@ class Pet extends Component {
       currentImageIndex: 0,
       name: 'Firulai',
       growthlvl: 0,
-      hunger: 0,
-      happiness: 100,
+      hunger: Global.hunger,
+      happiness: Global.happiness,
       lastInteractionTime: new Date(),
       careMistakes: 0,
     };
@@ -69,10 +70,10 @@ class Pet extends Component {
       <View>
         <Image source={images[currentImageIndex]} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
-        {/* <Text>Care Mistakes: {careMistakes}</Text> */} 
+        {/* <Text>Care Mistakes: {careMistakes}</Text> */}
         {/*uncomment line above to show care mistakes on the screen*/}
       </View>
-      
+
     );
   }
 }
