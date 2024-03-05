@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Global from './Global'; // Import global variables
 
 const questionsData = [
     {
@@ -64,7 +65,7 @@ const MiniGame = () => {
 
                         <View style={styles.hrow}>
                             <Text style={styles.statText}>
-                                Hunger: -{score}
+                                Hunger: {Global.hunger - score}
                             </Text>
                             <Image
                                 style={styles.image}
@@ -75,7 +76,7 @@ const MiniGame = () => {
 
                         <View style={styles.hrow}>
                             <Text style={styles.statText}>
-                                Happiness: +{score}
+                                Happiness: {Math.min(100, Global.happiness + 10)}
                             </Text>
                             <Image
                                 style={styles.image}
