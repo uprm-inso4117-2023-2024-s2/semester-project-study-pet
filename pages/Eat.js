@@ -15,11 +15,7 @@ export default function App() {
   }
 
   return (
-
     <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
-      </View>
       <ScrollView>
         <View style={styles.miniGameContainer}>
           <MiniGame />
@@ -36,22 +32,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#8FECA9', // light green
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  titleContainer: {
-    marginTop: 10,
-    backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 15,
-    marginVertical: 10,
-    marginHorizontal: 8,
-  },
-  titleText: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: 'black',
-    fontFamily: 'Jua-Regular',
-    textAlign: 'center',
-    textAlignVertical: 'top',
   },
   miniGameContainer: {
     flex: 1,
