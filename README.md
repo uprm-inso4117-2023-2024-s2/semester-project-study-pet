@@ -2,9 +2,7 @@
 
 ## Description
 
-Study Pet is a React Native Expo application designed to help students manage their study time effectively.
-
-TODO: Add more description
+Study Pet is a React Native Expo application designed to help students manage their study time effectively. The app's goal is to encouraging students to study by tying the care of a virtual pet to their study habits, the more they study the happier their pet will be and the better it will grow.
 
 ## Prerequisites
 
@@ -46,6 +44,9 @@ To use Study Pet follow these steps:
 - Open the Expo client app on your iOS or Android phone.
 - Scan the QR code printed by `expo start` with Expo Go (Android) or the Camera app (iOS).
 
+## Milestone Bugs and Fixes
+  - [Milestone 1 Bugs and Fixes](https://docs.google.com/document/d/1mxXtvbsHJ-JRNdFBPmnDy6rUwUo8a5JyL6NNMFrztxw/edit#heading=h.egftstbhm9t6)
+    
 ## License
 
 TODO: Add license
