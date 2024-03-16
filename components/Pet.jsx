@@ -16,8 +16,8 @@ class Pet extends Component {
       currentImageIndex: 0,
       name: 'Firulai',
       growthlvl: 0,
-      hunger: Global.hunger,
-      happiness: Global.happiness,
+      hunger: 0,
+      happiness: 100,
       lastInteractionTime: new Date(),
       careMistakes: 0,
     };
