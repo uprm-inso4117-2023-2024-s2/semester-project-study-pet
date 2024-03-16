@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Global from './Global'; // Import global variables
+import { loadHappiness, saveHappiness } from './happinessStorage';
 
 const questionsData = [
     {
@@ -35,6 +35,7 @@ const MiniGame = () => {
     const [gameOver, setGameOver] = useState(false);
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [score, setScore] = useState(0);
+    const [happiness, setHappiness] = useState(0);
 
     const handleAnswerSelection = (selectedAnswerIndex) => {
         const currentQuestion = questionsData[currentQuestionIndex];
@@ -48,6 +49,30 @@ const MiniGame = () => {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         }
     };
+
+    useEffect(() => {
+        const loadHappinessData = async () => {
+            try {
+                const loadedHappiness = await loadHappiness();
+                setHappiness(loadedHappiness);
+            } catch (error) {
+                console.error('Error loading happiness data:', error);
+            }
+        };
+
+        loadHappinessData();
+    }, []);
+
+
+
+    // Update happiness only when the game is over
+    useEffect(() => {
+        if (gameOver) {
+            const newHappiness = happiness + score;
+            setHappiness(newHappiness);
+            saveHappiness(newHappiness);
+        }
+    }, [gameOver, score]);
 
     if (gameOver) {
         return (
@@ -65,7 +90,7 @@ const MiniGame = () => {
 
                         <View style={styles.hrow}>
                             <Text style={styles.statText}>
-                                Hunger: {Global.hunger - score}
+                                Hunger: {score * 10}
                             </Text>
                             <Image
                                 style={styles.image}
@@ -76,7 +101,7 @@ const MiniGame = () => {
 
                         <View style={styles.hrow}>
                             <Text style={styles.statText}>
-                                Happiness: {Math.min(100, Global.happiness + 10)}
+                                Happiness: {happiness}
                             </Text>
                             <Image
                                 style={styles.image}

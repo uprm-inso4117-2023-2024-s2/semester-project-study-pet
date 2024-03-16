@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
-import Global from './Global';
+import { saveHappiness } from './happinessStorage';
 
 class Pet extends Component {
   constructor(props) {
@@ -16,8 +16,8 @@ class Pet extends Component {
       currentImageIndex: 0,
       name: 'Firulai',
       growthlvl: 0,
-      hunger: Global.hunger,
-      happiness: Global.happiness,
+      hunger: 0,
+      happiness: 100,
       lastInteractionTime: new Date(),
       careMistakes: 0,
     };
@@ -25,6 +25,8 @@ class Pet extends Component {
 
 
   componentDidMount() {
+
+    saveHappiness(this.state.happiness);
     // Simulate happiness increasing over time
     const interval = setInterval(() => {
       if (this.state.happiness < 100) {
