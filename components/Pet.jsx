@@ -95,8 +95,10 @@ class Pet extends Component {
         <Image source={images[currentImageIndex]} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
         {/* <Text>Care Mistakes: {careMistakes}</Text> */}
+        {/* <Text>Care Mistakes: {careMistakes}</Text> */}
         {/*uncomment line above to show care mistakes on the screen*/}
       </View>
+
 
     );
   }
