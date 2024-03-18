@@ -11,6 +11,37 @@ class User extends Component {
     };
   }
 
+  componentDidMount() {
+    this.loadData();
+  }
+
+// loading user data
+
+  loadData = async () => {
+    try {
+      const storedData = await AsyncStorage.getItem('user_data');
+      if (storedData !== null) {
+        const { name, pets, exams } = JSON.parse(storedData);
+        this.setState({ name, pets, exams });
+      }
+    } catch (error) {
+      console.log('Error loading data', error);
+    }
+  }
+
+  // saving user data
+
+  saveData = async () => {
+    try{
+      const {name, pets, exams} = this.state;
+      const data = JSON.stringify({name, pets, exams});
+      await AsyncStorage.setItem('user_data', data);
+    }
+    catch (error) {
+      console.log('Error saving data', error);
+    }
+  }
+
   render() {
     const { name, pets, exams } = this.state;
 
