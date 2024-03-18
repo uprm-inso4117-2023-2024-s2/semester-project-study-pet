@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import { saveHappiness, loadHappiness } from './happinessStorage';
+import { saveHappiness, loadHappiness } from './happinessStorage';
 
 class Pet extends Component {
   constructor(props) {
@@ -25,6 +26,8 @@ class Pet extends Component {
 
 
   componentDidMount() {
+    this.loadHappinessFromStorage();
+
     this.loadHappinessFromStorage();
 
     // Simulate happiness increasing over time
@@ -60,6 +63,26 @@ class Pet extends Component {
       }
     }, 1000 * 60 * 15);
   }
+
+  loadHappinessFromStorage = async () => {
+    try {
+      const happiness = await loadHappiness();
+      if (happiness !== null) {
+        this.setState({ happiness });
+      }
+    } catch (error) {
+      console.error('Error loading happiness value:', error);
+    }
+  };
+
+  saveHappinessToStorage = async () => {
+    const { happiness } = this.state;
+    try {
+      await saveHappiness(happiness);
+    } catch (error) {
+      console.error('Error saving happiness value:', error);
+    }
+  };
 
   loadHappinessFromStorage = async () => {
     try {
