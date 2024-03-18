@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { useFonts } from "expo-font";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function FlashCardCreator({ onCreate }) {
   const [studySet, setStudySet] = useState('');
@@ -10,21 +11,41 @@ export default function FlashCardCreator({ onCreate }) {
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
 
-  function handleSubmit() {
-    if (!studySet.trim() || (!question.trim() || !answer.trim())) {
-      Alert.alert('Error', 'Please fill out all fields');
-      return;
+  useEffect(() => {
+    loadData();
+  }, []); 
+// load data from AsyncStorage
+  const loadData = async () => {
+    try {
+      const storedData = await AsyncStorage.getItem('flashcard_data');
+      if (storedData !== null) {
+        const {studyset: storedStudySet, question: storedQuestion, answer: storedAnswer} = JSON.parse(storedData);
+        setStudySet(storedStudySet);
+        setQuestion(storedQuestion);
+        setAnswer(storedAnswer);
+      }
+    } catch (error) {
+      console.log('Error loading data', error); 
     }
+  }
 
-    const newFlashcard = {
-      id: Date.now().toString(),
-      studySet,
-      question,
-      answer,
-    };
+//save data to AsyncStorage
+  const saveData = async () => {
+    try {
+      const data = JSON.stringify({studyset: studySet, question, answer});
+      await AsyncStorage.setItem('flashcard_data', data);
+    } catch (error) {
+      console.log('Error saving data', error);
+    }
+  };
 
-    onCreate(newFlashcard);
+  useEffect(() => {
+    saveData();
+  }, [studySet, question, answer]);
 
+
+
+  function handleSubmit(e) {
     setStudySet('');
     setQuestion('');
     setAnswer('');

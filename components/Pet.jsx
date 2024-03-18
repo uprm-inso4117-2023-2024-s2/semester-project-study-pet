@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
+import { saveHappiness, loadHappiness } from './happinessStorage';
 
 class Pet extends Component {
   constructor(props) {
@@ -24,12 +25,16 @@ class Pet extends Component {
 
 
   componentDidMount() {
+    this.loadHappinessFromStorage();
+
     // Simulate happiness increasing over time
     const interval = setInterval(() => {
       if (this.state.happiness < 100) {
         this.setState((prevState) => ({
           happiness: prevState.happiness + 10,
-        }));
+        }), () => {
+          this.saveHappinessToStorage();
+        });
       } else {
         clearInterval(interval);
       }
@@ -56,6 +61,26 @@ class Pet extends Component {
     }, 1000 * 60 * 15);
   }
 
+  loadHappinessFromStorage = async () => {
+    try {
+      const happiness = await loadHappiness();
+      if (happiness !== null) {
+        this.setState({ happiness });
+      }
+    } catch (error) {
+      console.error('Error loading happiness value:', error);
+    }
+  };
+
+  saveHappinessToStorage = async () => {
+    const { happiness } = this.state;
+    try {
+      await saveHappiness(happiness);
+    } catch (error) {
+      console.error('Error saving happiness value:', error);
+    }
+  };
+
   handleInteraction = () => {
     this.setState({
       lastInteractionTime: new Date(),
@@ -69,10 +94,12 @@ class Pet extends Component {
       <View>
         <Image source={images[currentImageIndex]} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
-        {/* <Text>Care Mistakes: {careMistakes}</Text> */} 
+        {/* <Text>Care Mistakes: {careMistakes}</Text> */}
+        {/* <Text>Care Mistakes: {careMistakes}</Text> */}
         {/*uncomment line above to show care mistakes on the screen*/}
       </View>
-      
+
+
     );
   }
 }
