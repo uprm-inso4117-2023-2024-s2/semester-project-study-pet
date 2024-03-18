@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import { saveHappiness, loadHappiness } from './happinessStorage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class Pet extends Component {
   constructor(props) {
