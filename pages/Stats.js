@@ -15,8 +15,8 @@ function Stats() {
 
   useEffect(() => {
   const happinessInterval = setInterval(() => {
-    setHappiness(prevHappiness => Math.max(0, prevHappiness - 1)); // Decrease happiness, but not below 0
-  }, 36000000); // Decrease happiness every 10 hours (For debugging purposes, you may change that value to something like 5000 so it updates every 5 seconds)
+    setHappiness(prevHappiness => Math.max(0, prevHappiness - 10)); // Decrease happiness, but not below 0
+  }, 3600000); // Decrease happiness every 1 hour (For debugging purposes, you may change that value to something like 5000 so it updates every 5 seconds)
 
   const hungerInterval = setInterval(() => {
     setHunger(prevHunger => Math.min(100, prevHunger + 2)); // Increase hunger, but not above 100
