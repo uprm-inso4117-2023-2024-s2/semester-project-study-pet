@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,13 +6,32 @@ import { useNavigation } from '@react-navigation/native';
 import Pet from '../components/Pet';
 
 function Stats() {
+
+  const pet = new Pet();
+
   const navigation = useNavigation();
+  const [happiness, setHappiness] = useState(pet.state.happiness);
+  const [hunger, setHunger] = useState(pet.state.hunger);
+
+  useEffect(() => {
+  const happinessInterval = setInterval(() => {
+    setHappiness(prevHappiness => Math.max(0, prevHappiness - 10)); // Decrease happiness, but not below 0
+  }, 3600000); // Decrease happiness every 1 hour (For debugging purposes, you may change that value to something like 5000 so it updates every 5 seconds)
+
+  const hungerInterval = setInterval(() => {
+    setHunger(prevHunger => Math.min(100, prevHunger + 2)); // Increase hunger, but not above 100
+  }, 3600000); // Increase hunger every 1 hour
+
+  return () => {
+    clearInterval(happinessInterval);
+    clearInterval(hungerInterval);
+  };
+}, []);
+
 
   const goBack = () => {
     navigation.goBack();
   };
-const pet = new Pet();
-
 
   return (
     <LinearGradient colors={['#fcf188', '#fffbcf']} style={styles.container}>
@@ -51,11 +70,11 @@ const pet = new Pet();
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#f39c12' }]}>Hunger:</Text>
-            <Text style={[styles.statsValue, { color: '#f39c12' }]}>{pet.state.hunger}%</Text>
+            <Text style={[styles.statsValue, { color: '#f39c12' }]}>{hunger}%</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Happiness:</Text>
-            <Text style={[styles.statsValue, { color: '#e67e22' }]}>{pet.state.happiness}%</Text>
+            <Text style={[styles.statsValue, { color: '#e67e22' }]}>{happiness}%</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Care Mistakes:</Text>
