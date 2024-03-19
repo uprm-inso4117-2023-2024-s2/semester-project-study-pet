@@ -4,6 +4,8 @@ import { View, StyleSheet, Text, Image } from 'react-native';
 class Pet extends Component {
   constructor(props) {
     super(props);
+    // Pet animations, when the new pet stages are drawn, set the index below on the render function
+    
     this.state = {
       images: [
         require('./animatedFrog.gif'),
@@ -14,11 +16,14 @@ class Pet extends Component {
       ],
       currentImageIndex: 0,
       name: 'Firulai',
-      growthlvl: 0,
+      growthlvl: 0, // growth level in which stages are based on
       hunger: 0,
       happiness: 100,
       lastInteractionTime: new Date(),
       careMistakes: 0,
+      startDate: new Date("2024-03-16"), //Date the pet was created,  we need to get the info from pet creation
+      examDate: new Date("2024-03-18") // Date the exam is due , we need to get the info from pet creation, please implement this
+      
     };
   }
 
@@ -54,6 +59,31 @@ class Pet extends Component {
         }));
       }
     }, 1000 * 60 * 15);
+
+    
+
+
+    const growthInterval = setInterval(() => {
+      const { examDate, startDate } = this.state;
+      const timeToExam = Math.ceil((examDate - startDate) / (1000 * 60 * 60 * 24));
+      const daysUntilExam = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
+      console.log(timeToExam)
+      console.log(daysUntilExam)
+
+      let growthLevel;
+      if (daysUntilExam <= timeToExam / 3) {
+        growthLevel = 3;
+      } else if (daysUntilExam <= (2 * timeToExam) / 3) {
+        growthLevel = 2;
+      } else {
+        growthLevel = 1;
+      }
+
+      this.setState({ growthlvl: growthLevel });
+
+      if (growthLevel >= 3) clearInterval(growthInterval); // Stop growth after adult stage
+    }, 5000); 
+    
   }
 
   handleInteraction = () => {
@@ -63,12 +93,28 @@ class Pet extends Component {
   };
 
   render() {
-    const { happiness, name, images, currentImageIndex, careMistakes } = this.state;
+    const { happiness, name, images,growthlvl, currentImageIndex, careMistakes } = this.state;
+    let currentImage;
+    
 
+    // Select the image based on growth level
+    if (growthlvl === 0) {
+      currentImage = images[0]; // Baby stage image
+    } else if (growthlvl === 1) {
+      currentImage = images[1]; // Young stage image
+    } else {
+      currentImage = images[2]; // Adult stage image
+    }
+
+    //This piece of code changes the current image of the pet depending on the growth level
+    //<Image source={images[currentImageIndex]} style={styles.image} />  this is the original code for the pet photo
     return (
       <View>
-        <Image source={images[currentImageIndex]} style={styles.image} />
+        <Image source={currentImage} style={styles.image} />
+        
         <Text style={styles.name}>{name}</Text>
+        <Text style={styles.growth}>Growth Level: {growthlvl}</Text> 
+        
         {/* <Text>Care Mistakes: {careMistakes}</Text> */} 
         {/*uncomment line above to show care mistakes on the screen*/}
       </View>
