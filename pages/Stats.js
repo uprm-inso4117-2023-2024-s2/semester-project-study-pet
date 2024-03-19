@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import Pet from '../components/Pet';
+import Pet, { loadHappiness } from '../components/Pet';
 
 function Stats() {
 
@@ -14,19 +14,17 @@ function Stats() {
   const [hunger, setHunger] = useState(pet.state.hunger);
 
   useEffect(() => {
-  const happinessInterval = setInterval(() => {
-    setHappiness(prevHappiness => Math.max(0, prevHappiness - 10)); // Decrease happiness, but not below 0
-  }, 3600000); // Decrease happiness every 1 hour (For debugging purposes, you may change that value to something like 5000 so it updates every 5 seconds)
-
-  const hungerInterval = setInterval(() => {
-    setHunger(prevHunger => Math.min(100, prevHunger + 2)); // Increase hunger, but not above 100
-  }, 3600000); // Increase hunger every 1 hour
-
-  return () => {
-    clearInterval(happinessInterval);
-    clearInterval(hungerInterval);
-  };
-}, []);
+    const loadPetData = async () => {
+      try {
+        // Load happiness value from storage
+        const storedHappiness = await loadHappiness();
+        setHappiness(storedHappiness);
+      } catch (error) {
+        console.error('Error loading pet data:', error);
+      }
+    };
+    loadPetData();
+  }, []);
 
 
   const goBack = () => {
