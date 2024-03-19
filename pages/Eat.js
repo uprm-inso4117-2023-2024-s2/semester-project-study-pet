@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { useFonts } from 'expo-font';
 import MiniGame from '../components/eatingMinigame';
+import { loadHunger } from '../components/hungerStorage';
 
 // TODO: Add happiness functionality
 export default function App() {
@@ -12,6 +13,16 @@ export default function App() {
 
   if (!isFontLoaded) {
     return null;
+  }
+
+  if (loadHunger() <= 100) {
+    return (
+      <View style={styles.container}>
+        <Text style={{ fontFamily: "Jua-Regular", fontSize: 40 }}>
+          You are full!
+        </Text>
+      </View>
+    );
   }
 
   return (
