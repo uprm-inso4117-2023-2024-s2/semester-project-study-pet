@@ -61,6 +61,10 @@ const MiniGame = () => {
     const filteredQuestions = () => {
       const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
       //console.log("difficulty:", selectedDifficulty);
+
+      // Ensure the array does not exceed 9 elements
+      const maxQuestions = shuffledQuestions.slice(0, 9);
+
       let fraction;
       switch (selectedDifficulty) {
         case "easy":
@@ -76,8 +80,9 @@ const MiniGame = () => {
           fraction = 1 / 3;
       }
 
-      const numberToShow = Math.ceil(shuffledQuestions.length * fraction);
-      return shuffledQuestions.slice(0, numberToShow);
+      // Apply the fraction to the potentially shortened list of up to 9 questions
+      const numberToShow = Math.ceil(maxQuestions.length * fraction);
+      return maxQuestions.slice(0, numberToShow);
     };
 
     setQuestions(filteredQuestions());

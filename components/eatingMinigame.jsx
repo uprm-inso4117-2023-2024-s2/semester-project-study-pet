@@ -59,25 +59,30 @@ const MiniGame = () => {
     useEffect(() => {
 
         const filteredQuestions = () => {
-          const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
-          //console.log("difficulty:", selectedDifficulty);
-          let fraction;
-          switch (selectedDifficulty) {
-            case "easy":
-              fraction = 1 / 3;
-              break;
-            case "medium":
-              fraction = 2 / 3;
-              break;
-            case "hard":
-              fraction = 1; // All questions
-              break;
-            default:
-              fraction = 1 / 3;
-          }
+        const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
+        //console.log("difficulty:", selectedDifficulty);
     
-          const numberToShow = Math.ceil(shuffledQuestions.length * fraction);
-          return shuffledQuestions.slice(0, numberToShow);
+        // Ensure the array does not exceed 9 elements
+        const maxQuestions = shuffledQuestions.slice(0, 9);
+    
+        let fraction;
+        switch (selectedDifficulty) {
+            case "easy":
+            fraction = 1 / 3;
+            break;
+            case "medium":
+            fraction = 2 / 3;
+            break;
+            case "hard":
+            fraction = 1; // All questions
+            break;
+            default:
+            fraction = 1 / 3;
+        }
+    
+        // Apply the fraction to the potentially shortened list of up to 9 questions
+        const numberToShow = Math.ceil(maxQuestions.length * fraction);
+        return maxQuestions.slice(0, numberToShow);
         };
     
         setQuestions(filteredQuestions());
