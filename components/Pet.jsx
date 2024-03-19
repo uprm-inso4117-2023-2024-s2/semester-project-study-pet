@@ -43,7 +43,6 @@ class Pet extends Component {
         if (prevState.careMistakes >= 10) {
           // Emit event petDeath. This is for the "Homepage.js" file to receive it
           petEventEmitter.emit('petDeath', true);
-          // console.log("event emitted") // Testing purposes
           return { 
             currentImageIndex: this.state.images.length - 1,
           };
