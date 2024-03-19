@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const questionsData = [
@@ -29,19 +29,69 @@ const questionsData = [
   },
 ];
 
+// Function to shuffle an array (Fisher-Yates shuffle algorithm)
+const shuffleArray = (array) => {
+  let currentIndex = array.length,  randomIndex;
+  
+  // While there remain elements to shuffle...
+  while (currentIndex !== 0) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
 const MiniGame = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [score, setScore] = useState(0);
+  const [selectedDifficulty, setSelectedDifficulty] = useState('hard'); // The selectedDifficulty has to be changed to the current pet difficulty
+  const [questions, setQuestions] = useState([]);
 
+  useEffect(() => {
+
+    const filteredQuestions = () => {
+      const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
+      //console.log("difficulty:", selectedDifficulty);
+      let fraction;
+      switch (selectedDifficulty) {
+        case "easy":
+          fraction = 1 / 3;
+          break;
+        case "medium":
+          fraction = 2 / 3;
+          break;
+        case "hard":
+          fraction = 1; // All questions
+          break;
+        default:
+          fraction = 1 / 3;
+      }
+
+      const numberToShow = Math.ceil(shuffledQuestions.length * fraction);
+      return shuffledQuestions.slice(0, numberToShow);
+    };
+
+    setQuestions(filteredQuestions());
+
+  }, [selectedDifficulty]);
+
+  // Function to handle answer selection
   const handleAnswerSelection = (selectedAnswerIndex) => {
-    const currentQuestion = questionsData[currentQuestionIndex];
+    const currentQuestion = questions[currentQuestionIndex];
     if (selectedAnswerIndex === currentQuestion.correctAnswerIndex) {
       setScore(score + 1);
     }
 
-    if (currentQuestionIndex === questionsData.length - 1) {
+    if (currentQuestionIndex === questions.length - 1) {
       setGameOver(true);
     } else {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -61,7 +111,7 @@ const MiniGame = () => {
           <View style={styles.gameOverContainer}>
               <Text style={styles.finishedText}>Finished!</Text>
               <Text style={styles.resultText}>
-                You got {score} out of {questionsData.length} correct!
+                You got {score} out of {questions.length} correct!
               </Text>
               <TouchableOpacity style={styles.button} onPress={restartGame}>
                 <Text style={styles.buttonText}>Play Again</Text>
@@ -72,27 +122,32 @@ const MiniGame = () => {
     );
   }
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.gameContainer}>
-        <View style={styles.questionContainer}>
-          <Text style={styles.question}>{questionsData[currentQuestionIndex].question}</Text>
+  if (questions.length > 0 && currentQuestionIndex < questions.length) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.gameContainer}>
+          <View style={styles.questionContainer}>
+            <Text style={styles.question}>{questions[currentQuestionIndex].question}</Text>
+          </View>
+          {questions[currentQuestionIndex].answers.map((answer, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[styles.answerButton, index === hoveredIndex && styles.answerButtonHover]}
+              activeOpacity={0.7}
+              onPress={() => handleAnswerSelection(index)}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              <Text style={styles.answerText}>{answer}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
-        {questionsData[currentQuestionIndex].answers.map((answer, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[styles.answerButton, index === hoveredIndex && styles.answerButtonHover]}
-            activeOpacity={0.7}
-            onPress={() => handleAnswerSelection(index)}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            <Text style={styles.answerText}>{answer}</Text>
-          </TouchableOpacity>
-        ))}
       </View>
-    </View>
-  );
+    );
+  }
+  else {
+    return <View><Text>Loading questions...</Text></View>;
+  }
 };
 
 const styles = StyleSheet.create({
