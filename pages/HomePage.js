@@ -1,8 +1,10 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { AppState,View, Text, StyleSheet, TouchableOpacity, SafeAreaView,AppStateStatus } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
 import Pet from '../components/Pet';
+import { handleButtonPress, handlePermissionRequest,scheduleNotification } from './notifications'
+import * as Notifications from 'expo-notifications'; 
 
 const VerticalStripes = ({ numberOfStripes }) => {
   return (
@@ -24,6 +26,30 @@ const VerticalStripes = ({ numberOfStripes }) => {
  * A simple button component. This component helps navigate to different pages.
  */
 const HomePage = ({ navigation }) => {
+  const [appState, setAppState] = useState('active');
+  const [notificationTimer, setNotificationTimer] = useState(null);
+
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState) => {
+      if (appState === 'active' && nextAppState.match(/inactive|background/)) {
+        console.log('App has gone to the background');
+        scheduleNotification(); // Need to add timer that works when the app is in the background
+      } else if (appState.match(/inactive|background/) && nextAppState === 'active') {
+        console.log('App has come to the foreground');
+        clearTimeout(notificationTimer); // Cancel notification timer if app comes back to foreground before 5 minutes
+      }
+      setAppState(nextAppState);
+    };
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      subscription.remove(); // Cleanup: remove event listener on unmount
+      if (notificationTimer) {
+        clearTimeout(notificationTimer); // Clear the notification timer if the component unmounts
+      }
+    };
+  }, [appState, notificationTimer]);
 
   return (
     <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7'}}>
@@ -34,7 +60,9 @@ const HomePage = ({ navigation }) => {
           <TouchableOpacity onPress={() => navigation.navigate('Stats')} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Flashcards')} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
+          <TouchableOpacity onPress={handleButtonPress} style={styles.iconButton}><Ionicons name="notifications" size={30} color="#517fa4" /></TouchableOpacity> 
         </View>
+        
 
         <View style={styles.petContainer}>
           <VerticalStripes numberOfStripes={7} />
