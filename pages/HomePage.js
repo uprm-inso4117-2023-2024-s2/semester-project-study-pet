@@ -28,11 +28,15 @@ const VerticalStripes = ({ numberOfStripes }) => {
 const HomePage = ({ navigation }) => {
   const [isdead, setIsdead] = useState(false);
 
-  // Listen to the event petDeath to verify if the pet is dead
+  // Listen to the event petDeath and petAlive to verify if the pet is dead
   petEventEmitter.on('petDeath', () => {
-    // Set the "isDead" state to true, so the buttons stop appearing"
+    // Set the "isdead" state to true, so the buttons stop appearing"
     setIsdead(true);
-    //console.log("pet is dead"); // Testing purposes
+  });
+
+  petEventEmitter.on('petAlive', () => {
+    // Set the "isdead" state to false, so the buttons appear"
+    setIsdead(false);
   });
 
   return (

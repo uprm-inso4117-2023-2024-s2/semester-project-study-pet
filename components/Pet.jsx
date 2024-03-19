@@ -50,6 +50,7 @@ class Pet extends Component {
         } 
         else {
           // Otherwise, continue looping through images
+          petEventEmitter.emit('petAlive', true);
           return {
             currentImageIndex: (prevState.currentImageIndex + 1) % this.state.images.length,
           };
