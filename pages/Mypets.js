@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, TouchableOpacity, Modal, Platform, DatePickerAndroid } from "react-native";
+import { sendNotificationImmediately } from "./notifications";
 
 const CreatePetScreen = ({ navigation }) => {
   const [petName, setPetName] = useState("");
@@ -30,7 +31,7 @@ const CreatePetScreen = ({ navigation }) => {
     };
 
     console.log("New Pet:", newPet);
-
+    sendNotificationImmediately();
     navigation.goBack();
   };
 
