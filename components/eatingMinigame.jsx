@@ -85,14 +85,16 @@ const MiniGame = () => {
         }
     }, [gameOver, score]);
 
-    // Update happiness only when the game is over
+    // Update happiness only when the game is over and ensure it doesn't exceed 100
     useEffect(() => {
         if (gameOver) {
             const newHappiness = happiness + score;
-            setHappiness(newHappiness);
-            saveHappiness(newHappiness);
+            const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
+            setHappiness(cappedHappiness);
+            saveHappiness(cappedHappiness);
         }
-    }, [gameOver, score]);
+    }, [gameOver, score, happiness]);
+
 
     if (gameOver) {
         return (
