@@ -4,7 +4,9 @@ const HUNGER_KEY = 'hunger';
 
 export const saveHunger = async (hunger) => {
     try {
-        await AsyncStorage.setItem(HUNGER_KEY, hunger.toString());
+        // Hunger cant go below 0
+        const cappedHunger = Math.max(hunger, 0);
+        await AsyncStorage.setItem(HUNGER_KEY, cappedHunger.toString());
     } catch (error) {
         console.error('Error saving happiness value:', error);
     }

@@ -84,7 +84,7 @@ const MiniGame = () => {
             setHunger(cappedHunger);
             saveHunger(cappedHunger);
         }
-    }, [gameOver, score]);
+    }, [gameOver, score, hunger]);
 
     // Update happiness only when the game is over and ensure it doesn't exceed 100
     useEffect(() => {
