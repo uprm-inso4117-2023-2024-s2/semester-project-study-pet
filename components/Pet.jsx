@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import { saveHappiness, loadHappiness } from './happinessStorage';
+import { saveHunger, loadHunger } from './hungerStorage';
 
 class Pet extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class Pet extends Component {
 
   componentDidMount() {
     this.loadHappinessFromStorage();
+    this.loadHungerFromStorage(); 
 
     // Simulate happiness increasing over time
     const interval = setInterval(() => {
@@ -69,6 +71,18 @@ class Pet extends Component {
       }
     } catch (error) {
       console.error('Error loading happiness value:', error);
+    }
+  };
+
+  loadHungerFromStorage = async () => {
+    try {
+      const hunger = await loadHunger();
+      if (hunger !== null) {
+        this.setState({ hunger });
+      }
+    }
+    catch (error) {
+      console.error('Error loading hunger value:', error);
     }
   };
 
@@ -116,4 +130,4 @@ const styles = StyleSheet.create({
 });
 
 export default Pet;
-export { loadHappiness };
+export { loadHappiness, loadHunger };

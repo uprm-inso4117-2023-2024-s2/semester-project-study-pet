@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import Pet, { loadHappiness } from '../components/Pet';
+import Pet, { loadHappiness, loadHunger } from '../components/Pet';
 
 function Stats() {
 
@@ -18,7 +18,9 @@ function Stats() {
       try {
         // Load happiness value from storage
         const storedHappiness = await loadHappiness();
+        const storedHunger = await loadHunger();
         setHappiness(storedHappiness);
+        setHunger(storedHunger);
       } catch (error) {
         console.error('Error loading pet data:', error);
       }
@@ -129,22 +131,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statsBox: {
-  marginBottom: 10,
-  backgroundColor: 'white',
-  borderWidth: 2,
-  borderColor: '#3498db',
-  padding: 10,
-  borderRadius: 10,
-  width: '80%',
-  shadowColor: '#000',
-  shadowOffset: {
-    width: 0,
-    height: 2,
+    marginBottom: 10,
+    backgroundColor: 'white',
+    borderWidth: 2,
+    borderColor: '#3498db',
+    padding: 10,
+    borderRadius: 10,
+    width: '80%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.80,
+    elevation: 3,
   },
-  shadowOpacity: 0.25,
-  shadowRadius: 1.80,
-  elevation: 3,
-},
 
   statsLabel: {
     fontSize: 18,

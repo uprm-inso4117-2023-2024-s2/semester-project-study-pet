@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { loadHappiness, saveHappiness } from './happinessStorage';
-
+import { loadHunger, saveHunger } from './hungerStorage';
 const questionsData = [
     {
         question: 'What is the chemical symbol for oxygen?',
@@ -36,6 +36,7 @@ const MiniGame = () => {
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [score, setScore] = useState(0);
     const [happiness, setHappiness] = useState(0);
+    const [hunger, setHunger] = useState(0);
 
     const handleAnswerSelection = (selectedAnswerIndex) => {
         const currentQuestion = questionsData[currentQuestionIndex];
@@ -63,7 +64,26 @@ const MiniGame = () => {
         loadHappinessData();
     }, []);
 
+    useEffect(() => {
+        const loadHungerData = async () => {
+            try {
+                const loadedHunger = await loadHunger();
+                setHunger(loadedHunger);
+            } catch (error) {
+                console.error('Error loading hunger data:', error);
+            }
+        };
 
+        loadHungerData();
+    }, []);
+
+    useEffect(() => {
+        if (gameOver) {
+            const newHunger = hunger + score * 10;
+            setHunger(newHunger);
+            saveHunger(newHunger);
+        }
+    }, [gameOver, score]);
 
     // Update happiness only when the game is over
     useEffect(() => {
@@ -90,7 +110,7 @@ const MiniGame = () => {
 
                         <View style={styles.hrow}>
                             <Text style={styles.statText}>
-                                Hunger: {score * 10}
+                                Hunger: {hunger}
                             </Text>
                             <Image
                                 style={styles.image}
