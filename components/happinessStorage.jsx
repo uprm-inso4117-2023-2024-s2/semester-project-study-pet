@@ -4,11 +4,14 @@ const HAPPINESS_KEY = 'happiness';
 
 export const saveHappiness = async (happiness) => {
     try {
-        await AsyncStorage.setItem(HAPPINESS_KEY, happiness.toString());
+        // Limit happiness to 100
+        const cappedHappiness = Math.min(happiness, 100);
+        await AsyncStorage.setItem(HAPPINESS_KEY, cappedHappiness.toString());
     } catch (error) {
         console.error('Error saving happiness value:', error);
     }
 };
+
 
 export const loadHappiness = async () => {
     try {
