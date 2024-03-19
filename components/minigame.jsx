@@ -53,7 +53,7 @@ const MiniGame = () => {
   const [gameOver, setGameOver] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [score, setScore] = useState(0);
-  const [selectedDifficulty, setSelectedDifficulty] = useState('hard'); // The selectedDifficulty has to be changed to the current pet difficulty
+  const [selectedDifficulty, setSelectedDifficulty] = useState('medium'); // The selectedDifficulty has to be changed to the current pet difficulty
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
