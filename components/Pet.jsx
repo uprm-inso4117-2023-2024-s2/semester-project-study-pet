@@ -13,6 +13,8 @@ class Pet extends Component {
         require('./animatedFrog(happy).gif'),
         require('./animatedFrog(happy).gif'),
         require('./animatedFrog(dead).gif'),
+        require('./babyfrog.jpeg'),
+        require('./youngfrog.jpeg'),
       ],
       currentImageIndex: 0,
       name: 'Firulai',
@@ -82,7 +84,7 @@ class Pet extends Component {
       this.setState({ growthlvl: growthLevel });
 
       if (growthLevel >= 3) clearInterval(growthInterval); // Stop growth after adult stage
-    }, 5000); 
+    }, 0); 
     
   }
 
@@ -99,11 +101,11 @@ class Pet extends Component {
 
     // Select the image based on growth level
     if (growthlvl === 0) {
-      currentImage = images[0]; // Baby stage image
+      currentImage = images[5]; // Baby stage image
     } else if (growthlvl === 1) {
-      currentImage = images[1]; // Young stage image
+      currentImage = images[6]; // Young stage image
     } else {
-      currentImage = images[2]; // Adult stage image
+      currentImage = images[0]; // Adult stage image
     }
 
     //This piece of code changes the current image of the pet depending on the growth level
