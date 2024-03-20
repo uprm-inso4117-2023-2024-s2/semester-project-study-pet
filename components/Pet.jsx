@@ -18,7 +18,7 @@ class Pet extends Component {
       ],
       currentImageIndex: 0,
       name: 'Firulai',
-      growthlvl: 0, // growth level in which stages are based on
+      growthlvl: 3, // growth level in which stages are based on
       hunger: 0,
       happiness: 100,
       lastInteractionTime: new Date(),
