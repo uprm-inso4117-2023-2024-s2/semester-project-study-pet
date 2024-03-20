@@ -3,13 +3,16 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { useFonts } from 'expo-font';
 import MiniGame from '../components/eatingMinigame';
+import { useNavigation } from '@react-navigation/native';
 
 // TODO: Add happiness functionality
-export default function App() {
+export default function Eat({ route }) {
   const [isFontLoaded] = useFonts({
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
 
+  const numQuestions = route.params?.numQuestions;
+  
   if (!isFontLoaded) {
     return null;
   }
@@ -22,7 +25,7 @@ export default function App() {
       </View>
       <ScrollView>
         <View style={styles.miniGameContainer}>
-          <MiniGame />
+          <MiniGame numQuestions={numQuestions} />
         </View>
       </ScrollView>
       <StatusBar style="auto" />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const questionsData = [
@@ -29,19 +29,25 @@ const questionsData = [
     },
 ];
 
-const MiniGame = () => {
+const MiniGame = ({numQuestions}) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [score, setScore] = useState(0);
+    const [availableQuestions, setAvailableQuestions] = useState([]);
+
+    useEffect(() => {
+        const questionsToUse = questionsData.slice(0, numQuestions || questionsData.length);
+        setAvailableQuestions(questionsToUse);
+    }, [numQuestions]);
 
     const handleAnswerSelection = (selectedAnswerIndex) => {
-        const currentQuestion = questionsData[currentQuestionIndex];
+        const currentQuestion = availableQuestions[currentQuestionIndex];
         if (selectedAnswerIndex === currentQuestion.correctAnswerIndex) {
             setScore(score + 1);
         }
 
-        if (currentQuestionIndex === questionsData.length - 1) {
+        if (currentQuestionIndex === availableQuestions.length - 1) {
             setGameOver(true);
         } else {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -55,7 +61,7 @@ const MiniGame = () => {
                     <View style={styles.gameOverContainer}>
                         <Text style={styles.finishedText}>Finished!</Text>
                         <Text style={styles.resultText}>
-                            You got {score} out of {questionsData.length} correct!
+                            You got {score} out of {numQuestions} correct!
                         </Text>
                         <Image
                             style={styles.frogStyle}

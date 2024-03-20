@@ -10,6 +10,7 @@ import Stats from './pages/Stats';
 import Game from './pages/Game';
 import Eat from './pages/Eat';
 import Bath from './pages/Bath';
+import SelectQuestions from './pages/Selector'
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ export default function App() {
         <Stack.Screen name="Game" component={Game} />
         <Stack.Screen name="Eat" component={Eat} />
         <Stack.Screen name="Bath" component={Bath} />
+        <Stack.Screen name="Select Questions" component={SelectQuestions}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
