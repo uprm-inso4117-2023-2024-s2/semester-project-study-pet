@@ -136,6 +136,18 @@ class Pet extends Component {
         images: this.state.frogimages,
       }));
     }
+    
+    this.setState((prevState) => {
+      // Check if careMistakes are >= 10
+      if (prevState.careMistakes >= 10) {
+        // Emit event petDeath. This is for the "Homepage.js" file to receive it
+        petEventEmitter.emit('petDeath', true);
+        currentImageIndex: this.state.images.length - 1,
+      } 
+      else {
+        petEventEmitter.emit('petAlive', true);
+      }
+    });
 
     // Check for care mistakes every 15 minutes
     const careMistakeInterval = setInterval(() => {
