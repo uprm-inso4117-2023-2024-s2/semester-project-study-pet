@@ -130,23 +130,6 @@ class Pet extends Component {
       }));
     }
 
-    // Switch images every 3 seconds
-    const imageInterval = setInterval(() => {
-      this.setState((prevState) => {
-        // temporary if to set the only avilable images of pets
-        if (prevState.pettype != 'frog') {
-          return { 
-            currentImageIndex: 0,
-          };
-        } 
-        else {
-          // Otherwise, continue looping through frog images
-          return {
-            currentImageIndex: (prevState.currentImageIndex + 1) % this.state.images.length,
-          };
-        }
-      });
-    }, 3000);
     // Check for care mistakes every 15 minutes
     const careMistakeInterval = setInterval(() => {
       const currentTime = new Date();
