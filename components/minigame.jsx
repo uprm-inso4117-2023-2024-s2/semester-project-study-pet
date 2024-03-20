@@ -1,5 +1,5 @@
 import React, { useState, useEffect  } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Picker } from 'react-native';
 
 const questionsData = [
   {
@@ -130,6 +130,16 @@ const MiniGame = () => {
   if (questions.length > 0 && currentQuestionIndex < questions.length) {
     return (
       <View style={styles.container}>
+          {/* This is a temporary slider to test the difficulty */}
+          <Picker
+            selectedValue={selectedDifficulty}
+            style={{ height: 50, width: 150 }}
+            onValueChange={(itemValue, itemIndex) => setSelectedDifficulty(itemValue)}>
+              {console.log(selectedDifficulty)}
+            <Picker.Item label="easy" value="easy" />
+            <Picker.Item label="medium" value="medium" />
+            <Picker.Item label="hard" value="hard" />
+          </Picker>
         <View style={styles.gameContainer}>
           <View style={styles.questionContainer}>
             <Text style={styles.question}>{questions[currentQuestionIndex].question}</Text>
