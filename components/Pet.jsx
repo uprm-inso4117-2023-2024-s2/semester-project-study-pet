@@ -138,15 +138,23 @@ class Pet extends Component {
     }
     
     this.setState((prevState) => {
+      // Initialize an object to hold the state update
+      let updates = {};
+    
       // Check if careMistakes are >= 10
       if (prevState.careMistakes >= 10) {
         // Emit event petDeath. This is for the "Homepage.js" file to receive it
         petEventEmitter.emit('petDeath', true);
-        currentImageIndex: this.state.images.length - 1,
-      } 
-      else {
+        
+        // Update currentImageIndex to the last image
+        updates = { currentImageIndex: prevState.images.length - 1 };
+      } else {
+        // If careMistakes are less than 10, emit petAlive
         petEventEmitter.emit('petAlive', true);
       }
+    
+      // Return the updates to be applied to the state
+      return updates;
     });
 
     // Check for care mistakes every 15 minutes
