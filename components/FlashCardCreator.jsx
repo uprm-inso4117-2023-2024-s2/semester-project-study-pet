@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useFonts } from "expo-font";
 
-export default function FlashCardCreator(props) {
+export default function FlashCardCreator({ onCreate }) {
   const [studySet, setStudySet] = useState('');
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
@@ -10,10 +10,26 @@ export default function FlashCardCreator(props) {
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
 
-  function handleSubmit(e) {
+  function handleSubmit() {
+    if (!studySet.trim() || (!question.trim() || !answer.trim())) {
+      Alert.alert('Error', 'Please fill out all fields');
+      return;
+    }
+
+    const newFlashcard = {
+      id: Date.now().toString(),
+      studySet,
+      question,
+      answer,
+    };
+
+    onCreate(newFlashcard);
+
     setStudySet('');
     setQuestion('');
     setAnswer('');
+
+    Alert.alert('Success', 'Flashcard created successfully');
   }
 
   return (
@@ -82,6 +98,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderWidth: 1,
     fontFamily: "Jua-Regular",
+    borderWidth: 2,
+    borderColor: '#000',
   },
   button: {
     display: 'inline-block',
@@ -91,9 +109,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     fontSize: 20,
     borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 0.4,
-    shadowRadius: 3,
+    borderWidth: 2,
+    borderColor: '#000',
   },
 });
