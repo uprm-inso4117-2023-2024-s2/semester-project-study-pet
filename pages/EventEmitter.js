@@ -1,3 +1,3 @@
-import EventEmitter from 'events';
+import mitt from 'mitt';
 
-export const petEventEmitter = new EventEmitter();
+export const petEventEmitter = new mitt();
