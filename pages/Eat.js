@@ -4,6 +4,8 @@ import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { useFonts } from 'expo-font';
 import MiniGame from '../components/eatingMinigame';
 import { useNavigation } from '@react-navigation/native';
+import { loadHunger } from '../components/hungerStorage';
+
 
 // TODO: Add happiness functionality
 export default function Eat({ route }) {
@@ -17,12 +19,18 @@ export default function Eat({ route }) {
     return null;
   }
 
-  return (
-
-    <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
+  if (loadHunger() <= 100) {
+    return (
+      <View style={styles.container}>
+        <Text style={{ fontFamily: "Jua-Regular", fontSize: 40 }}>
+          You are full!
+        </Text>
       </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
       <ScrollView>
         <View style={styles.miniGameContainer}>
           <MiniGame numQuestions={numQuestions} />
@@ -39,22 +47,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#8FECA9', // light green
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  titleContainer: {
-    marginTop: 10,
-    backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 15,
-    marginVertical: 10,
-    marginHorizontal: 8,
-  },
-  titleText: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: 'black',
-    fontFamily: 'Jua-Regular',
-    textAlign: 'center',
-    textAlignVertical: 'top',
   },
   miniGameContainer: {
     flex: 1,
