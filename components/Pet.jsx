@@ -7,27 +7,55 @@ class Pet extends Component {
     super(props);
     this.state = {
       frogimages: [
-        require('./FrogImages/animatedFrog.gif'),
-        require('./FrogImages/animatedFrog(sad).gif'),
-        require('./FrogImages/animatedFrog(happy).gif'),
-        require('./FrogImages/animatedFrog(happy).gif'),
-        require('./FrogImages/animatedFrog(dead).gif'),
+        require('./PetImages/FrogImages/animatedFrog.gif'),
+        require('./PetImages/FrogImages/animatedFrog(sad).gif'),
+        require('./PetImages/FrogImages/animatedFrog(happy).gif'),
+        require('./PetImages/FrogImages/animatedFrog(happy).gif'),
+        require('./PetImages/FrogImages/animatedFrog(dead).gif'),
       ],
       // All Dog and Cat related are currently placeholders for new pets
       dogimages: [
-        require('./DogImages/animatedDog.gif'),
-        require('./DogImages/animatedDog(sad).gif'),
-        require('./DogImages/animatedDog(happy).gif'),
-        require('./DogImages/animatedDog(happy)1.gif'),
-        require('./DogImages/animatedDog(dead).gif'),
+        require('./PetImages/DogImages/animatedDog.png'),
+        require('./PetImages/DogImages/animatedDog(sad).gif'),
+        require('./PetImages/DogImages/animatedDog(happy).gif'),
+        require('./PetImages/DogImages/animatedDog(happy)1.gif'),
+        require('./PetImages/DogImages/animatedDog(dead).gif'),
       ],
       // Placeholder for new pet
       catimages: [
-        require('./CatImages/animatedCat.gif'),
-        require('./CatImages/animatedCat(sad).gif'),
-        require('./CatImages/animatedCat(happy).gif'),
-        require('./CatImages/animatedCat(happy)1.gif'),
-        require('./CatImages/animatedCat(dead).gif'),
+        require('./PetImages/CatImages/animatedCat.png'),
+        require('./PetImages/CatImages/animatedCat(sad).gif'),
+        require('./PetImages/CatImages/animatedCat(happy).gif'),
+        require('./PetImages/CatImages/animatedCat(happy)1.gif'),
+        require('./PetImages/CatImages/animatedCat(dead).gif'),
+      ], 
+      bunnyimages: [
+        require('./PetImages/BunnyImages/animatedBunny.png'), // Has to be changed to gif
+        require('./PetImages/CatImages/animatedCat(sad).gif'), // <--- Have to be changed to bunny images
+        require('./PetImages/CatImages/animatedCat(happy).gif'), // <---
+        require('./PetImages/CatImages/animatedCat(happy)1.gif'), // <---
+        require('./PetImages/CatImages/animatedCat(dead).gif'), // <---
+      ], 
+      penguinimages: [
+        require('./PetImages/PenguinImages/animatedPenguin.png'), // Has to be changed to gif
+        require('./PetImages/CatImages/animatedCat(sad).gif'), // <--- Have to be changed to Penguin images
+        require('./PetImages/CatImages/animatedCat(happy).gif'), // <---
+        require('./PetImages/CatImages/animatedCat(happy)1.gif'), // <---
+        require('./PetImages/CatImages/animatedCat(dead).gif'), // <---
+      ], 
+      pigimages: [
+        require('./PetImages/PigImages/animatedPig.png'), // Has to be changed to gif
+        require('./PetImages/CatImages/animatedCat(sad).gif'), // <--- Have to be changed to pig images
+        require('./PetImages/CatImages/animatedCat(happy).gif'), // <---
+        require('./PetImages/CatImages/animatedCat(happy)1.gif'), // <---
+        require('./PetImages/CatImages/animatedCat(dead).gif'), // <---
+      ], 
+      bearimages: [
+        require('./PetImages/BearImages/animatedBear.png'), // Has to be changed to gif
+        require('./PetImages/CatImages/animatedCat(sad).gif'), // <--- Have to be changed to bear images
+        require('./PetImages/CatImages/animatedCat(happy).gif'), // <---
+        require('./PetImages/CatImages/animatedCat(happy)1.gif'), // <---
+        require('./PetImages/CatImages/animatedCat(dead).gif'), // <---
       ], 
       // More pets can be added here
       currentImageIndex: 0,
@@ -54,6 +82,18 @@ class Pet extends Component {
         break;
       case 'cat':
         images = this.state.catimages;
+        break;
+      case 'bunny':
+        images = this.state.bunnyimages;
+        break;
+      case 'penguin':
+        images = this.state.penguinimages;
+        break;
+      case 'pig':
+        images = this.state.pigimages;
+        break;
+      case 'bear':
+        images = this.state.bearimages;
         break;
       // More pets can be added here
     };

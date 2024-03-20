@@ -12,7 +12,7 @@ const CreatePetScreen = ({ navigation }) => {
   const [type, setType] = useState("frog");
 
   const difficultyOptions = ["easy", "medium", "hard"];
-  const typeOptions = ["frog", "dog", "cat"];
+  const typeOptions = ["frog", "dog", "cat", "bunny", "penguin", "pig", "bear"];
 
   const validateDate = (dateString) => {
     const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
