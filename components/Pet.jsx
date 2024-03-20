@@ -9,7 +9,7 @@ class Pet extends Component {
         require('./animatedFrog.gif'),
         require('./animatedFrog(sad).gif'),
         require('./animatedFrog(happy).gif'),
-        require('./animatedFrog(happy).gif'),
+        require('./animatedFrog(angry).gif'),
         require('./animatedFrog(dead).gif'),
       ],
       currentImageIndex: 0,
@@ -25,22 +25,33 @@ class Pet extends Component {
 
   componentDidMount() {
     // Simulate happiness increasing over time
-    const interval = setInterval(() => {
-      if (this.state.happiness < 100) {
-        this.setState((prevState) => ({
-          happiness: prevState.happiness + 10,
-        }));
-      } else {
-        clearInterval(interval);
-      }
-    }, 1000);
+    // const interval = setInterval(() => {
+    //   if (this.state.happiness < 100) {
+    //     this.setState((prevState) => ({
+    //       happiness: prevState.happiness + 10,
+    //     }));
+    //   } else {
+    //     clearInterval(interval);
+    //   }
+    // }, 2000);
 
-    // Switch images every 3 seconds
+    // Switch images every 2 seconds
     const imageInterval = setInterval(() => {
-      this.setState((prevState) => ({
-        currentImageIndex: (prevState.currentImageIndex + 1) % this.state.images.length,
-      }));
-    }, 3000);
+      let nextIndex;
+
+      if(this.state.hunger >= 50){
+        nextIndex = this.state.images.findIndex(image => image === require('./animatedFrog(angry).gif'));
+      } else if (this.state.happiness >= 80) {
+        nextIndex = this.state.images.findIndex(image => image === require('./animatedFrog(happy).gif'));
+      } else if (this.state.happiness >= 50) {
+        nextIndex = this.state.images.findIndex(image => image === require('./animatedFrog.gif'));
+
+      } else if (this.state.happiness >= 20 || this.state.happiness <=20) {
+        nextIndex = this.state.images.findIndex(image => image === require('./animatedFrog(sad).gif')); 
+      } 
+  // Update the currentImageIndex state with the index of the selected image
+    this.setState((prevState) => ({
+    currentImageIndex: nextIndex,}));}, 2000);
 
     // Check for care mistakes every 15 minutes
     const careMistakeInterval = setInterval(() => {
