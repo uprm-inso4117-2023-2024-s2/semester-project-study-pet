@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
+import { petEventEmitter } from '../pages/EventEmitter';
 import { saveHappiness, loadHappiness } from './happinessStorage';
 import { saveHunger, loadHunger } from './hungerStorage';
 
@@ -42,11 +43,25 @@ class Pet extends Component {
       }
     }, 1000);
 
-    // Switch images every 3 seconds
+    // Switch images every 3 seconds. If careMistakes >= 10 triggers death
     const imageInterval = setInterval(() => {
-      this.setState((prevState) => ({
-        currentImageIndex: (prevState.currentImageIndex + 1) % this.state.images.length,
-      }));
+      this.setState((prevState) => {
+        // Check if careMistakes are >= 10
+        if (prevState.careMistakes >= 10) {
+          // Emit event petDeath. This is for the "Homepage.js" file to receive it
+          petEventEmitter.emit('petDeath', true);
+          return { 
+            currentImageIndex: this.state.images.length - 1,
+          };
+        } 
+        else {
+          // Otherwise, continue looping through images
+          petEventEmitter.emit('petAlive', true);
+          return {
+            currentImageIndex: (prevState.currentImageIndex + 1) % this.state.images.length,
+          };
+        }
+      });
     }, 3000);
 
     // Check for care mistakes every 15 minutes
