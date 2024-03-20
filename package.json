@@ -12,15 +12,8 @@
   "jest": {
     "preset": "jest-expo",
     "transformIgnorePatterns": [
-      
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|@react-native-async-storage/async-storage)"
     ]
-    
-    
-      
-    
-
-    
   },
   "dependencies": {
     "@babel/preset-env": "^7.24.1",
@@ -51,7 +44,8 @@
     "ts-jest": "^29.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@testing-library/react-native": "^12.4.4"
   },
   "private": true,
   "android": {
