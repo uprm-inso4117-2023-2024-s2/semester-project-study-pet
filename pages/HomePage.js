@@ -51,6 +51,10 @@ const HomePage = ({ navigation }) => {
     };
   }, [appState, notificationTimer]);
 
+  useEffect(() => {
+    handlePermissionRequest(); // Ask for notification permission when the component mounts
+  }, []); // Empty dependency array ensures it runs only once when component mounts
+
   return (
     <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7'}}>
       <LinearGradient colors={['#f7ffe7', '#edf5ff']} style={styles.container}>
