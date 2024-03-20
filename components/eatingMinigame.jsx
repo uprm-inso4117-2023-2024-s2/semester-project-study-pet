@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { Image, View, Text, TouchableOpacity, StyleSheet, Picker } from 'react-native';
+import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { loadHappiness, saveHappiness } from './happinessStorage';
 import { loadHunger, saveHunger } from './hungerStorage';
 const questionsData = [
@@ -195,16 +195,21 @@ const MiniGame = () => {
     if (questions.length > 0 && currentQuestionIndex < questions.length) {
         return (
             <View style={styles.container}>
-                {/* This is a temporary slider to test the difficulty */}
-                <Picker
-                    selectedValue={selectedDifficulty}
-                    style={{ height: 50, width: 150 }}
-                    onValueChange={(itemValue, itemIndex) => setSelectedDifficulty(itemValue)}>
-                    {console.log(selectedDifficulty)}
-                    <Picker.Item label="easy" value="easy" />
-                    <Picker.Item label="medium" value="medium" />
-                    <Picker.Item label="hard" value="hard" />
-                </Picker>
+                {/* This are 3 temporary buttons to test the difficulty */}
+                <TouchableOpacity style={styles.answerButton} onPress={() => setSelectedDifficulty('easy')}>
+                    <Text style={styles.buttonText}>easy</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.answerButton} onPress={() => setSelectedDifficulty('medium')}>
+                    <Text style={styles.buttonText}>medium</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.answerButton}onPress={() => setSelectedDifficulty('hard')}>
+                    <Text style={styles.buttonText}>hard</Text>
+                    </TouchableOpacity>
+
+                    <Text>Selected Value: {selectedDifficulty}</Text>
+                    {/* End of temporary code */}
               <View style={styles.titleContainer}>
                   <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
               </View>
