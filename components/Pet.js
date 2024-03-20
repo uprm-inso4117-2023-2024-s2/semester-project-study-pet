@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class Pet extends Component {
   constructor(props) {
@@ -22,28 +23,28 @@ class Pet extends Component {
     };
   }
 
-
   componentDidMount() {
+    this.loadData();
     // Simulate happiness increasing over time
-    const interval = setInterval(() => {
+    this.happinessInterval = setInterval(() => {
       if (this.state.happiness < 100) {
         this.setState((prevState) => ({
           happiness: prevState.happiness + 10,
         }));
       } else {
-        clearInterval(interval);
+        clearInterval(this.happinessInterval);
       }
     }, 1000);
 
     // Switch images every 3 seconds
-    const imageInterval = setInterval(() => {
+    this.imageInterval = setInterval(() => {
       this.setState((prevState) => ({
         currentImageIndex: (prevState.currentImageIndex + 1) % this.state.images.length,
       }));
     }, 3000);
 
     // Check for care mistakes every 15 minutes
-    const careMistakeInterval = setInterval(() => {
+    this.careMistakeInterval = setInterval(() => {
       const currentTime = new Date();
       const lastInteractionTime = new Date(this.state.lastInteractionTime);
       const timeDifference = (currentTime - lastInteractionTime) / (1000 * 60); // in minutes
@@ -55,6 +56,45 @@ class Pet extends Component {
       }
     }, 1000 * 60 * 15);
   }
+
+  componentWillUnmount() {
+    this.saveData();
+    clearInterval(this.happinessInterval);
+    clearInterval(this.imageInterval);
+    clearInterval(this.careMistakeInterval);
+  }
+
+  async saveData() {
+    try {
+      await AsyncStorage.setItem('petData', JSON.stringify(this.state));
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
+  }
+  async loadData() {
+    try {
+      const petData = await AsyncStorage.getItem('petData');
+      if (petData !== null) {
+        this.setState(JSON.parse(petData));
+      } else {
+        console.error('Error loading data: Retrieved data is undefined');
+        // Set default values for state properties
+        this.setState({
+          images: this.state.images, // Keep existing images array
+          currentImageIndex: this.state.currentImageIndex, // Keep existing currentImageIndex
+          name: 'Firulai',
+          growthlvl: 0,
+          hunger: 0,
+          happiness: 100,
+          lastInteractionTime: new Date(),
+          careMistakes: 0,
+        });
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+  }
+  
 
   handleInteraction = () => {
     this.setState({
@@ -69,10 +109,9 @@ class Pet extends Component {
       <View>
         <Image source={images[currentImageIndex]} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
-        {/* <Text>Care Mistakes: {careMistakes}</Text> */} 
-        {/*uncomment line above to show care mistakes on the screen*/}
+        {/* <Text>Care Mistakes: {careMistakes}</Text> */}
+        {/* Uncomment line above to show care mistakes on the screen */}
       </View>
-      
     );
   }
 }

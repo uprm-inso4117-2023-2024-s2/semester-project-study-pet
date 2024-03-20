@@ -10,7 +10,7 @@ const mockAsyncStorage = {
   }),
   getItem: jest.fn((key) => {
     return new Promise((resolve, reject) => {
-      resolve(mockAsyncStorage.data[key]);
+      resolve(mockAsyncStorage.data[key] || null); // Return null if key does not exist
     });
   }),
   removeItem: jest.fn((key) => {
