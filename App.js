@@ -1,20 +1,23 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { useState } from "react";
 
-import HomePage from './pages/HomePage';
-import Settings from './pages/Settings';
-import Mypets from './pages/Mypets';
-import Flashcards from './pages/Flashcards';
-import Stats from './pages/Stats';
-import Game from './pages/Game';
-import Eat from './pages/Eat';
-import Bath from './pages/Bath';
-import Shop from './pages/Shop';
+import HomePage from "./pages/HomePage";
+import Settings from "./pages/Settings";
+import Mypets from "./pages/Mypets";
+import Flashcards from "./pages/Flashcards";
+import Stats from "./pages/Stats";
+import Game from "./pages/Game";
+import Eat from "./pages/Eat";
+import Bath from "./pages/Bath";
+import Shop from "./pages/Shop";
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [studyPoints, setStudyPoints] = useState(500);
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -26,7 +29,12 @@ export default function App() {
         <Stack.Screen name="Game" component={Game} />
         <Stack.Screen name="Eat" component={Eat} />
         <Stack.Screen name="Bath" component={Bath} />
-        <Stack.Screen name="Shop" component={Shop} />
+        <Stack.Screen
+          name="Shop"
+          children={() => (
+            <Shop studyPoints={studyPoints} setStudyPoints={setStudyPoints} />
+          )}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
