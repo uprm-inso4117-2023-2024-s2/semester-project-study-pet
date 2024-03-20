@@ -1,6 +1,7 @@
-import React, { useState, useEffect  } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-
+import { loadHappiness, saveHappiness } from './happinessStorage';
+import { loadHunger, saveHunger } from './hungerStorage';
 const questionsData = [
     {
         question: 'What is the chemical symbol for oxygen?',
@@ -53,6 +54,8 @@ const MiniGame = () => {
     const [gameOver, setGameOver] = useState(false);
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [score, setScore] = useState(0);
+    const [happiness, setHappiness] = useState(0);
+    const [hunger, setHunger] = useState(0);
     const [selectedDifficulty, setSelectedDifficulty] = useState('medium'); // The selectedDifficulty has to be changed to the current pet difficulty
     const [questions, setQuestions] = useState([]);
 
@@ -102,6 +105,52 @@ const MiniGame = () => {
         }
     };
 
+    useEffect(() => {
+        const loadHappinessData = async () => {
+            try {
+                const loadedHappiness = await loadHappiness();
+                setHappiness(loadedHappiness);
+            } catch (error) {
+                console.error('Error loading happiness data:', error);
+            }
+        };
+
+        loadHappinessData();
+    }, []);
+
+    useEffect(() => {
+        const loadHungerData = async () => {
+            try {
+                const loadedHunger = await loadHunger();
+                setHunger(loadedHunger);
+            } catch (error) {
+                console.error('Error loading hunger data:', error);
+            }
+        };
+
+        loadHungerData();
+    }, []);
+
+    useEffect(() => {
+        if (gameOver) {
+            const newHunger = hunger - score * 10;
+            const cappedHunger = Math.max(newHunger, 0); // Cap hunger at 0
+            setHunger(cappedHunger);
+            saveHunger(cappedHunger);
+        }
+    }, [gameOver, score, hunger]);
+
+    // Update happiness only when the game is over and ensure it doesn't exceed 100
+    useEffect(() => {
+        if (gameOver) {
+            const newHappiness = happiness + score;
+            const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
+            setHappiness(cappedHappiness);
+            saveHappiness(cappedHappiness);
+        }
+    }, [gameOver, score, happiness]);
+
+
     if (gameOver) {
         return (
             <View style={styles.container}>
@@ -118,7 +167,7 @@ const MiniGame = () => {
 
                         <View style={styles.hrow}>
                             <Text style={styles.statText}>
-                                Hunger: -{score}
+                                Hunger: {hunger}
                             </Text>
                             <Image
                                 style={styles.image}
@@ -129,7 +178,7 @@ const MiniGame = () => {
 
                         <View style={styles.hrow}>
                             <Text style={styles.statText}>
-                                Happiness: +{score}
+                                Happiness: {happiness}
                             </Text>
                             <Image
                                 style={styles.image}
@@ -146,6 +195,9 @@ const MiniGame = () => {
     if (questions.length > 0 && currentQuestionIndex < questions.length) {
         return (
             <View style={styles.container}>
+              <View style={styles.titleContainer}>
+                  <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
+              </View>
                 <View style={styles.gameContainer}>
                     <View style={styles.questionContainer}>
                         <Text style={styles.question}>{questions[currentQuestionIndex].question}</Text>
@@ -175,6 +227,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 20,
         backgroundColor: 'transparent',
+    },
+    titleContainer: {
+        marginTop: 10,
+        backgroundColor: 'white',
+        padding: 10,
+        borderRadius: 15,
+        marginVertical: 10,
+        marginHorizontal: 8,
+    },
+    titleText: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        color: 'black',
+        fontFamily: 'Jua-Regular',
+        textAlign: 'center',
+        textAlignVertical: 'top',
     },
     gameContainer: {
         backgroundColor: 'white',
@@ -267,7 +335,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         resizeMode: 'contain',
     },
-    statText :{
+    statText: {
         fontSize: 26,
         marginRight: 5,
         fontFamily: 'Jua-Regular',
