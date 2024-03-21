@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert } from 'r
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
 import Pet from '../components/Pet';
+import { petEventEmitter } from './EventEmitter';
+import PetGoodbye from '../components/PetGoodbye';
 import {loadIsAsleepFromStorage} from '../components/sleepScheduleStorage';
 
 const VerticalStripes = ({ numberOfStripes }) => {
@@ -25,6 +27,24 @@ const VerticalStripes = ({ numberOfStripes }) => {
  * A simple button component. This component helps navigate to different pages.
  */
 const HomePage = ({ navigation }) => {
+  const [isdead, setIsdead] = useState(false);
+
+  // Listen to the event petDeath and petAlive to verify if the pet is dead
+  petEventEmitter.on('petDeath', () => {
+    // Set the "isdead" state to true, so the buttons stop appearing"
+    setIsdead(true);
+  });
+
+  petEventEmitter.on('petAlive', () => {
+    // Set the "isdead" state to false, so the buttons appear"
+    setIsdead(false);
+  });
+
+  const [goodbye, setGoodbye] = useState(false);
+  const handleGoodbye = (newValue) => {
+    setGoodbye(newValue);
+  };
+  
   const [isAsleep, setIsAsleep] = useState(false);
 
   useEffect(() => {
@@ -49,26 +69,32 @@ const HomePage = ({ navigation }) => {
   };
 
   return (
-    <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7'}}>
+    <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7', }}>
       <LinearGradient colors={['#f7ffe7', '#edf5ff']} style={styles.container}>
         
+        {!isdead && (
         <View style={styles.topButtons}>
           <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
           <TouchableOpacity onPress={() => navigation.navigate('Stats')} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Flashcards')} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
-        </View>
+        </View>)}
+
+        {isdead && (<View style={styles.topButtons}>
+          <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
+        </View>)}
 
         <View style={styles.petContainer}>
           <VerticalStripes numberOfStripes={7} />
-          <Pet />
+          {goodbye ? <PetGoodbye /> : <Pet onChange={handleGoodbye} />}
         </View>
 
+        {!isdead && (  
         <View style={styles.bottomButtons}>
           <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Bath') : navigation.navigate('Bath')} activeOpacity={isAsleep ? 1 : 0} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
           <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Eat') : navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
           <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Play') : navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
-        </View>
+        </View>)}
       </LinearGradient>
     </View>
   );
@@ -94,7 +120,6 @@ const styles = StyleSheet.create({
   petContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 25,
     margin: 20,
