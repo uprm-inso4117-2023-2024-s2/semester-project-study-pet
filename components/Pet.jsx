@@ -56,6 +56,8 @@ class Pet extends Component {
 
     // Check for care mistakes every 15 minutes
     const careMistakeInterval = setInterval(() => {
+      if (this.state.isAsleep) return; // Don't count care mistakes when pet is asleep
+
       const currentTime = new Date();
       const lastInteractionTime = new Date(this.state.lastInteractionTime);
       const timeDifference = (currentTime - lastInteractionTime) / (1000 * 60); // in minutes

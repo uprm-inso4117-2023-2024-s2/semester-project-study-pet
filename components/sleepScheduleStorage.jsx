@@ -39,3 +39,12 @@ export const loadSleep = async () => {
         return 'false';
     }
 };
+
+export const loadIsAsleepFromStorage = async (setter) => {
+    try {
+        const sleepFlag = await loadSleep();
+        setter(sleepFlag === 'true');
+    } catch (error) {
+        console.error('Error loading sleep schedule:', error);
+    }
+};
