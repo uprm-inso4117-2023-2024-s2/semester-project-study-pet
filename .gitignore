@@ -34,5 +34,5 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-# Jetbrain's IDEs
+# JetBrains IDEs
 .idea
