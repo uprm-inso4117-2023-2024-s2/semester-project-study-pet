@@ -192,9 +192,8 @@ class Pet extends Component {
   };
 
   render() {
-    const { happiness, name, images,growthlvl, currentImageIndex, careMistakes, IsAsleep } = this.state;
+    const { happiness, name, images, growthlvl, currentImageIndex, careMistakes, isAsleep } = this.state;
     let currentImage;
-    
 
     // Select the image based on growth level
     if (growthlvl === 0) {
@@ -207,15 +206,14 @@ class Pet extends Component {
     
     //This piece of code changes the current image of the pet depending on the growth level
     //<Image source={images[currentImageIndex]} style={styles.image} />  this is the original code for the pet photo
-
-
     return (
       <View style={{alignItems: 'center', position: 'relative'}}>
-        <TouchableOpacity onPress={()=>{handleClick()}} style={styles.debug} ><Text>< FontAwesome6 name="soap" size={200} color="#cdb4db" /> </Text></TouchableOpacity>
-        <Image source={currentImage} style={styles.image} />
-
-      <View>
-        {isAsleep ? <Text>Your pet is asleep Zz</Text> : <Image source={images[currentImageIndex]} style={styles.image} />}
+        {isAsleep ? <Text>Your pet is asleep Zz</Text> : 
+          <>
+            <TouchableOpacity onPress={()=>{handleClick()}} style={styles.debug} ><Text>< FontAwesome6 name="soap" size={200} color="#cdb4db" /> </Text></TouchableOpacity>
+            <Image source={currentImage} style={styles.image} />
+          </>
+        }
         <Text style={styles.name}>{name}</Text>
         {/* <Text>Care Mistakes: {careMistakes}</Text> */}
         <Text style={styles.growth}>Growth Level: {growthlvl}</Text> 
