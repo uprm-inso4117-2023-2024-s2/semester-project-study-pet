@@ -33,7 +33,7 @@ describe('Pet component', () => {
   
   it('handles undefined data when loading', async () => {
     // Mock AsyncStorage.getItem to return undefined
-    AsyncStorage.getItem.mockResolvedValueOnce(undefined);
+    AsyncStorage.getItem.mockResolvedValueOnce(null);
 
     render(<Pet />);
 

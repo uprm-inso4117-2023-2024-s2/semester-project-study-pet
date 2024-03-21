@@ -74,7 +74,7 @@ class Pet extends Component {
   async loadData() {
     try {
       const petData = await AsyncStorage.getItem('petData');
-      if (petData !== null) {
+      if (petData != null) {
         this.setState(JSON.parse(petData));
       } else {
         console.error('Error loading data: Retrieved data is undefined');
