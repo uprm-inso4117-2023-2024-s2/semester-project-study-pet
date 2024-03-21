@@ -16,7 +16,7 @@ class Pet extends Component {
       name: 'Firulai',
       growthlvl: 0,
       hunger: 0,
-      happiness: 100,
+      happiness: 80,
       lastInteractionTime: new Date(),
       careMistakes: 0,
     };
@@ -43,10 +43,10 @@ class Pet extends Component {
         nextIndex = this.state.images.findIndex(image => image === require('./animatedFrog(angry).gif'));
       } else if (this.state.happiness >= 80) {
         nextIndex = this.state.images.findIndex(image => image === require('./animatedFrog(happy).gif'));
-      } else if (this.state.happiness >= 50) {
+      } else if (this.state.happiness >= 40) {
         nextIndex = this.state.images.findIndex(image => image === require('./animatedFrog.gif'));
 
-      } else if (this.state.happiness >= 20 || this.state.happiness <=20) {
+      } else if (this.state.happiness >= 30 || this.state.happiness <= 30) {
         nextIndex = this.state.images.findIndex(image => image === require('./animatedFrog(sad).gif')); 
       } 
   // Update the currentImageIndex state with the index of the selected image
