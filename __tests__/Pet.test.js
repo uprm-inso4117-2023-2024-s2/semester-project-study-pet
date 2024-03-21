@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Pet from './Pet';
+import Pet from '../components/Pet';
 
 // Mock AsyncStorage module
 jest.mock('@react-native-async-storage/async-storage');

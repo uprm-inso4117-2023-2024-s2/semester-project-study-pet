@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import User from './User';
+import User from '../components/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 describe('User component', () => {
