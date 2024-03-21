@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Image } from 'react-native';
 import { saveHappiness, loadHappiness } from './happinessStorage';
 import { saveHunger, loadHunger } from './hungerStorage';
 import { saveSleep, loadSleepTime, loadSleep } from './sleepScheduleStorage';
+import { isPetAsleep } from '../utils/sleepSchedule';
 
 class Pet extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class Pet extends Component {
       happiness: 100,
       lastInteractionTime: new Date(),
       careMistakes: 0,
-      sleepTime: '17:10',
+      sleepTime: '23:00',
       isAsleep: false,
     };
   }
@@ -68,22 +69,7 @@ class Pet extends Component {
 
     // Check for sleep time every minute
     const sleepInterval = setInterval(() => {
-      const [hours, minutes] = this.state.sleepTime.trim().split(':');
-      const sleepTime = new Date();
-      sleepTime.setHours(parseInt(hours));
-      sleepTime.setMinutes(parseInt(minutes));
-      sleepTime.setSeconds(0);
-      
-      const currentTime = new Date();
-
-      const wakeUpTime = new Date(sleepTime.getTime() + 8 * 60 * 60 * 1000); // 8 hours in milliseconds
-
-      let isAsleep = false;
-      
-      if (currentTime >= sleepTime && currentTime < wakeUpTime) {
-        isAsleep = true;
-      }
-
+      const isAsleep = isPetAsleep(this.state.sleepTime);
       this.setState({ isAsleep }, () => this.saveSleepToStorage(isAsleep) );
     }, 1000 * 60);
   }
