@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {React,  useState, useEffect } from 'react';
+import { Image,View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { loadHappiness, saveHappiness } from './happinessStorage';
 
 const BathGame = () => {
   const [flashcards, setFlashcards] = useState([]);
@@ -7,6 +8,7 @@ const BathGame = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
   const [score, setScore] = useState(0);
+  const [happiness, setHappiness] = useState(0);
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
@@ -63,12 +65,44 @@ const BathGame = () => {
     setCurrentQuestionIndex(nextQuestionIndex);
   };
 
+  useEffect(() => {
+    const loadHappinessData = async () => {
+        try {
+            const loadedHappiness = await loadHappiness();
+            setHappiness(loadedHappiness);
+        } catch (error) {
+            console.error('Error loading happiness data:', error);
+        }
+    };
+
+    loadHappinessData();
+}, []);
+
+useEffect(() => {
+  if (gameOver) {
+      const newHappiness = happiness + score;
+      const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
+      setHappiness(cappedHappiness);
+      saveHappiness(cappedHappiness);
+  }
+}, [gameOver, score, happiness]);
+
   if (gameOver) {
     return (
       <View style={styles.container}>
         <View style={styles.gameOverContainer}>
           <Text style={styles.gameOverText}>Game Over!</Text>
           <Text style={styles.scoreText}>Your Score: {score}/{flashcards.length}</Text>
+          <View style={styles.hrow}>
+                            <Text style={styles.statText}>
+                                Happiness: {happiness}
+                            </Text>
+                            <Image
+                                style={styles.image}
+                                source={require('../components/happiness.jpg')}
+                            >
+                            </Image>
+                        </View>
         </View>
       </View>
     );
