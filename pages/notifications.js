@@ -17,7 +17,6 @@ export async function scheduleNotification() {
       },
       trigger: null,
     });
-    console.log("notification triggered")
   }
 
 

@@ -32,10 +32,8 @@ const HomePage = ({ navigation }) => {
   useEffect(() => {
     const handleAppStateChange = (nextAppState) => {
       if (appState === 'active' && nextAppState.match(/inactive|background/)) {
-        console.log('App has gone to the background');
         scheduleNotification(); // Need to add timer that works when the app is in the background
       } else if (appState.match(/inactive|background/) && nextAppState === 'active') {
-        console.log('App has come to the foreground');
         clearTimeout(notificationTimer); // Cancel notification timer if app comes back to foreground before 5 minutes
       }
       setAppState(nextAppState);
