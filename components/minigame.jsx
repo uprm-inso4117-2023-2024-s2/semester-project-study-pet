@@ -1,33 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-
-const questionsData = [
-  {
-    question: 'What is the capital of France?',
-    answers: ['London', 'Paris', 'Berlin', 'Rome'],
-    correctAnswerIndex: 1,
-  },
-  {
-    question: 'What is the largest planet in our solar system?',
-    answers: ['Jupiter', 'Mars', 'Earth', 'Venus'],
-    correctAnswerIndex: 0,
-  },
-  {
-    question: 'Who wrote "To Kill a Mockingbird"?',
-    answers: ['Stephen King', 'Harper Lee', 'J.K. Rowling', 'Charles Dickens'],
-    correctAnswerIndex: 1,
-  },
-  {
-    question: 'Which element has the chemical symbol "Fe"?',
-    answers: ['Iron', 'Gold', 'Silver', 'Copper'],
-    correctAnswerIndex: 0,
-  },
-  {
-    question: 'What is the powerhouse of the cell?',
-    answers: ['Nucleus', 'Cell membrane', 'Mitochondria', 'Endoplasmic reticulum'],
-    correctAnswerIndex: 2,
-  },
-];
+import questionsData from '../assets/data/questions.json'
 
 const MiniGame = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
