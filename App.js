@@ -10,6 +10,7 @@ import Stats from './pages/Stats';
 import Game from './pages/Game';
 import Eat from './pages/Eat';
 import Bath from './pages/Bath';
+import PlayerStats from './pages/PlayerStats';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ export default function App() {
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen name="Mypets" component={Mypets} />
         <Stack.Screen name="Stats" component={Stats} />
+        <Stack.Screen name="PlayerStats" component={PlayerStats} />
         <Stack.Screen name="Game" component={Game} />
         <Stack.Screen name="Eat" component={Eat} />
         <Stack.Screen name="Bath" component={Bath} />

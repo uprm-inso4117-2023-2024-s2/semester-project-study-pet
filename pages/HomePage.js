@@ -45,6 +45,7 @@ const HomePage = ({ navigation }) => {
           <TouchableOpacity onPress={() => navigation.navigate('Bath')} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('PlayerStats')} style={styles.iconButton}><Ionicons name="Playerstats-chart" size={30} color="#517fa4" /></TouchableOpacity>
         </View>
       </LinearGradient>
     </View>
