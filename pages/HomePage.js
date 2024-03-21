@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { AppState,View, Text, StyleSheet, TouchableOpacity, SafeAreaView,AppStateStatus } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -5,6 +6,9 @@ import { Ionicons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-ico
 import Pet from '../components/Pet';
 import { handleButtonPress, handlePermissionRequest,scheduleNotification } from './notifications'
 import * as Notifications from 'expo-notifications'; 
+import { petEventEmitter } from './EventEmitter';
+import PetGoodbye from '../components/PetGoodbye';
+
 
 const VerticalStripes = ({ numberOfStripes }) => {
   return (
@@ -26,8 +30,10 @@ const VerticalStripes = ({ numberOfStripes }) => {
  * A simple button component. This component helps navigate to different pages.
  */
 const HomePage = ({ navigation }) => {
-  const [appState, setAppState] = useState('active');
-  const [notificationTimer, setNotificationTimer] = useState(null);
+
+const [appState, setAppState] = useState('active');
+const [notificationTimer, setNotificationTimer] = useState(null);
+const [isdead, setIsdead] = useState(false);
 
   useEffect(() => {
     const handleAppStateChange = (nextAppState) => {
@@ -55,29 +61,51 @@ const HomePage = ({ navigation }) => {
     handlePermissionRequest(); // Ask for notification permission when the component mounts
   }, []); // Empty dependency array ensures it runs only once when component mounts
 
+ 
+
+
+  // Listen to the event petDeath and petAlive to verify if the pet is dead
+  petEventEmitter.on('petDeath', () => {
+    // Set the "isdead" state to true, so the buttons stop appearing"
+    setIsdead(true);
+  });
+
+  petEventEmitter.on('petAlive', () => {
+    // Set the "isdead" state to false, so the buttons appear"
+    setIsdead(false);
+  });
+
+  const [goodbye, setGoodbye] = useState(false);
+  const handleGoodbye = (newValue) => {
+    setGoodbye(newValue);
+  }
   return (
-    <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7'}}>
+    <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7', }}>
       <LinearGradient colors={['#f7ffe7', '#edf5ff']} style={styles.container}>
         
+        {!isdead && (
         <View style={styles.topButtons}>
           <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
           <TouchableOpacity onPress={() => navigation.navigate('Stats')} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Flashcards')} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
-          <TouchableOpacity onPress={handleButtonPress} style={styles.iconButton}><Ionicons name="notifications" size={30} color="#517fa4" /></TouchableOpacity> 
+
+          <TouchableOpacity onPress={handleButtonPress} style={styles.iconButton}><Ionicons name="notifications" size={30} color="#517fa4" /></TouchableOpacity>
+          {isdead && (<View style={styles.topButtons}>
+            <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
         </View>
         
-
         <View style={styles.petContainer}>
           <VerticalStripes numberOfStripes={7} />
-          <Pet />
+          {goodbye ? <PetGoodbye /> : <Pet onChange={handleGoodbye} />}
         </View>
 
+        {!isdead && (  
         <View style={styles.bottomButtons}>
           <TouchableOpacity onPress={() => navigation.navigate('Bath')} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
-        </View>
+        </View>)}
       </LinearGradient>
     </View>
   );
@@ -103,7 +131,6 @@ const styles = StyleSheet.create({
   petContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 25,
     margin: 20,

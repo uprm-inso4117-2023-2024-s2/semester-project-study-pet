@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import Pet from '../components/Pet';
+import Pet, { loadHappiness, loadHunger } from '../components/Pet';
 
 function Stats() {
+
+  const pet = new Pet();
+
   const navigation = useNavigation();
+  const [happiness, setHappiness] = useState(pet.state.happiness);
+  const [hunger, setHunger] = useState(pet.state.hunger);
+
+  useEffect(() => {
+    const loadPetData = async () => {
+      try {
+        // Load happiness value from storage
+        const storedHappiness = await loadHappiness();
+        const storedHunger = await loadHunger();
+        setHappiness(storedHappiness);
+        setHunger(storedHunger);
+      } catch (error) {
+        console.error('Error loading pet data:', error);
+      }
+    };
+    loadPetData();
+  }, []);
+
 
   const goBack = () => {
     navigation.goBack();
   };
-const pet = new Pet();
-
 
   return (
     <LinearGradient colors={['#fcf188', '#fffbcf']} style={styles.container}>
@@ -51,11 +70,11 @@ const pet = new Pet();
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#f39c12' }]}>Hunger:</Text>
-            <Text style={[styles.statsValue, { color: '#f39c12' }]}>{pet.state.hunger}%</Text>
+            <Text style={[styles.statsValue, { color: '#f39c12' }]}>{hunger}%</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Happiness:</Text>
-            <Text style={[styles.statsValue, { color: '#e67e22' }]}>{pet.state.happiness}%</Text>
+            <Text style={[styles.statsValue, { color: '#e67e22' }]}>{happiness}%</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Care Mistakes:</Text>
@@ -112,22 +131,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statsBox: {
-  marginBottom: 10,
-  backgroundColor: 'white',
-  borderWidth: 2,
-  borderColor: '#3498db',
-  padding: 10,
-  borderRadius: 10,
-  width: '80%',
-  shadowColor: '#000',
-  shadowOffset: {
-    width: 0,
-    height: 2,
+    marginBottom: 10,
+    backgroundColor: 'white',
+    borderWidth: 2,
+    borderColor: '#3498db',
+    padding: 10,
+    borderRadius: 10,
+    width: '80%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.80,
+    elevation: 3,
   },
-  shadowOpacity: 0.25,
-  shadowRadius: 1.80,
-  elevation: 3,
-},
 
   statsLabel: {
     fontSize: 18,
