@@ -76,9 +76,7 @@ class Pet extends Component {
       const { examDate, startDate } = this.state;
       const timeToExam = Math.ceil((examDate - startDate) / (1000 * 60 * 60 * 24));
       const daysUntilExam = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
-      console.log(timeToExam)
-      console.log(daysUntilExam)
-
+     
       let growthLevel;
       if (daysUntilExam <= timeToExam / 3) {
         growthLevel = 3;
