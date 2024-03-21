@@ -40,5 +40,8 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# JetBrains IDEs
+.idea
+
 # stryker temp files
 .stryker-tmp
