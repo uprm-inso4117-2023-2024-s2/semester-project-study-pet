@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, } from 'react-native';
+import { Ionicons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
 
 class Pet extends Component {
   constructor(props) {
@@ -61,9 +62,18 @@ class Pet extends Component {
         }));
       }
     }, 1000 * 60 * 15);
-
     
+    handleClick = () => {
+      this.props.onChange(true);
+      console.log("Goodbye Click");
+    }
 
+    const goodbyeInterval = setInterval(() => {
+      const { examDate, startDate } = this.state;
+      if (examDate >= new Date()){
+        this.props.onChange(true)
+      }
+    })
 
     const growthInterval = setInterval(() => {
       const { examDate, startDate } = this.state;
@@ -107,13 +117,14 @@ class Pet extends Component {
     } else {
       currentImage = images[0]; // Adult stage image
     }
-
+    
     //This piece of code changes the current image of the pet depending on the growth level
     //<Image source={images[currentImageIndex]} style={styles.image} />  this is the original code for the pet photo
     return (
-      <View>
+      <View style={{alignItems: 'center', position: 'relative'}}>
+        <TouchableOpacity onPress={()=>{handleClick()}} style={styles.debug} ><Text>< FontAwesome6 name="soap" size={200} color="#cdb4db" /> </Text></TouchableOpacity>
         <Image source={currentImage} style={styles.image} />
-        
+
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.growth}>Growth Level: {growthlvl}</Text> 
         
@@ -133,9 +144,18 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 200,
-    height: 200,
-    marginTop: 50,
-    marginBottom: 50,
+    height: 210,
+    marginTop: 70,
+    marginBottom: 0,
+  },
+  debug: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: 'transparent',
+    elevation: 3,
   },
 });
 

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
 import Pet from '../components/Pet';
+import PetGoodbye from '../components/PetGoodbye';
 
 const VerticalStripes = ({ numberOfStripes }) => {
   return (
@@ -24,9 +25,12 @@ const VerticalStripes = ({ numberOfStripes }) => {
  * A simple button component. This component helps navigate to different pages.
  */
 const HomePage = ({ navigation }) => {
-
+  const [goodbye, setGoodbye] = useState(false);
+  const handleGoodbye = (newValue) => {
+    setGoodbye(newValue);
+  }
   return (
-    <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7'}}>
+    <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7', }}>
       <LinearGradient colors={['#f7ffe7', '#edf5ff']} style={styles.container}>
         
         <View style={styles.topButtons}>
@@ -38,7 +42,7 @@ const HomePage = ({ navigation }) => {
 
         <View style={styles.petContainer}>
           <VerticalStripes numberOfStripes={7} />
-          <Pet />
+          {goodbye ? <PetGoodbye /> : <Pet onChange={handleGoodbye} />}
         </View>
 
         <View style={styles.bottomButtons}>
@@ -71,7 +75,6 @@ const styles = StyleSheet.create({
   petContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 25,
     margin: 20,
