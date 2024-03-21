@@ -269,9 +269,10 @@ class Pet extends Component {
 
       <View>
         {images && images.length > 0 &&(
-      <View style={{alignItems: 'center', position: 'relative'}}>
-        <TouchableOpacity onPress={()=>{handleClick()}} style={styles.debug} ><Text>< FontAwesome6 name="soap" size={200} color="#cdb4db" /> </Text></TouchableOpacity>
-        <Image source={currentImage} style={styles.image} />
+        <View style={{alignItems: 'center', position: 'relative'}}>
+            <TouchableOpacity onPress={()=>{handleClick()}} style={styles.debug} ><Text>< FontAwesome6 name="soap" size={200} color="#cdb4db" /> </Text></TouchableOpacity>
+            <Image source={currentImage} style={styles.image} />
+        </View>
         )}
         <Text style={styles.name}>{name}</Text>
         {/* <Text>Care Mistakes: {careMistakes}</Text> */}
