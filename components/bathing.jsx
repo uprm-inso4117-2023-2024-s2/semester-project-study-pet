@@ -128,12 +128,13 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: 'white',
     alignItems: 'center',
-    padding: 10,
+    padding: 15, 
     margin: 10,
-    borderRadius: 15,
-    borderWidth: 1,
+    borderRadius: 120,
+    borderWidth: 2,
     borderColor: '#ccc',
-    elevation: 5, 
+    elevation: 5,
+    maxWidth: '90%',
   },
   answerText: {
     fontSize: 17,
@@ -142,6 +143,8 @@ const styles = StyleSheet.create({
     maxWidth: '100%',
     overflow: 'hidden',
   },
+  
+  
   gameOverContainer: {
     backgroundColor: 'white',
     padding: 20,

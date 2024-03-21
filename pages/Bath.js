@@ -1,9 +1,18 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useFonts } from "expo-font";
 import BathGame from '../components/bathing'; // Changed import
 
 const Bath = ({ navigation }) => {
+
+  const [isFontLoaded] = useFonts({
+    "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
+  });
+
+  if (!isFontLoaded) {
+    return null; // for now, render nothing
+  }
   return (
     <LinearGradient colors={['#D4F1F4', '#b3d9ff']} style={styles.container}>
       <View style={styles.titleContainer}>
