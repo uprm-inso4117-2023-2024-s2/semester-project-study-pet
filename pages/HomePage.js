@@ -70,6 +70,7 @@ const HomePage = ({ navigation }) => {
           <TouchableOpacity onPress={() => navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={styles.iconButton}><Ionicons name="cart" size={30} color="#f7d794" /></TouchableOpacity>
+        </View> 
         )}
       </LinearGradient>
     </View>
