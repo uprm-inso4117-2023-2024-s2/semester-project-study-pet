@@ -17,6 +17,8 @@ class Pet extends Component {
         require('./PetImages/FrogImages/animatedFrog(happy).gif'),
         require('./PetImages/FrogImages/animatedFrog(happy).gif'),
         require('./PetImages/FrogImages/animatedFrog(dead).gif'),
+        require('./babyfrog.png'),
+        require('./youngfrog.png'),
       ],
       // All Dog and Cat related are currently placeholders for new pets
       dogimages: [
