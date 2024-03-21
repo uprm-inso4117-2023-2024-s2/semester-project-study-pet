@@ -131,15 +131,15 @@ const MiniGame = () => {
     return (
       <View style={styles.container}>
           {/* This are 3 temporary buttons to test the difficulty */}
-          <TouchableOpacity style={styles.button} onPress={() => setSelectedDifficulty('easy')}>
+          <TouchableOpacity onPress={() => setSelectedDifficulty('easy')}>
               <Text style={styles.buttonText}>easy</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={() => setSelectedDifficulty('medium')}>
+            <TouchableOpacity onPress={() => setSelectedDifficulty('medium')}>
               <Text style={styles.buttonText}>medium</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button}onPress={() => setSelectedDifficulty('hard')}>
+            <TouchableOpacity onPress={() => setSelectedDifficulty('hard')}>
               <Text style={styles.buttonText}>hard</Text>
             </TouchableOpacity>
 
