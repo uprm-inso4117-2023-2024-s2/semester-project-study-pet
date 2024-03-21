@@ -5,6 +5,9 @@ const SLEEP_KEY = 'sleep';
 
 export const saveSleepTime = async (sleepTime) => {
     try {
+        if (typeof sleepTime !== 'string') {
+            throw new Error('Invalid sleep time type, expected string');
+        }
         // Save the time in 24-hour format (e.g. 22:30)
         await AsyncStorage.setItem(SLEEP_TIME_KEY, sleepTime.toString());
     } catch (error) {
@@ -20,10 +23,13 @@ export const loadSleepTime = async () => {
         console.error('Error loading sleep time:', error);
         return '23:00';
     }
-}
+};
 
 export const saveSleep = async (sleep) => {
     try {
+        if (typeof sleep !== 'boolean') {
+            throw new Error('Invalid sleep value type, expected boolean');
+        }
         await AsyncStorage.setItem(SLEEP_KEY, sleep.toString());
     } catch (error) {
         console.error('Error saving sleep value:', error);

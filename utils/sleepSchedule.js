@@ -1,13 +1,15 @@
 const isPetAsleep = (time) => {
-    const [hours, minutes] = time.trim().split(':');
+    let [hours, minutes] = time.split(':');
+    hours = parseInt(hours);
+    minutes = parseInt(minutes);
 
-    if (!hours || !minutes || hours.length !== 2 || minutes.length !== 2) {
-        throw new Error('Invalid time format. Please enter in hh:mm format.');
+    if (Number.isNaN(hours) || hours < 0 || hours > 23 || Number.isNaN(minutes) || minutes < 0 || minutes > 59) {
+        throw new Error('Invalid time');
     }
 
     const sleepTime = new Date();
-    sleepTime.setHours(parseInt(hours));
-    sleepTime.setMinutes(parseInt(minutes));
+    sleepTime.setHours(hours);
+    sleepTime.setMinutes(minutes);
     sleepTime.setSeconds(0);
     
     const currentTime = new Date();
