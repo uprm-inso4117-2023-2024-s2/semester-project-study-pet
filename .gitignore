@@ -19,6 +19,12 @@ web-build/
 # Metro
 .metro-health-check*
 
+# Stryker
+reports/
+
+# Jest
+coverage/
+
 # debug
 npm-debug.*
 yarn-debug.*
@@ -33,3 +39,6 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# stryker temp files
+.stryker-tmp
