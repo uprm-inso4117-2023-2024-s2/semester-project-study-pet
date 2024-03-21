@@ -19,6 +19,7 @@
     "expo-linear-gradient": "~12.7.2",
     "expo-status-bar": "~1.11.1",
     "metro": "^0.80.6",
+    "mitt": "^3.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.73.4",
