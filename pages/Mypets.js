@@ -27,6 +27,7 @@ const CreatePetScreen = ({ navigation }) => {
       difficulty: difficulty,
       happiness: 100,
       hunger: 100,
+      sleepTime: '22:30',  // Dummy value for now (10:30 pm), must be a valid time
     };
 
     console.log("New Pet:", newPet);

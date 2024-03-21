@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import { saveHappiness, loadHappiness } from './happinessStorage';
 import { saveHunger, loadHunger } from './hungerStorage';
+import { saveSleep, loadSleepTime, loadSleep } from './sleepScheduleStorage';
 
 class Pet extends Component {
   constructor(props) {
@@ -21,6 +22,8 @@ class Pet extends Component {
       happiness: 100,
       lastInteractionTime: new Date(),
       careMistakes: 0,
+      sleepTime: '17:10',
+      isAsleep: false,
     };
   }
 
@@ -28,6 +31,7 @@ class Pet extends Component {
   componentDidMount() {
     this.loadHappinessFromStorage();
     this.loadHungerFromStorage(); 
+    this.loadSleepScheduleFromStorage();
 
     // Simulate happiness increasing over time
     const interval = setInterval(() => {
@@ -61,6 +65,27 @@ class Pet extends Component {
         }));
       }
     }, 1000 * 60 * 15);
+
+    // Check for sleep time every minute
+    const sleepInterval = setInterval(() => {
+      const [hours, minutes] = this.state.sleepTime.trim().split(':');
+      const sleepTime = new Date();
+      sleepTime.setHours(parseInt(hours));
+      sleepTime.setMinutes(parseInt(minutes));
+      sleepTime.setSeconds(0);
+      
+      const currentTime = new Date();
+
+      const wakeUpTime = new Date(sleepTime.getTime() + 8 * 60 * 60 * 1000); // 8 hours in milliseconds
+
+      let isAsleep = false;
+      
+      if (currentTime >= sleepTime && currentTime < wakeUpTime) {
+        isAsleep = true;
+      }
+
+      this.setState({ isAsleep }, () => this.saveSleepToStorage(isAsleep) );
+    }, 1000 * 60);
   }
 
   loadHappinessFromStorage = async () => {
@@ -86,6 +111,27 @@ class Pet extends Component {
     }
   };
 
+  loadSleepScheduleFromStorage = async () => {
+    try {
+      const sleepTime = await loadSleepTime();
+      const isAsleep = await loadSleep();
+      this.setState({ 
+        sleepTime,
+        isAsleep: isAsleep === 'true',
+      });
+    } catch (error) {
+      console.error('Error loading sleep schedule:', error);
+    }
+  };
+
+  saveSleepToStorage = async (isAsleep) => {
+    try {
+      await saveSleep(isAsleep);
+    } catch (error) {
+      console.error('Error saving sleep value:', error);
+    }
+  };
+
   saveHappinessToStorage = async () => {
     const { happiness } = this.state;
     try {
@@ -102,11 +148,11 @@ class Pet extends Component {
   };
 
   render() {
-    const { happiness, name, images, currentImageIndex, careMistakes } = this.state;
+    const { happiness, name, images, currentImageIndex, careMistakes, isAsleep } = this.state;
 
     return (
       <View>
-        <Image source={images[currentImageIndex]} style={styles.image} />
+        {isAsleep ? <Text>Your pet is asleep Zz</Text> : <Image source={images[currentImageIndex]} style={styles.image} />}
         <Text style={styles.name}>{name}</Text>
         {/* <Text>Care Mistakes: {careMistakes}</Text> */}
         {/*uncomment line above to show care mistakes on the screen*/}
