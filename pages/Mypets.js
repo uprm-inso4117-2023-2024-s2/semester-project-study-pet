@@ -38,7 +38,7 @@ function MyPetScreen() {
   };
 
   const handleCreateNewPet = () => {
-    navigation.navigate('CreatePetScreen');
+    navigation.navigate('CreatePetPage');
   };
 
   return (
