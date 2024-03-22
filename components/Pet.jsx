@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { petEventEmitter } from '../pages/EventEmitter';
 import { saveHappiness, loadHappiness } from './happinessStorage';
-import { saveHunger, loadHunger } from './hungerStorage';
-import { View, StyleSheet, Text, Image, TouchableOpacity, } from 'react-native';
-import { Ionicons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
+import { loadHunger } from './hungerStorage';
+import { View, StyleSheet, Text, Image } from 'react-native';
+import { saveSleep, loadSleepTime, loadSleep } from './sleepScheduleStorage';
+import { isPetAsleep } from '../utils/sleepSchedule';
 
 class Pet extends Component {
   constructor(props) {
@@ -76,8 +77,9 @@ class Pet extends Component {
       pettype: 'frog',
       images: [],
       startDate: new Date("2024-03-16"), //Date the pet was created,  we need to get the info from pet creation
-      examDate: new Date("2024-05-18") // Date the exam is due , we need to get the info from pet creation, please implement this
-      
+      examDate: new Date("2024-05-18"), // Date the exam is due , we need to get the info from pet creation, please implement this
+      sleepTime: '23:00',
+      isAsleep: false,
     };
   }
 
@@ -112,10 +114,10 @@ class Pet extends Component {
     this.setState({ images });
   }
 
-
   componentDidMount() {
     this.loadHappinessFromStorage();
     this.loadHungerFromStorage(); 
+    this.loadSleepScheduleFromStorage();
 
     // Simulate happiness increasing over time
     const interval = setInterval(() => {
@@ -168,6 +170,8 @@ class Pet extends Component {
 
     // Check for care mistakes every 15 minutes
     const careMistakeInterval = setInterval(() => {
+      if (this.state.isAsleep) return; // Don't count care mistakes when pet is asleep
+
       const currentTime = new Date();
       const lastInteractionTime = new Date(this.state.lastInteractionTime);
       const timeDifference = (currentTime - lastInteractionTime) / (1000 * 60); // in minutes
@@ -198,6 +202,12 @@ class Pet extends Component {
       if (growthLevel >= 3) clearInterval(growthInterval); // Stop growth after adult stage
     }, 0); 
     
+
+    // Check for sleep time every minute
+    const sleepInterval = setInterval(() => {
+      const isAsleep = isPetAsleep(this.state.sleepTime);
+      this.setState({ isAsleep }, () => this.saveSleepToStorage(isAsleep) );
+    }, 1000 * 60);
   }
 
   loadHappinessFromStorage = async () => {
@@ -223,6 +233,27 @@ class Pet extends Component {
     }
   };
 
+  loadSleepScheduleFromStorage = async () => {
+    try {
+      const sleepTime = await loadSleepTime();
+      const isAsleep = await loadSleep();
+      this.setState({ 
+        sleepTime,
+        isAsleep: isAsleep === 'true',
+      });
+    } catch (error) {
+      console.error('Error loading sleep schedule:', error);
+    }
+  };
+
+  saveSleepToStorage = async (isAsleep) => {
+    try {
+      await saveSleep(isAsleep);
+    } catch (error) {
+      console.error('Error saving sleep value:', error);
+    }
+  };
+
   saveHappinessToStorage = async () => {
     const { happiness } = this.state;
     try {
@@ -239,7 +270,7 @@ class Pet extends Component {
   };
 
   render() {
-    const { examDate, name, images,growthlvl } = this.state;
+    const { examDate, name, images, growthlvl, isAsleep } = this.state;
     let currentImage;
     
     if (examDate <= new Date()){
@@ -263,7 +294,9 @@ class Pet extends Component {
       <View>
         {images && images.length > 0 &&(
         <View style={{alignItems: 'center', position: 'relative'}}>
-            <Image source={currentImage} style={styles.image} />
+            {isAsleep ? <Text>Your pet is asleep Zz</Text> :
+              <Image source={currentImage} style={styles.image} />
+            }
         </View>
         )}
         <Text style={styles.name}>{name}</Text>

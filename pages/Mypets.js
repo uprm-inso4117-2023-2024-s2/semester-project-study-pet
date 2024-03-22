@@ -32,6 +32,7 @@ const CreatePetScreen = ({ navigation }) => {
       happiness: 100,
       hunger: 100,
       type: type,
+      sleepTime: '22:30',  // Dummy value for now (10:30 pm), must be a valid time
     };
 
     // Trigger event for the Pet.jsx to receive the type
