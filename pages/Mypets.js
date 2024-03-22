@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Button } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Pet from '../components/Pet';
 import { Ionicons } from '@expo/vector-icons';
