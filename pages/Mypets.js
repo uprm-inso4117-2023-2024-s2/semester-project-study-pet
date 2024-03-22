@@ -38,9 +38,9 @@ function MyPetScreen() {
   };
 
   const handleCreateNewPet = () => {
-    navigation.navigate('CreatePetPage');
+    navigation.navigate('CreatePetScreen');
   };
-
+  
   return (
     <LinearGradient colors={['#add8e6', '#87cefa']} style={styles.container}>
       <View style={styles.header}>
