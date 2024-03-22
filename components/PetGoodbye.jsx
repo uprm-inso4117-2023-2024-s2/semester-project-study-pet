@@ -8,13 +8,13 @@ class PetGoodbye extends Component {
 
     this.state = {
       images: [
-        require('./animatedFrog.gif'),
-        require('./animatedFrog(sad).gif'),
-        require('./animatedFrog(happy).gif'),
-        require('./animatedFrog(happy).gif'),
-        require('./animatedFrog(dead).gif'),
-        require('./babyfrog.jpeg'),
-        require('./youngfrog.jpeg'),
+        require('./PetImages/FrogImages/animatedFrog.gif'),
+        require('./PetImages/FrogImages/animatedFrog(sad).gif'),
+        require('./PetImages/FrogImages/animatedFrog(happy).gif'),
+        require('./PetImages/FrogImages/animatedFrog(happy).gif'),
+        require('./PetImages/FrogImages/animatedFrog(dead).gif'),
+        require('./babyfrog.png'),
+        require('./youngfrog.png'),
         require('./animatedFrog(talkin).gif'),
         require('../assets/petGoodbye/goodbyeSuitcase.png'),
         require('../assets/petGoodbye/goodbyeButtonNo.png'),
