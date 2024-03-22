@@ -30,6 +30,25 @@ const questionsData = [
     },
 ];
 
+// Function to shuffle an array (Fisher-Yates shuffle algorithm)
+const shuffleArray = (array) => {
+    let currentIndex = array.length,  randomIndex;
+    
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  }
+
 const MiniGame = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [gameOver, setGameOver] = useState(false);
@@ -37,14 +56,49 @@ const MiniGame = () => {
     const [score, setScore] = useState(0);
     const [happiness, setHappiness] = useState(0);
     const [hunger, setHunger] = useState(0);
+    const [selectedDifficulty, setSelectedDifficulty] = useState('medium'); // The selectedDifficulty has to be changed to the current pet difficulty
+    const [questions, setQuestions] = useState([]);
+
+    useEffect(() => {
+
+        const filteredQuestions = () => {
+        const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
+        //console.log("difficulty:", selectedDifficulty);
+    
+        // Ensure the array does not exceed 9 elements
+        const maxQuestions = shuffledQuestions.slice(0, 9);
+    
+        let fraction;
+        switch (selectedDifficulty) {
+            case "easy":
+            fraction = 1 / 3;
+            break;
+            case "medium":
+            fraction = 2 / 3;
+            break;
+            case "hard":
+            fraction = 1; // All questions
+            break;
+            default:
+            fraction = 1 / 3;
+        }
+    
+        // Apply the fraction to the potentially shortened list of up to 9 questions
+        const numberToShow = Math.ceil(maxQuestions.length * fraction);
+        return maxQuestions.slice(0, numberToShow);
+        };
+    
+        setQuestions(filteredQuestions());
+    
+      }, [selectedDifficulty]);
 
     const handleAnswerSelection = (selectedAnswerIndex) => {
-        const currentQuestion = questionsData[currentQuestionIndex];
+        const currentQuestion = questions[currentQuestionIndex];
         if (selectedAnswerIndex === currentQuestion.correctAnswerIndex) {
             setScore(score + 1);
         }
 
-        if (currentQuestionIndex === questionsData.length - 1) {
+        if (currentQuestionIndex === questions.length - 1) {
             setGameOver(true);
         } else {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -104,7 +158,7 @@ const MiniGame = () => {
                     <View style={styles.gameOverContainer}>
                         <Text style={styles.finishedText}>Finished!</Text>
                         <Text style={styles.resultText}>
-                            You got {score} out of {questionsData.length} correct!
+                            You got {score} out of {questions.length} correct!
                         </Text>
                         <Image
                             style={styles.frogStyle}
@@ -138,30 +192,47 @@ const MiniGame = () => {
         );
     }
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
-            </View>
-            <View style={styles.gameContainer}>
-                <View style={styles.questionContainer}>
-                    <Text style={styles.question}>{questionsData[currentQuestionIndex].question}</Text>
-                </View>
-                {questionsData[currentQuestionIndex].answers.map((answer, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        style={[styles.answerButton, index === hoveredIndex && styles.answerButtonHover]}
-                        activeOpacity={0.7}
-                        onPress={() => handleAnswerSelection(index)}
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        onMouseLeave={() => setHoveredIndex(null)}
-                    >
-                        <Text style={styles.answerText}>{answer}</Text>
+    if (questions.length > 0 && currentQuestionIndex < questions.length) {
+        return (
+            <View style={styles.container}>
+                {/* This are 3 temporary buttons to test the difficulty */}
+                <TouchableOpacity onPress={() => setSelectedDifficulty('easy')}>
+                    <Text style={styles.buttonText}>easy</Text>
                     </TouchableOpacity>
-                ))}
+
+                    <TouchableOpacity onPress={() => setSelectedDifficulty('medium')}>
+                    <Text style={styles.buttonText}>medium</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => setSelectedDifficulty('hard')}>
+                    <Text style={styles.buttonText}>hard</Text>
+                    </TouchableOpacity>
+
+                    <Text>Selected Value: {selectedDifficulty}</Text>
+                    {/* End of temporary code */}
+              <View style={styles.titleContainer}>
+                  <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
+              </View>
+                <View style={styles.gameContainer}>
+                    <View style={styles.questionContainer}>
+                        <Text style={styles.question}>{questions[currentQuestionIndex].question}</Text>
+                    </View>
+                    {questions[currentQuestionIndex].answers.map((answer, index) => (
+                        <TouchableOpacity
+                            key={index}
+                            style={[styles.answerButton, index === hoveredIndex && styles.answerButtonHover]}
+                            activeOpacity={0.7}
+                            onPress={() => handleAnswerSelection(index)}
+                            onMouseEnter={() => setHoveredIndex(index)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                        >
+                            <Text style={styles.answerText}>{answer}</Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
             </View>
-        </View>
-    );
+        ); 
+    }
 };
 
 const styles = StyleSheet.create({
