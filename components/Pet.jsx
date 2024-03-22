@@ -70,7 +70,7 @@ class Pet extends Component {
 
       growthlvl: 3, // growth level in which stages are based on
       hunger: 0,
-      happiness: 30,
+      happiness: 100,
       lastInteractionTime: new Date(),
       careMistakes: 0,
       pettype: 'frog',
@@ -114,12 +114,15 @@ class Pet extends Component {
 
 
   componentDidMount() {
-    this.loadHappinessFromStorage();
-    this.loadHungerFromStorage(); 
+    //this.loadHappinessFromStorage();
+    //this.loadHungerFromStorage();  both functions make happiness buggy, 
+    //                                and I wont able to test happiness by hardcoding values into constructor
 
-    // Simulate happiness increasing over time
-    // const interval = setInterval(() => {
-    //   if (this.state.happiness < 100) {
+    // Simulate happiness increasing over time  
+    // const interval = setInterval(() => {  needed to eliminate this function since it would 
+    //                                       constantly add happiness every second, so the changes in animation
+    //                                        wouldnt last long with this
+    // if (this.state.happiness < 100) {
     //     this.setState((prevState) => ({
     //       happiness: prevState.happiness + 10,
     //     }), () => {
@@ -248,11 +251,14 @@ class Pet extends Component {
     }
 
     // Select the image based on growth level
+    // Also determines the pet's emotion when it is at adult stage
     if (growthlvl === 0) {
-      currentImage = images[2]; // Baby stage image
-    } else if (growthlvl === 1 && this.state.happiness === 100) {
-      currentImage = images[2]
-    } else if(growthlvl === 1 && this.state.happiness <= 30) {
+      currentImage = images[6]; // Baby stage image
+    } else if (growthlvl === 1 && this.state.happiness >= 80) {
+      currentImage = images[3]
+    } else if (growthlvl === 1 && this.state.happiness >= 40){
+      currentImage = images[0]
+    } else if (growthlvl === 1 && (this.state.happiness <= 30 || this.state.happiness >= 30)) {
       currentImage = images[1]
     }
     
