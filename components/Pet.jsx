@@ -14,7 +14,7 @@ class Pet extends Component {
       frogimages: [
         require('./PetImages/FrogImages/animatedFrog.gif'),
         require('./PetImages/FrogImages/animatedFrog(sad).gif'),
-        require('./PetImages/FrogImages/animatedFrog(happy).gif'),
+        require('./PetImages/FrogImages/animatedFrog(angry).gif'),
         require('./PetImages/FrogImages/animatedFrog(happy).gif'),
         require('./PetImages/FrogImages/animatedFrog(dead).gif'),
         require('./babyfrog.png'),
@@ -70,13 +70,13 @@ class Pet extends Component {
 
       growthlvl: 3, // growth level in which stages are based on
       hunger: 0,
-      happiness: 100,
+      happiness: 30,
       lastInteractionTime: new Date(),
       careMistakes: 0,
       pettype: 'frog',
       images: [],
-      startDate: new Date("2024-03-16"), //Date the pet was created,  we need to get the info from pet creation
-      examDate: new Date("2024-03-18") // Date the exam is due , we need to get the info from pet creation, please implement this
+      startDate: new Date("2024-07-16"), //Date the pet was created,  we need to get the info from pet creation
+      examDate: new Date("2024-07-17") // Date the exam is due , we need to get the info from pet creation, please implement this
       
     };
   }
@@ -118,17 +118,17 @@ class Pet extends Component {
     this.loadHungerFromStorage(); 
 
     // Simulate happiness increasing over time
-    const interval = setInterval(() => {
-      if (this.state.happiness < 100) {
-        this.setState((prevState) => ({
-          happiness: prevState.happiness + 10,
-        }), () => {
-          this.saveHappinessToStorage();
-        });
-      } else {
-        clearInterval(interval);
-      }
-    }, 1000);
+    // const interval = setInterval(() => {
+    //   if (this.state.happiness < 100) {
+    //     this.setState((prevState) => ({
+    //       happiness: prevState.happiness + 10,
+    //     }), () => {
+    //       this.saveHappinessToStorage();
+    //     });
+    //   } else {
+    //     clearInterval(interval);
+    //   }
+    // }, 1000);
 
     // Receives event from Mypets.js when a new pet is created
     // Eventually this would need to be changed to function with choosing an existent pet data
@@ -178,19 +178,6 @@ class Pet extends Component {
         }));
       }
     }, 1000 * 60 * 15);
-    
-    handleClick = () => {
-      this.props.onChange(true);
-      console.log("Goodbye Click");
-    }
-
-    const goodbyeInterval = setInterval(() => {
-      const { examDate, startDate } = this.state;
-      if (examDate >= new Date()){
-        this.props.onChange(true)
-      }
-    })
-
 
     const growthInterval = setInterval(() => {
       const { examDate, startDate } = this.state;
@@ -252,16 +239,21 @@ class Pet extends Component {
   };
 
   render() {
-    const { happiness, name, images,growthlvl, currentImageIndex, careMistakes } = this.state;
+    const { examDate, name, images,growthlvl, happiness} = this.state;
     let currentImage;
     
+    if (examDate <= new Date()){
+      this.props.onChange(true)
+      console.log("AAAAAAA")
+    }
+
     // Select the image based on growth level
     if (growthlvl === 0) {
-      currentImage = images[5]; // Baby stage image
-    } else if (growthlvl === 1) {
-      currentImage = images[6]; // Young stage image
-    } else {
-      currentImage = images[0]; // Adult stage image
+      currentImage = images[2]; // Baby stage image
+    } else if (growthlvl === 1 && this.state.happiness === 100) {
+      currentImage = images[2]
+    } else if(growthlvl === 1 && this.state.happiness <= 30) {
+      currentImage = images[1]
     }
     
     //This piece of code changes the current image of the pet depending on the growth level
@@ -271,7 +263,6 @@ class Pet extends Component {
       <View>
         {images && images.length > 0 &&(
         <View style={{alignItems: 'center', position: 'relative'}}>
-            <TouchableOpacity onPress={()=>{handleClick()}} style={styles.debug} ><Text>< FontAwesome6 name="soap" size={200} color="#cdb4db" /> </Text></TouchableOpacity>
             <Image source={currentImage} style={styles.image} />
         </View>
         )}
@@ -298,15 +289,6 @@ const styles = StyleSheet.create({
     height: 210,
     marginTop: 70,
     marginBottom: 0,
-  },
-  debug: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: 'transparent',
-    elevation: 3,
   },
 });
 
