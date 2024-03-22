@@ -26,89 +26,6 @@ const VerticalStripes = ({ numberOfStripes }) => {
   );
 };
 
-/**
- * A simple button component. This component helps navigate to different pages.
- */
-const HomePage = ({ navigation }) => {
-
-const [appState, setAppState] = useState('active');
-const [notificationTimer, setNotificationTimer] = useState(null);
-const [isdead, setIsdead] = useState(false);
-
-  useEffect(() => {
-    const handleAppStateChange = (nextAppState) => {
-      if (appState === 'active' && nextAppState.match(/inactive|background/)) {
-        scheduleNotification(); // Need to add timer that works when the app is in the background
-      } else if (appState.match(/inactive|background/) && nextAppState === 'active') {
-        clearTimeout(notificationTimer); // Cancel notification timer if app comes back to foreground before 5 minutes
-      }
-      setAppState(nextAppState);
-    };
-
-    const subscription = AppState.addEventListener('change', handleAppStateChange);
-
-    return () => {
-      subscription.remove(); // Cleanup: remove event listener on unmount
-      if (notificationTimer) {
-        clearTimeout(notificationTimer); // Clear the notification timer if the component unmounts
-      }
-    };
-  }, [appState, notificationTimer]);
-
-  useEffect(() => {
-    handlePermissionRequest(); // Ask for notification permission when the component mounts
-  }, []); // Empty dependency array ensures it runs only once when component mounts
-
- 
-
-
-  // Listen to the event petDeath and petAlive to verify if the pet is dead
-  petEventEmitter.on('petDeath', () => {
-    // Set the "isdead" state to true, so the buttons stop appearing"
-    setIsdead(true);
-  });
-
-  petEventEmitter.on('petAlive', () => {
-    // Set the "isdead" state to false, so the buttons appear"
-    setIsdead(false);
-  });
-
-  const [goodbye, setGoodbye] = useState(false);
-  const handleGoodbye = (newValue) => {
-    setGoodbye(newValue);
-  }
-  return (
-    <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7', }}>
-      <LinearGradient colors={['#f7ffe7', '#edf5ff']} style={styles.container}>
-        
-        {!isdead && (
-        <View style={styles.topButtons}>
-          <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
-          <TouchableOpacity onPress={() => navigation.navigate('Stats')} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Flashcards')} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
-
-          <TouchableOpacity onPress={handleButtonPress} style={styles.iconButton}><Ionicons name="notifications" size={30} color="#517fa4" /></TouchableOpacity>
-          {isdead && (<View style={styles.topButtons}>
-            <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
-        </View>
-        
-        <View style={styles.petContainer}>
-          <VerticalStripes numberOfStripes={7} />
-          {goodbye ? <PetGoodbye /> : <Pet onChange={handleGoodbye} />}
-        </View>
-
-        {!isdead && (  
-        <View style={styles.bottomButtons}>
-          <TouchableOpacity onPress={() => navigation.navigate('Bath')} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
-        </View>)}
-      </LinearGradient>
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -166,5 +83,89 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
 });
+
+/**
+ * A simple button component. This component helps navigate to different pages.
+ */
+const HomePage = ({ navigation }) => {
+
+const [appState, setAppState] = useState('active');
+const [notificationTimer, setNotificationTimer] = useState(null);
+const [isdead, setIsdead] = useState(false);
+
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState) => {
+      if (appState === 'active' && nextAppState.match(/inactive|background/)) {
+        scheduleNotification(); // Need to add timer that works when the app is in the background
+      } else if (appState.match(/inactive|background/) && nextAppState === 'active') {
+        clearTimeout(notificationTimer); // Cancel notification timer if app comes back to foreground before 5 minutes
+      }
+      setAppState(nextAppState);
+    };
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      subscription.remove(); // Cleanup: remove event listener on unmount
+      if (notificationTimer) {
+        clearTimeout(notificationTimer); // Clear the notification timer if the component unmounts
+      }
+    };
+  }, [appState, notificationTimer]);
+
+  useEffect(() => {
+    handlePermissionRequest(); // Ask for notification permission when the component mounts
+  }, []); // Empty dependency array ensures it runs only once when component mounts
+
+ 
+
+
+  // Listen to the event petDeath and petAlive to verify if the pet is dead
+  petEventEmitter.on('petDeath', () => {
+    // Set the "isdead" state to true, so the buttons stop appearing"
+    setIsdead(true);
+  });
+
+  petEventEmitter.on('petAlive', () => {
+    // Set the "isdead" state to false, so the buttons appear"
+    setIsdead(false);
+  });
+
+  const [goodbye, setGoodbye] = useState(false);
+  const handleGoodbye = (newValue) => {
+    setGoodbye(newValue);
+  }
+  return (
+    <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7'}}>
+      <LinearGradient colors={['#f7ffe7', '#edf5ff']} style={styles.container}>
+        
+        {!isdead && (
+          <View style={styles.topButtons}>
+            <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
+            <TouchableOpacity onPress={() => navigation.navigate('Stats')} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Flashcards')} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
+  
+            <TouchableOpacity onPress={handleButtonPress} style={styles.iconButton}><Ionicons name="notifications" size={30} color="#517fa4" /></TouchableOpacity>
+          </View>
+        )}
+        
+        <View style={styles.petContainer}>
+          <VerticalStripes numberOfStripes={7} />
+          {goodbye ? <PetGoodbye /> : <Pet onChange={handleGoodbye} />}
+        </View>
+  
+        {!isdead && (  
+          <View style={styles.bottomButtons}>
+            <TouchableOpacity onPress={() => navigation.navigate('Bath')} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
+          </View>
+        )}
+      </LinearGradient>
+    </View>
+  );
+  
+};
 
 export default HomePage;
