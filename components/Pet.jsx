@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { petEventEmitter } from '../pages/EventEmitter';
 import { saveHappiness, loadHappiness } from './happinessStorage';
-import { saveHunger, loadHunger } from './hungerStorage';
-import { View, StyleSheet, Text, Image, TouchableOpacity, } from 'react-native';
-import { Ionicons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
+import { loadHunger } from './hungerStorage';
+import { View, StyleSheet, Text, Image } from 'react-native';
 import { saveSleep, loadSleepTime, loadSleep } from './sleepScheduleStorage';
 import { isPetAsleep } from '../utils/sleepSchedule';
 
@@ -114,38 +113,6 @@ class Pet extends Component {
   
     this.setState({ images });
   }
-
-  // Choose images depending on the pet type
-  updateImages = () => {
-    console.log(this.state.pettype);
-    switch (this.state.pettype) {
-      case 'frog':
-        images = this.state.frogimages;
-        break;
-      case 'dog':
-        images = this.state.dogimages;
-        break;
-      case 'cat':
-        images = this.state.catimages;
-        break;
-      case 'bunny':
-        images = this.state.bunnyimages;
-        break;
-      case 'penguin':
-        images = this.state.penguinimages;
-        break;
-      case 'pig':
-        images = this.state.pigimages;
-        break;
-      case 'bear':
-        images = this.state.bearimages;
-        break;
-      // More pets can be added here
-    };
-  
-    this.setState({ images });
-  }
-
 
   componentDidMount() {
     this.loadHappinessFromStorage();
