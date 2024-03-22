@@ -70,13 +70,13 @@ class Pet extends Component {
       name: 'Firulai',
 
       growthlvl: 3, // growth level in which stages are based on
-      hunger: 0,
-      happiness: 50,
+      hunger: 50,
+      happiness: 30,
       lastInteractionTime: new Date(),
       careMistakes: 0,
       pettype: 'frog',
       images: [],
-      startDate: new Date("2024-03-16"), //Date the pet was created,  we need to get the info from pet creation
+      startDate: new Date("2024-05-16"), //Date the pet was created,  we need to get the info from pet creation
       examDate: new Date("2024-05-18"), // Date the exam is due , we need to get the info from pet creation, please implement this
       sleepTime: '23:00',
       isAsleep: false,
@@ -185,8 +185,8 @@ class Pet extends Component {
 
     const growthInterval = setInterval(() => {
       const { examDate, startDate } = this.state;
-      const timeToExam = Math.ceil((examDate - startDate) / (1000 * 60 * 60 * 24));
-      const daysUntilExam = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
+      const timeToExam = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
+      const daysUntilExam = Math.ceil((examDate - startDate) / (1000 * 60 * 60 * 24));
      
       let growthLevel;
       if (daysUntilExam <= timeToExam / 3) {
@@ -279,15 +279,18 @@ class Pet extends Component {
     }
 
     // Select the image based on growth level
-    if (growthlvl === 0) {
+    if (growthlvl === 1) {
       currentImage = images[5]; // Baby stage image
-
-    } else if (growthlvl === 1 && this.state.happiness >= 80) {
-      currentImage = images[3]
-    } else if (growthlvl === 1 && this.state.happiness >= 40){
-      currentImage = images[0]
-    } else if (growthlvl === 1 && (this.state.happiness <= 30 || this.state.happiness >= 30)) {
-      currentImage = images[1]
+    } else if(growthlvl === 2){
+      currentImage = images[6] // Young state iamge
+    } else if(growthlvl === 3 && this.state.hunger >= 50){
+      currentImage = images[2]
+    } else if (growthlvl === 3 && this.state.happiness >= 80) {
+      currentImage = images[3] // Happy Adult Frog
+    } else if (growthlvl === 3 && this.state.happiness >= 40){
+      currentImage = images[0] // Regular Adult Frog
+    } else if (growthlvl === 3 && (this.state.happiness <= 30 || this.state.happiness >= 30)) {
+      currentImage = images[1] // Sad Adult Frog
     } else {
       currentImage = images[0]
     }
