@@ -39,7 +39,7 @@ const CreatePetScreen = ({ navigation }) => {
 
     console.log("New Pet:", newPet);
 
-    navigation.goBack();
+    navigation.navigate('Create study set', { petType: newPet.name });
   };
 
   return (

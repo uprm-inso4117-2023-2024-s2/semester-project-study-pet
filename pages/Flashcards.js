@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useFonts } from "expo-font";
 import { getStudySets, createOrUpdateFlashcard, removeFlashcard } from '../components/FlashcardManagement';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 import StudySet from '../components/StudySet';
 import FlashCard from '../components/FlashCard';
@@ -22,6 +24,13 @@ export default function Flashcards() {
   const [isFontLoaded] = useFonts({
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadStudySets();
+      return () => {};
+    }, [])
+  );
 
   useEffect(() => {
     loadStudySets();
