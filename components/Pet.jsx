@@ -75,8 +75,8 @@ class Pet extends Component {
       careMistakes: 0,
       pettype: 'frog',
       images: [],
-      startDate: new Date("2024-07-16"), //Date the pet was created,  we need to get the info from pet creation
-      examDate: new Date("2024-07-17") // Date the exam is due , we need to get the info from pet creation, please implement this
+      startDate: new Date("2024-03-16"), //Date the pet was created,  we need to get the info from pet creation
+      examDate: new Date("2024-05-18") // Date the exam is due , we need to get the info from pet creation, please implement this
       
     };
   }
