@@ -76,7 +76,7 @@ class Pet extends Component {
       pettype: 'frog',
       images: [],
       startDate: new Date("2024-03-16"), //Date the pet was created,  we need to get the info from pet creation
-      examDate: new Date("2024-03-18") // Date the exam is due , we need to get the info from pet creation, please implement this
+      examDate: new Date("2024-05-18") // Date the exam is due , we need to get the info from pet creation, please implement this
       
     };
   }
@@ -178,19 +178,6 @@ class Pet extends Component {
         }));
       }
     }, 1000 * 60 * 15);
-    
-    handleClick = () => {
-      this.props.onChange(true);
-      console.log("Goodbye Click");
-    }
-
-    const goodbyeInterval = setInterval(() => {
-      const { examDate, startDate } = this.state;
-      if (examDate >= new Date()){
-        this.props.onChange(true)
-      }
-    })
-
 
     const growthInterval = setInterval(() => {
       const { examDate, startDate } = this.state;
@@ -252,9 +239,14 @@ class Pet extends Component {
   };
 
   render() {
-    const { happiness, name, images,growthlvl, currentImageIndex, careMistakes } = this.state;
+    const { examDate, name, images,growthlvl } = this.state;
     let currentImage;
     
+    if (examDate <= new Date()){
+      this.props.onChange(true)
+      console.log("AAAAAAA")
+    }
+
     // Select the image based on growth level
     if (growthlvl === 0) {
       currentImage = images[5]; // Baby stage image
@@ -271,7 +263,6 @@ class Pet extends Component {
       <View>
         {images && images.length > 0 &&(
         <View style={{alignItems: 'center', position: 'relative'}}>
-            <TouchableOpacity onPress={()=>{handleClick()}} style={styles.debug} ><Text>< FontAwesome6 name="soap" size={200} color="#cdb4db" /> </Text></TouchableOpacity>
             <Image source={currentImage} style={styles.image} />
         </View>
         )}
@@ -298,15 +289,6 @@ const styles = StyleSheet.create({
     height: 210,
     marginTop: 70,
     marginBottom: 0,
-  },
-  debug: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: 'transparent',
-    elevation: 3,
   },
 });
 
