@@ -76,8 +76,8 @@ class Pet extends Component {
       careMistakes: 0,
       pettype: 'frog',
       images: [],
-      startDate: new Date("2024-05-16"), //Date the pet was created,  we need to get the info from pet creation
-      examDate: new Date("2024-05-18"), // Date the exam is due , we need to get the info from pet creation, please implement this
+      startDate: new Date("2024-05-24"), //Date the pet was created,  we need to get the info from pet creation
+      examDate: new Date("2024-05-26"), // Date the exam is due , we need to get the info from pet creation, please implement this
       sleepTime: '23:00',
       isAsleep: false,
     };
@@ -194,7 +194,7 @@ class Pet extends Component {
       } else if (daysUntilExam <= (2 * timeToExam) / 3) {
         growthLevel = 2;
       } else {
-        growthLevel = 1;
+        growthLevel = 3;
       }
 
       this.setState({ growthlvl: growthLevel });
