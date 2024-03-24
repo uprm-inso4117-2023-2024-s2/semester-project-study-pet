@@ -1,10 +1,10 @@
 {
     "projectName": "Study Pet",
     "managers": ["irsaris", "PinkSylvie"],
-    "milestoneName": "Milestone #2",
+    "milestoneName": "Milestone #3",
     "projectedMilestoneGroupGrade": 100.0,
-    "milestoneStartDate": "2024-02-26",
-    "milestoneEndDate": "2024-03-21",
+    "milestoneStartDate": "2024-03-25",
+    "milestoneEndDate": "2024-04-26",
     "lectureTopicTaskQuota": 4, 
     "countOpenIssues": true
   }
