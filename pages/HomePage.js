@@ -94,7 +94,9 @@ const HomePage = ({ navigation }) => {
           <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Bath') : navigation.navigate('Bath')} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
           <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Eat') : navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
           <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Play') : navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
-        </View>)}
+          <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={styles.iconButton}><Ionicons name="cart" size={30} color="#f7d794" /></TouchableOpacity>
+        </View> 
+        )}
       </LinearGradient>
     </View>
   );
