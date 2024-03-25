@@ -25,6 +25,32 @@ const VerticalStripes = ({ numberOfStripes }) => {
   );
 };
 
+// sound objects
+
+const soundObjects = {
+  'bath': new Audio.Sound(),
+  'button': new Audio.Sound(),
+  'eat': new Audio.Sound(),
+  'game': new Audio.Sound(),
+  'shop': new Audio.Sound(),
+};
+
+// loads sound files 
+
+const loadSoundFiles = async () => {
+  try {
+    await soundObjects.bath.loadAsync(require('../assets/sounds/bath.mp3'));
+    await soundObjects.button.loadAsync(require('../assets/sounds/button.mp3'));
+    await soundObjects.eat.loadAsync(require('../assets/sounds/eat.mp3'));
+    await soundObjects.game.loadAsync(require('../assets/sounds/game.mp3'));
+    await soundObjects.shop.loadAsync(require('../assets/sounds/shop.mp3'));
+  } catch (error) {
+    console.error('Error loading sound files', error);
+  }
+}
+
+
+
 /**
  * A simple button component. This component helps navigate to different pages.
  */
@@ -60,6 +86,36 @@ const HomePage = ({ navigation }) => {
     };
 
     checkPermission();
+  }, []);
+
+  // load sound when component mounts
+
+  useEffect(() => {
+    loadSoundFiles();
+  }, []);
+
+  // play sounds
+
+  const playSound = async (sound) => {
+    try {
+      await soundObjects[sound].replayAsync();
+    } catch (error) {
+      console.error('Error playing sound', error);
+    }
+  }
+
+  // Unload sound files when component unmounts
+
+  useEffect(() => {
+    return () => {
+      Object.values(soundObjects).forEach(async (soundObject) => {
+        try {
+          await soundObject.unloadAsync();
+        } catch (error) {
+          console.error('Error unloading sound', error);
+        }
+      });
+    };
   }, []);
 
   // Listen to the event petDeath and petAlive to verify if the pet is dead
@@ -107,10 +163,10 @@ const HomePage = ({ navigation }) => {
         
         {!isdead && (
         <View style={styles.topButtons}>
-          <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
-          <TouchableOpacity onPress={() => navigation.navigate('Stats')} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Flashcards')} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
+          <TouchableOpacity onPressIn={() => (playSound('button'), navigation.navigate('Mypets'))} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
+          <TouchableOpacity onPressIn={() => (playSound('button'), navigation.navigate('Stats'))} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
+          <TouchableOpacity onPressIn={() => (playSound('button'), navigation.navigate('Flashcards'))} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
+          <TouchableOpacity onPressIn={() => (playSound('button'), navigation.navigate('Settings'))} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
         </View>)}
 
         {isdead && (<View style={styles.topButtons}>
@@ -125,11 +181,11 @@ const HomePage = ({ navigation }) => {
         {!isdead && (  
         <View style={styles.bottomButtons}>
 
-          <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Bath') : navigation.navigate('Bath')} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Eat') : navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Play') : navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('PlayerStats') : navigation.navigate('PlayerStats')} style={styles.iconButton}><Ionicons name="person-circle-outline" size={30} color="#87CEEB" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={styles.iconButton}><Ionicons name="cart" size={30} color="#f7d794" /></TouchableOpacity>
+          <TouchableOpacity onPressIn={() => isAsleep ? showSleepAlert('Bath') : (playSound('bath'), navigation.navigate('Bath'))} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
+          <TouchableOpacity onPressIn={() => isAsleep ? showSleepAlert('Eat') : (playSound('eat'), navigation.navigate('Eat'))} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
+          <TouchableOpacity onPressIn={() => isAsleep ? showSleepAlert('Play') :(playSound('game'), navigation.navigate('Game'))} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
+          <TouchableOpacity onPressIn={() => isAsleep ? showSleepAlert('PlayerStats') : (playSound('button'), navigation.navigate('PlayerStats'))} style={styles.iconButton}><Ionicons name="person-circle-outline" size={30} color="#87CEEB" /></TouchableOpacity>
+          <TouchableOpacity onPressIn={() => (playSound('shop'), navigation.navigate('Shop'))} style={styles.iconButton}><Ionicons name="cart" size={30} color="#f7d794" /></TouchableOpacity>
         </View> 
         )}
 
