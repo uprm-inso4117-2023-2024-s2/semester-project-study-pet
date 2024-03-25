@@ -24,7 +24,7 @@ const CreatePetScreen = ({ navigation }) => {
 
 
 
-function MyPetScreen() {
+function Mypets() {
   const navigation = useNavigation();
   const [numberOfPets, setNumberOfPets] = useState(1);
   const pets = ['Current Pet', 'Create New Pet 1', 'Create New Pet 2'];
@@ -160,5 +160,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
-
-export default MyPetScreen;
+}
+export default Mypets;
