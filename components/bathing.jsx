@@ -80,7 +80,7 @@ const BathGame = () => {
 
 useEffect(() => {
   if (gameOver) {
-      const newHappiness = happiness + score;
+      const newHappiness = score * 10;
       const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
       setHappiness(cappedHappiness);
       saveHappiness(cappedHappiness);
