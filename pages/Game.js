@@ -2,8 +2,17 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text } from 'react-native';
 import MiniGame from '../components/minigame'; // Import the Minigame component
+import { useFonts } from "expo-font";
+
 
 export default function App() {
+  const [isFontLoaded] = useFonts({
+    "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
+  });
+
+  if (!isFontLoaded) {
+    return null; // for now, render nothing
+  }
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>

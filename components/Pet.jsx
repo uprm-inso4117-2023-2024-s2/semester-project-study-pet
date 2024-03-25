@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { petEventEmitter } from '../pages/EventEmitter';
 import { saveHappiness, loadHappiness } from './happinessStorage';
-import { saveHunger, loadHunger } from './hungerStorage';
-import { View, StyleSheet, Text, Image, TouchableOpacity, } from 'react-native';
-import { Ionicons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
+import { loadHunger } from './hungerStorage';
+import { View, StyleSheet, Text, Image } from 'react-native';
+import { saveSleep, loadSleepTime, loadSleep } from './sleepScheduleStorage';
+import { isPetAsleep } from '../utils/sleepSchedule';
 
 class Pet extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class Pet extends Component {
       frogimages: [
         require('./PetImages/FrogImages/animatedFrog.gif'),
         require('./PetImages/FrogImages/animatedFrog(sad).gif'),
-        require('./PetImages/FrogImages/animatedFrog(happy).gif'),
+        require('./PetImages/FrogImages/animatedFrog(angry).gif'),
         require('./PetImages/FrogImages/animatedFrog(happy).gif'),
         require('./PetImages/FrogImages/animatedFrog(dead).gif'),
         require('./babyfrog.png'),
@@ -75,9 +76,10 @@ class Pet extends Component {
       careMistakes: 0,
       pettype: 'frog',
       images: [],
-      startDate: new Date("2024-03-16"), //Date the pet was created,  we need to get the info from pet creation
-      examDate: new Date("2024-05-18") // Date the exam is due , we need to get the info from pet creation, please implement this
-      
+      startDate: new Date("2024-05-24"), //Date the pet was created,  we need to get the info from pet creation
+      examDate: new Date("2024-05-26"), // Date the exam is due , we need to get the info from pet creation, please implement this
+      sleepTime: '23:00',
+      isAsleep: false,
     };
   }
 
@@ -112,23 +114,23 @@ class Pet extends Component {
     this.setState({ images });
   }
 
-
   componentDidMount() {
-    this.loadHappinessFromStorage();
-    this.loadHungerFromStorage(); 
+    //this.loadHappinessFromStorage();
+    //this.loadHungerFromStorage(); 
+    this.loadSleepScheduleFromStorage();
 
     // Simulate happiness increasing over time
-    const interval = setInterval(() => {
-      if (this.state.happiness < 100) {
-        this.setState((prevState) => ({
-          happiness: prevState.happiness + 10,
-        }), () => {
-          this.saveHappinessToStorage();
-        });
-      } else {
-        clearInterval(interval);
-      }
-    }, 1000);
+    // const interval = setInterval(() => {
+    //   if (this.state.happiness < 100) {
+    //     this.setState((prevState) => ({
+    //       happiness: prevState.happiness + 10,
+    //     }), () => {
+    //       this.saveHappinessToStorage();
+    //     });
+    //   } else {
+    //     clearInterval(interval);
+    //   }
+    // }, 1000);
 
     // Receives event from Mypets.js when a new pet is created
     // Eventually this would need to be changed to function with choosing an existent pet data
@@ -168,6 +170,8 @@ class Pet extends Component {
 
     // Check for care mistakes every 15 minutes
     const careMistakeInterval = setInterval(() => {
+      if (this.state.isAsleep) return; // Don't count care mistakes when pet is asleep
+
       const currentTime = new Date();
       const lastInteractionTime = new Date(this.state.lastInteractionTime);
       const timeDifference = (currentTime - lastInteractionTime) / (1000 * 60); // in minutes
@@ -181,8 +185,8 @@ class Pet extends Component {
 
     const growthInterval = setInterval(() => {
       const { examDate, startDate } = this.state;
-      const timeToExam = Math.ceil((examDate - startDate) / (1000 * 60 * 60 * 24));
-      const daysUntilExam = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
+      const timeToExam = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
+      const daysUntilExam = Math.ceil((examDate - startDate) / (1000 * 60 * 60 * 24));
      
       let growthLevel;
       if (daysUntilExam <= timeToExam / 3) {
@@ -190,7 +194,7 @@ class Pet extends Component {
       } else if (daysUntilExam <= (2 * timeToExam) / 3) {
         growthLevel = 2;
       } else {
-        growthLevel = 1;
+        growthLevel = 3;
       }
 
       this.setState({ growthlvl: growthLevel });
@@ -198,6 +202,12 @@ class Pet extends Component {
       if (growthLevel >= 3) clearInterval(growthInterval); // Stop growth after adult stage
     }, 0); 
     
+
+    // Check for sleep time every minute
+    const sleepInterval = setInterval(() => {
+      const isAsleep = isPetAsleep(this.state.sleepTime);
+      this.setState({ isAsleep }, () => this.saveSleepToStorage(isAsleep) );
+    }, 1000 * 60);
   }
 
   loadHappinessFromStorage = async () => {
@@ -223,6 +233,27 @@ class Pet extends Component {
     }
   };
 
+  loadSleepScheduleFromStorage = async () => {
+    try {
+      const sleepTime = await loadSleepTime();
+      const isAsleep = await loadSleep();
+      this.setState({ 
+        sleepTime,
+        isAsleep: isAsleep === 'true',
+      });
+    } catch (error) {
+      console.error('Error loading sleep schedule:', error);
+    }
+  };
+
+  saveSleepToStorage = async (isAsleep) => {
+    try {
+      await saveSleep(isAsleep);
+    } catch (error) {
+      console.error('Error saving sleep value:', error);
+    }
+  };
+
   saveHappinessToStorage = async () => {
     const { happiness } = this.state;
     try {
@@ -239,7 +270,7 @@ class Pet extends Component {
   };
 
   render() {
-    const { examDate, name, images,growthlvl } = this.state;
+    const { examDate, name, images, growthlvl, isAsleep } = this.state;
     let currentImage;
     
     if (examDate <= new Date()){
@@ -248,13 +279,28 @@ class Pet extends Component {
     }
 
     // Select the image based on growth level
-    if (growthlvl === 0) {
+    if (growthlvl === 1) {
       currentImage = images[5]; // Baby stage image
-    } else if (growthlvl === 1) {
-      currentImage = images[6]; // Young stage image
+    } else if(growthlvl === 2){
+      currentImage = images[6] // Young state iamge
+    } else if(growthlvl === 3 && this.state.hunger >= 50){
+      currentImage = images[2]
+    } else if (growthlvl === 3 && this.state.happiness >= 80) {
+      currentImage = images[3] // Happy Adult Frog
+    } else if (growthlvl === 3 && this.state.happiness >= 40){
+      currentImage = images[0] // Regular Adult Frog
+    } else if (growthlvl === 3 && (this.state.happiness <= 30 || this.state.happiness >= 30)) {
+      currentImage = images[1] // Sad Adult Frog
     } else {
-      currentImage = images[0]; // Adult stage image
+      currentImage = images[0]
     }
+
+
+    //else if (growthlvl === 1) {
+    //   currentImage = images[6]; // Young stage image
+    // } else {
+    //   currentImage = images[0]; // Adult stage image
+    // }
     
     //This piece of code changes the current image of the pet depending on the growth level
     //<Image source={images[currentImageIndex]} style={styles.image} />  this is the original code for the pet photo
@@ -263,7 +309,9 @@ class Pet extends Component {
       <View>
         {images && images.length > 0 &&(
         <View style={{alignItems: 'center', position: 'relative'}}>
-            <Image source={currentImage} style={styles.image} />
+            {isAsleep ? <Text>Your pet is asleep Zz</Text> :
+              <Image source={currentImage} style={styles.image} />
+            }
         </View>
         )}
         <Text style={styles.name}>{name}</Text>

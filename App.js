@@ -12,6 +12,8 @@ import Game from "./pages/Game";
 import Eat from "./pages/Eat";
 import Bath from "./pages/Bath";
 import Shop from "./pages/Shop";
+import PetToStudySetCreation from './pages/PetToStudySetCreation';
+import CreatePetScreen from './pages/CreatePetScreen';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +37,8 @@ export default function App() {
             <Shop studyPoints={studyPoints} setStudyPoints={setStudyPoints} />
           )}
         />
+        <Stack.Screen name="Create study set" component={PetToStudySetCreation} />
+        <Stack.Screen name="CreatePetScreen" component={CreatePetScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
 import Pet from '../components/Pet';
 import { petEventEmitter } from './EventEmitter';
 import PetGoodbye from '../components/PetGoodbye';
+import {loadIsAsleepFromStorage} from '../components/sleepScheduleStorage';
 
 const VerticalStripes = ({ numberOfStripes }) => {
   return (
@@ -42,7 +43,31 @@ const HomePage = ({ navigation }) => {
   const [goodbye, setGoodbye] = useState(false);
   const handleGoodbye = (newValue) => {
     setGoodbye(newValue);
-  }
+  };
+  
+  const [isAsleep, setIsAsleep] = useState(false);
+
+  useEffect(() => {
+    loadIsAsleepFromStorage(setIsAsleep);
+
+    const sleepInterval = setInterval(async () => {
+      await loadIsAsleepFromStorage(setIsAsleep);
+    }, 1000 * 60);
+
+    return () => clearInterval(sleepInterval);
+  }, [isAsleep]);
+
+  const showSleepAlert = (action) => {
+    Alert.alert(
+      `${action} Not Allowed!`,
+      'Your pet is sleeping and cannot be disturbed. Wait until it wakes up!',
+      [
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
     <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7', }}>
       <LinearGradient colors={['#f7ffe7', '#edf5ff']} style={styles.container}>
@@ -66,9 +91,9 @@ const HomePage = ({ navigation }) => {
 
         {!isdead && (  
         <View style={styles.bottomButtons}>
-          <TouchableOpacity onPress={() => navigation.navigate('Bath')} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Bath') : navigation.navigate('Bath')} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Eat') : navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Play') : navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={styles.iconButton}><Ionicons name="cart" size={30} color="#f7d794" /></TouchableOpacity>
         </View> 
         )}
