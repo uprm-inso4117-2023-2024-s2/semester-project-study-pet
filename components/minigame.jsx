@@ -1,58 +1,109 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { React, useState, useEffect } from 'react';
+import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { loadHappiness, saveHappiness } from './happinessStorage';
+import questionsData from '../assets/data/questions.json'
 
-const questionsData = [
-  {
-    question: 'What is the capital of France?',
-    answers: ['London', 'Paris', 'Berlin', 'Rome'],
-    correctAnswerIndex: 1,
-  },
-  {
-    question: 'What is the largest planet in our solar system?',
-    answers: ['Jupiter', 'Mars', 'Earth', 'Venus'],
-    correctAnswerIndex: 0,
-  },
-  {
-    question: 'Who wrote "To Kill a Mockingbird"?',
-    answers: ['Stephen King', 'Harper Lee', 'J.K. Rowling', 'Charles Dickens'],
-    correctAnswerIndex: 1,
-  },
-  {
-    question: 'Which element has the chemical symbol "Fe"?',
-    answers: ['Iron', 'Gold', 'Silver', 'Copper'],
-    correctAnswerIndex: 0,
-  },
-  {
-    question: 'What is the powerhouse of the cell?',
-    answers: ['Nucleus', 'Cell membrane', 'Mitochondria', 'Endoplasmic reticulum'],
-    correctAnswerIndex: 2,
-  },
-];
+// Function to shuffle an array (Fisher-Yates shuffle algorithm)
+const shuffleArray = (array) => {
+  let currentIndex = array.length,  randomIndex;
+  
+  // While there remain elements to shuffle...
+  while (currentIndex !== 0) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
 
 const MiniGame = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [score, setScore] = useState(0);
+  const [happiness, setHappiness] = useState(0);
+  const [selectedDifficulty, setSelectedDifficulty] = useState('medium'); // The selectedDifficulty has to be changed to the current pet difficulty
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+
+    const filteredQuestions = () => {
+      const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
+      //console.log("difficulty:", selectedDifficulty);
+
+      // Ensure the array does not exceed 9 elements
+      const maxQuestions = shuffledQuestions.slice(0, 9);
+
+      let fraction;
+      switch (selectedDifficulty) {
+        case "easy":
+          fraction = 1 / 3;
+          break;
+        case "medium":
+          fraction = 2 / 3;
+          break;
+        case "hard":
+          fraction = 1; // All questions
+          break;
+        default:
+          fraction = 1 / 3;
+      }
+
+      // Apply the fraction to the potentially shortened list of up to 9 questions
+      const numberToShow = Math.ceil(maxQuestions.length * fraction);
+      return maxQuestions.slice(0, numberToShow);
+    };
+
+    setQuestions(filteredQuestions());
+
+  }, [selectedDifficulty]);
+
+  // Function to handle answer selection  const [happiness, setHappiness] = useState(0);
+ 
 
   const handleAnswerSelection = (selectedAnswerIndex) => {
-    const currentQuestion = questionsData[currentQuestionIndex];
+    const currentQuestion = questions[currentQuestionIndex];
     if (selectedAnswerIndex === currentQuestion.correctAnswerIndex) {
       setScore(score + 1);
     }
 
-    if (currentQuestionIndex === questionsData.length - 1) {
+    if (currentQuestionIndex === questions.length - 1) {
       setGameOver(true);
     } else {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
   };
 
-  const restartGame = () => {
-    setCurrentQuestionIndex(0);
-    setScore(0);
-    setGameOver(false);
-  };
+
+    useEffect(() => {
+      const loadHappinessData = async () => {
+          try {
+              const loadedHappiness = await loadHappiness();
+              setHappiness(loadedHappiness);
+          } catch (error) {
+              console.error('Error loading happiness data:', error);
+          }
+      };
+
+      loadHappinessData();
+  }, []);
+
+
+  // Update happiness only when the game is over and ensure it doesn't exceed 100
+  useEffect(() => {
+      if (gameOver) {
+          const newHappiness = happiness + score;
+          const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
+          setHappiness(cappedHappiness);
+          saveHappiness(cappedHappiness);
+      }
+  }, [gameOver, score, happiness]);
 
   if (gameOver) {
     return (
@@ -61,38 +112,73 @@ const MiniGame = () => {
           <View style={styles.gameOverContainer}>
               <Text style={styles.finishedText}>Finished!</Text>
               <Text style={styles.resultText}>
-                You got {score} out of {questionsData.length} correct!
+                You got {score} out of {questions.length} correct!
               </Text>
-              <TouchableOpacity style={styles.button} onPress={restartGame}>
-                <Text style={styles.buttonText}>Play Again</Text>
-              </TouchableOpacity>
+              <Image
+                            style={styles.frogStyle}
+                            source={require('../assets/pets/frog/Frog.jpg')}>
+                        </Image>
+
+
+
+                        <View style={styles.hrow}>
+                            <Text style={styles.statText}>
+                                Happiness: {happiness}
+                            </Text>
+                            <Image
+                                style={styles.image}
+                                source={require('../components/happiness.jpg')}
+                            >
+                            </Image>
+                        </View>
           </View>
         </View>
       </View>
     );
   }
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.gameContainer}>
-        <View style={styles.questionContainer}>
-          <Text style={styles.question}>{questionsData[currentQuestionIndex].question}</Text>
+  if (questions.length > 0 && currentQuestionIndex < questions.length) {
+    return (
+      <View style={styles.container}>
+          {/* This are 3 temporary buttons to test the difficulty */}
+          <TouchableOpacity onPress={() => setSelectedDifficulty('easy')}>
+              <Text style={styles.buttonText}>easy</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => setSelectedDifficulty('medium')}>
+              <Text style={styles.buttonText}>medium</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => setSelectedDifficulty('hard')}>
+              <Text style={styles.buttonText}>hard</Text>
+            </TouchableOpacity>
+
+            <Text>Selected Value: {selectedDifficulty}</Text>
+            {/* End of temporary code */}
+
+        <View style={styles.gameContainer}>
+          <View style={styles.questionContainer}>
+            <Text style={styles.question}>{questions[currentQuestionIndex].question}</Text>
+          </View>
+          {questions[currentQuestionIndex].answers.map((answer, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[styles.answerButton, index === hoveredIndex && styles.answerButtonHover]}
+              activeOpacity={0.7}
+              onPress={() => handleAnswerSelection(index)}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              <Text style={styles.answerText}>{answer}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
-        {questionsData[currentQuestionIndex].answers.map((answer, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[styles.answerButton, index === hoveredIndex && styles.answerButtonHover]}
-            activeOpacity={0.7}
-            onPress={() => handleAnswerSelection(index)}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            <Text style={styles.answerText}>{answer}</Text>
-          </TouchableOpacity>
-        ))}
       </View>
-    </View>
-  );
+    );
+  }
+  else {
+    return <View><Text>Loading questions...</Text></View>;
+  }
 };
 
 const styles = StyleSheet.create({
@@ -103,6 +189,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: 'transparent', 
   },
+  titleContainer: {
+    marginTop: 10,
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 15,
+    marginVertical: 10,
+    marginHorizontal: 8,
+},
+titleText: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: 'black',
+    fontFamily: 'Jua-Regular',
+    textAlign: 'center',
+    textAlignVertical: 'top',
+},
   gameContainer: {
     backgroundColor: 'white',
     padding: 40,
@@ -175,19 +277,28 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     textAlign: 'center',
+    marginRight: 10,
     fontFamily: 'Jua-Regular',
   },
-  button: {
-    backgroundColor: '#6C99BB',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 10,
+  hrow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+},
+frogStyle: {
+    width: 200,
+    height: 200,
+    marginTop: 5,
+    marginBottom: 20,
+},
+image: {
+    width: 50,
+    height: 50,
     marginTop: 20,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'black',
+    resizeMode: 'contain',
+},
+statText: {
+    fontSize: 26,
+    marginRight: 5,
     fontFamily: 'Jua-Regular',
   },
 });

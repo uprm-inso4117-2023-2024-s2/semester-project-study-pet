@@ -1,22 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import Pet from '../components/Pet';
+import Pet, { loadHappiness, loadHunger } from '../components/Pet';
 
 function Stats() {
+
+  const pet = new Pet();
+
   const navigation = useNavigation();
+  const [happiness, setHappiness] = useState(pet.state.happiness);
+  const [hunger, setHunger] = useState(pet.state.hunger);
+
+  useEffect(() => {
+    const loadPetData = async () => {
+      try {
+        // Load happiness value from storage
+        const storedHappiness = await loadHappiness();
+        const storedHunger = await loadHunger();
+        setHappiness(storedHappiness);
+        setHunger(storedHunger);
+      } catch (error) {
+        console.error('Error loading pet data:', error);
+      }
+    };
+    loadPetData();
+  }, []);
+
 
   const goBack = () => {
     navigation.goBack();
   };
-const pet = new Pet();
-
 
   return (
     <LinearGradient colors={['#fcf188', '#fffbcf']} style={styles.container}>
       {/* Header */}
+    <ScrollView>
       <View style={styles.header}>
         <TouchableOpacity onPress={goBack} style={styles.backButton}>
           <View style={styles.circle}></View>
@@ -24,14 +44,17 @@ const pet = new Pet();
         </TouchableOpacity>
         <Text style={styles.headerText}>Stats</Text>
       </View>
+      
 
       {/* Dog Paw Icon */}
+      
       <View style={styles.pawContainer}>
         <Ionicons name="paw" size={90} color="#3498db" />
       </View>
+      
 
       {/* Stats Section */}
-      <ScrollView contentContainerStyle={styles.statsContainer}>
+      
         <View style={styles.statsContent}>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#3498db' }]}>Pet Name:</Text>
@@ -51,11 +74,11 @@ const pet = new Pet();
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#f39c12' }]}>Hunger:</Text>
-            <Text style={[styles.statsValue, { color: '#f39c12' }]}>{pet.state.hunger}%</Text>
+            <Text style={[styles.statsValue, { color: '#f39c12' }]}>{hunger}%</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Happiness:</Text>
-            <Text style={[styles.statsValue, { color: '#e67e22' }]}>{pet.state.happiness}%</Text>
+            <Text style={[styles.statsValue, { color: '#e67e22' }]}>{happiness}%</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Care Mistakes:</Text>
@@ -72,6 +95,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff9c4',
     padding: 20,
+    maxHeight: '90%',
+     // Enable vertical scrolling
   },
   header: {
     flexDirection: 'row',
@@ -107,27 +132,27 @@ const styles = StyleSheet.create({
     marginBottom: -30,
   },
   statsContainer: {
-    flex: 1,
+    flex: 5,
     justifyContent: 'center',
     alignItems: 'center',
   },
   statsBox: {
-  marginBottom: 10,
-  backgroundColor: 'white',
-  borderWidth: 2,
-  borderColor: '#3498db',
-  padding: 10,
-  borderRadius: 10,
-  width: '80%',
-  shadowColor: '#000',
-  shadowOffset: {
-    width: 0,
-    height: 2,
+    marginBottom: 10,
+    backgroundColor: 'white',
+    borderWidth: 2,
+    borderColor: '#3498db',
+    padding: 5,
+    borderRadius: 10,
+    width: '80%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.80,
+    elevation: 3,
   },
-  shadowOpacity: 0.25,
-  shadowRadius: 1.80,
-  elevation: 3,
-},
 
   statsLabel: {
     fontSize: 18,
