@@ -15,7 +15,7 @@ class Pet extends Component {
       frogimages: [
         require('./PetImages/FrogImages/animatedFrog.gif'),
         require('./PetImages/FrogImages/animatedFrog(sad).gif'),
-        require('./PetImages/FrogImages/animatedFrog(happy).gif'),
+        require('./PetImages/FrogImages/animatedFrog(angry).gif'),
         require('./PetImages/FrogImages/animatedFrog(happy).gif'),
         require('./PetImages/FrogImages/animatedFrog(dead).gif'),
         require('./babyfrog.png'),
@@ -76,8 +76,8 @@ class Pet extends Component {
       careMistakes: 0,
       pettype: 'frog',
       images: [],
-      startDate: new Date("2024-03-16"), //Date the pet was created,  we need to get the info from pet creation
-      examDate: new Date("2024-05-18"), // Date the exam is due , we need to get the info from pet creation, please implement this
+      startDate: new Date("2024-05-24"), //Date the pet was created,  we need to get the info from pet creation
+      examDate: new Date("2024-05-26"), // Date the exam is due , we need to get the info from pet creation, please implement this
       sleepTime: '23:00',
       isAsleep: false,
     };
@@ -115,22 +115,22 @@ class Pet extends Component {
   }
 
   componentDidMount() {
-    this.loadHappinessFromStorage();
-    this.loadHungerFromStorage(); 
+    //this.loadHappinessFromStorage();
+    //this.loadHungerFromStorage(); 
     this.loadSleepScheduleFromStorage();
 
     // Simulate happiness increasing over time
-    const interval = setInterval(() => {
-      if (this.state.happiness < 100) {
-        this.setState((prevState) => ({
-          happiness: prevState.happiness + 10,
-        }), () => {
-          this.saveHappinessToStorage();
-        });
-      } else {
-        clearInterval(interval);
-      }
-    }, 1000);
+    // const interval = setInterval(() => {
+    //   if (this.state.happiness < 100) {
+    //     this.setState((prevState) => ({
+    //       happiness: prevState.happiness + 10,
+    //     }), () => {
+    //       this.saveHappinessToStorage();
+    //     });
+    //   } else {
+    //     clearInterval(interval);
+    //   }
+    // }, 1000);
 
     // Receives event from Mypets.js when a new pet is created
     // Eventually this would need to be changed to function with choosing an existent pet data
@@ -185,8 +185,8 @@ class Pet extends Component {
 
     const growthInterval = setInterval(() => {
       const { examDate, startDate } = this.state;
-      const timeToExam = Math.ceil((examDate - startDate) / (1000 * 60 * 60 * 24));
-      const daysUntilExam = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
+      const timeToExam = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
+      const daysUntilExam = Math.ceil((examDate - startDate) / (1000 * 60 * 60 * 24));
      
       let growthLevel;
       if (daysUntilExam <= timeToExam / 3) {
@@ -194,7 +194,7 @@ class Pet extends Component {
       } else if (daysUntilExam <= (2 * timeToExam) / 3) {
         growthLevel = 2;
       } else {
-        growthLevel = 1;
+        growthLevel = 3;
       }
 
       this.setState({ growthlvl: growthLevel });
@@ -279,13 +279,28 @@ class Pet extends Component {
     }
 
     // Select the image based on growth level
-    if (growthlvl === 0) {
+    if (growthlvl === 1) {
       currentImage = images[5]; // Baby stage image
-    } else if (growthlvl === 1) {
-      currentImage = images[6]; // Young stage image
+    } else if(growthlvl === 2){
+      currentImage = images[6] // Young state iamge
+    } else if(growthlvl === 3 && this.state.hunger >= 50){
+      currentImage = images[2]
+    } else if (growthlvl === 3 && this.state.happiness >= 80) {
+      currentImage = images[3] // Happy Adult Frog
+    } else if (growthlvl === 3 && this.state.happiness >= 40){
+      currentImage = images[0] // Regular Adult Frog
+    } else if (growthlvl === 3 && (this.state.happiness <= 30 || this.state.happiness >= 30)) {
+      currentImage = images[1] // Sad Adult Frog
     } else {
-      currentImage = images[0]; // Adult stage image
+      currentImage = images[0]
     }
+
+
+    //else if (growthlvl === 1) {
+    //   currentImage = images[6]; // Young stage image
+    // } else {
+    //   currentImage = images[0]; // Adult stage image
+    // }
     
     //This piece of code changes the current image of the pet depending on the growth level
     //<Image source={images[currentImageIndex]} style={styles.image} />  this is the original code for the pet photo
