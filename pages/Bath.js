@@ -6,6 +6,24 @@ import BathGame from '../components/bathing'; // Changed import
 
 const Bath = ({ navigation }) => {
 
+  const [poopCount, setPoopCount] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (poopCount < 3) {
+        setPoopCount(prevCount => prevCount + 1);
+      }
+    }, 10000); // Increase count every 10 seconds
+
+    return () => clearInterval(timer);
+  }, [poopCount]);
+
+  const handlePoopPress = () => {
+    // Open pop-up with trivia question
+    // You can implement this part according to your requirement
+    // For now, I'll just reset the poop count
+    setPoopCount(0);
+  };
   const [isFontLoaded] = useFonts({
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
@@ -22,7 +40,16 @@ const Bath = ({ navigation }) => {
         <BathGame /> 
       </View>
       <View style={{ flex: 1 }} />
+      <TouchableOpacity onPress={handlePoopPress} style={styles.poopButton}>
+        <Text style={styles.poopIcon}>💩</Text>
+        {poopCount > 0 && (
+          <View style={styles.counterContainer}>
+            <Text style={styles.counterText}>{poopCount}</Text>
+          </View>
+        )}
+      </TouchableOpacity>
     </LinearGradient>
+
   );
 };
 
@@ -31,6 +58,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+
+
   },
   titleContainer: {
     position: 'absolute',
@@ -52,6 +81,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 250,
+  },
+  poopButton: {
+    position: 'absolute',
+    bottom: 20,
+    alignSelf: 'center',
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  poopIcon: {
+    fontSize: 30,
+    color: 'brown',
+  },
+  counterContainer: {
+    position: 'absolute',
+    bottom: -5,
+    right: -5,
+    backgroundColor: 'red',
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  counterText: {
+    color: 'white',
+    fontSize: 12,
   },
 });
 
