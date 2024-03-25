@@ -7,6 +7,7 @@ import { petEventEmitter } from './EventEmitter';
 import PetGoodbye from '../components/PetGoodbye';
 import {loadIsAsleepFromStorage} from '../components/sleepScheduleStorage';
 import { handlePermissionRequest, scheduleNotification } from './notifications';
+import { Audio } from 'expo-av';  
 
 const VerticalStripes = ({ numberOfStripes }) => {
   return (
