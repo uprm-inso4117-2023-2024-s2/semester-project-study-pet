@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert,AppState } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
 import Pet from '../components/Pet';
 import { petEventEmitter } from './EventEmitter';
 import PetGoodbye from '../components/PetGoodbye';
 import {loadIsAsleepFromStorage} from '../components/sleepScheduleStorage';
+import { handlePermissionRequest, scheduleNotification } from './notifications';
 
 const VerticalStripes = ({ numberOfStripes }) => {
   return (
@@ -28,6 +29,37 @@ const VerticalStripes = ({ numberOfStripes }) => {
  */
 const HomePage = ({ navigation }) => {
   const [isdead, setIsdead] = useState(false);
+  const [notificationScheduled, setNotificationScheduled] = useState(false);
+
+  useEffect(() => {
+    const handleAppStateChange = async (nextAppState) => {
+      if (nextAppState === 'background' && !notificationScheduled) {
+        await scheduleNotification();
+        setNotificationScheduled(true);
+      }
+    };
+
+    AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      
+    };
+  }, [notificationScheduled]);
+
+  useEffect(() => {
+    const checkPermission = async () => {
+      const { status } = await handlePermissionRequest();
+      if (status !== 'granted') {
+        Alert.alert(
+          'Permission required',
+          'You need to grant permission to receive notifications',
+          [{ text: 'OK' }]
+        );
+      }
+    };
+
+    checkPermission();
+  }, []);
 
   // Listen to the event petDeath and petAlive to verify if the pet is dead
   petEventEmitter.on('petDeath', () => {

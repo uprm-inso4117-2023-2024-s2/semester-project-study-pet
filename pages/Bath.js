@@ -1,8 +1,9 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useState, useEffect } from 'react'; // Add useState to the import statement
+import { View, StyleSheet, Text,TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from "expo-font";
 import BathGame from '../components/bathing'; // Changed import
+
 
 const Bath = ({ navigation }) => {
 
