@@ -36,6 +36,7 @@ function Stats() {
   return (
     <LinearGradient colors={['#fcf188', '#fffbcf']} style={styles.container}>
       {/* Header */}
+    <ScrollView>
       <View style={styles.header}>
         <TouchableOpacity onPress={goBack} style={styles.backButton}>
           <View style={styles.circle}></View>
@@ -43,14 +44,17 @@ function Stats() {
         </TouchableOpacity>
         <Text style={styles.headerText}>Stats</Text>
       </View>
+      
 
       {/* Dog Paw Icon */}
+      
       <View style={styles.pawContainer}>
         <Ionicons name="paw" size={90} color="#3498db" />
       </View>
+      
 
       {/* Stats Section */}
-      <ScrollView contentContainerStyle={styles.statsContainer}>
+      
         <View style={styles.statsContent}>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#3498db' }]}>Pet Name:</Text>
@@ -91,6 +95,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff9c4',
     padding: 20,
+    maxHeight: '90%',
+     // Enable vertical scrolling
   },
   header: {
     flexDirection: 'row',
@@ -126,7 +132,7 @@ const styles = StyleSheet.create({
     marginBottom: -30,
   },
   statsContainer: {
-    flex: 1,
+    flex: 5,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -135,7 +141,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 2,
     borderColor: '#3498db',
-    padding: 10,
+    padding: 5,
     borderRadius: 10,
     width: '80%',
     shadowColor: '#000',
