@@ -278,21 +278,31 @@ class Pet extends Component {
       console.log("AAAAAAA")
     }
 
-    // Select the image based on growth level
-    if (growthlvl === 1) {
-      currentImage = images[5]; // Baby stage image
-    } else if(growthlvl === 2){
-      currentImage = images[6] // Young state iamge
-    } else if(growthlvl === 3 && this.state.hunger >= 50){
-      currentImage = images[2]
-    } else if (growthlvl === 3 && this.state.happiness >= 80) {
-      currentImage = images[3] // Happy Adult Frog
-    } else if (growthlvl === 3 && this.state.happiness >= 40){
-      currentImage = images[0] // Regular Adult Frog
-    } else if (growthlvl === 3 && (this.state.happiness <= 30 || this.state.happiness >= 30)) {
-      currentImage = images[1] // Sad Adult Frog
-    } else {
-      currentImage = images[0]
+    if(this.state.careMistakes < 10) {
+      // Select the image based on growth level
+      if (growthlvl === 1) {
+        currentImage = images[5]; // Baby stage image
+      } else if(growthlvl === 2){
+        currentImage = images[6] // Young state iamge
+      } else if(growthlvl === 3 && this.state.hunger >= 50){
+        currentImage = images[2]
+      } else if (growthlvl === 3 && this.state.happiness >= 80) {
+        if(this.state.pettype == 'frog') {
+          currentImage = images[3] // Happy Adult Frog
+        }                                                             // Change this if and else statemente when the animations of the other pets are added
+        else {
+          currentImage = images[0] // Happy Adult Frog
+        }
+      } else if (growthlvl === 3 && this.state.happiness >= 40){
+        currentImage = images[0] // Regular Adult Frog
+      } else if (growthlvl === 3 && (this.state.happiness <= 30 || this.state.happiness >= 30)) {
+        currentImage = images[1] // Sad Adult Frog
+      } else {
+        currentImage = images[0]
+      }
+    }
+    else {
+      currentImage = images[4]
     }
 
 
