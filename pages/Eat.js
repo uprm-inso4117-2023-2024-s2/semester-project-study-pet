@@ -5,7 +5,6 @@ import { useFonts } from 'expo-font';
 import MiniGame from '../components/eatingMinigame';
 import { loadHunger } from '../components/hungerStorage';
 
-// TODO: Add happiness functionality
 export default function App() {
   const [isFontLoaded] = useFonts({
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
