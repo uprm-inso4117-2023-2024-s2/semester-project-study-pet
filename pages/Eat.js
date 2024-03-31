@@ -28,7 +28,7 @@ export default function App() {
     }
   }, [loadedFont]);
 
-  if (hunger === 0) {
+  if (hunger <= 10) {
     return (
       <View style={styles.container}>
         <Text style={{ fontFamily: "Jua-Regular", fontSize: 40 }}>
