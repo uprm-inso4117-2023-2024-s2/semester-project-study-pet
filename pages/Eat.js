@@ -28,6 +28,10 @@ export default function App() {
     }
   }, [loadedFont]);
 
+  if (!isFontLoaded) {
+    return null;
+  }
+
   if (hunger <= 10) {
     return (
       <View style={styles.container}>
