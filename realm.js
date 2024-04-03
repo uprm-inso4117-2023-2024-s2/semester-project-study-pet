@@ -1,15 +1,22 @@
 import Realm from 'realm'
 
-class User {}
-User.schema = {
-    name: 'User',
-    properties: {
-        name: 'string',
-        pets: 'Pet[]',
-        exams: 'Exam[]'
-    }
-};
+class Pet {
+    static schema = {
+        name: 'Pet',
+        properties: {
+            name: 'string',
+            growthlvl: 'int',
+            happiness: 'int',
+            lastInteractionTime: 'date',
+            careMistakes: 'int',
+            pettype: 'string',
+            images: 'list',
+            sleepTime: 'string',
+            isAsleep: 'bool',
+        },
+    };
+}
 
-const realm = new Realm({schema: [User]});
+const realm = new Realm({ schema: [Pet] });
 
 export default realm;
