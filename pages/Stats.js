@@ -36,25 +36,25 @@ function Stats() {
   return (
     <LinearGradient colors={['#fcf188', '#fffbcf']} style={styles.container}>
       {/* Header */}
-    <ScrollView>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={goBack} style={styles.backButton}>
-          <View style={styles.circle}></View>
-          <Ionicons name="arrow-back" size={30} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Stats</Text>
-      </View>
-      
+      <ScrollView>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={goBack} style={styles.backButton}>
+            <View style={styles.circle}></View>
+            <Ionicons name="arrow-back" size={30} color="white" />
+          </TouchableOpacity>
+          <Text style={styles.headerText}>Stats</Text>
+        </View>
 
-      {/* Dog Paw Icon */}
-      
-      <View style={styles.pawContainer}>
-        <Ionicons name="paw" size={90} color="#3498db" />
-      </View>
-      
 
-      {/* Stats Section */}
-      
+        {/* Dog Paw Icon */}
+
+        <View style={styles.pawContainer}>
+          <Ionicons name="paw" size={90} color="#3498db" />
+        </View>
+
+
+        {/* Stats Section */}
+
         <View style={styles.statsContent}>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#3498db' }]}>Pet Name:</Text>
@@ -74,11 +74,11 @@ function Stats() {
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#f39c12' }]}>Hunger:</Text>
-            <Text style={[styles.statsValue, { color: '#f39c12' }]}>{hunger}%</Text>
+            <Text style={[styles.statsValue, { color: '#f39c12' }]}>{pet.state.hunger}%</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Happiness:</Text>
-            <Text style={[styles.statsValue, { color: '#e67e22' }]}>{happiness}%</Text>
+            <Text style={[styles.statsValue, { color: '#e67e22' }]}>{pet.state.happiness}%</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Care Mistakes:</Text>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff9c4',
     padding: 20,
     maxHeight: '90%',
-     // Enable vertical scrolling
+    // Enable vertical scrolling
   },
   header: {
     flexDirection: 'row',
