@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert,AppState } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert, AppState } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
 import Pet from '../components/Pet';
 import { petEventEmitter } from './EventEmitter';
 import PetGoodbye from '../components/PetGoodbye';
-import {loadIsAsleepFromStorage} from '../components/sleepScheduleStorage';
+import { loadIsAsleepFromStorage } from '../components/sleepScheduleStorage';
 import { handlePermissionRequest, scheduleNotification } from './notifications';
+import * as Notifications from 'expo-notifications';
 
 const VerticalStripes = ({ numberOfStripes }) => {
   return (
@@ -42,13 +43,14 @@ const HomePage = ({ navigation }) => {
     AppState.addEventListener('change', handleAppStateChange);
 
     return () => {
-      
+
     };
   }, [notificationScheduled]);
 
   useEffect(() => {
     const checkPermission = async () => {
-      const { status } = await handlePermissionRequest();
+      let permission = await Notifications.getPermissionsAsync();
+      let status = permission?.status || ''; // Use optional chaining to avoid accessing properties of undefined
       if (status !== 'granted') {
         Alert.alert(
           'Permission required',
@@ -76,7 +78,7 @@ const HomePage = ({ navigation }) => {
   const handleGoodbye = (newValue) => {
     setGoodbye(newValue);
   };
-  
+
   const [isAsleep, setIsAsleep] = useState(false);
 
   useEffect(() => {
@@ -101,19 +103,19 @@ const HomePage = ({ navigation }) => {
   };
 
   return (
-    <View style={{flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7', }}>
+    <View style={{ flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7', }}>
       <LinearGradient colors={['#f7ffe7', '#edf5ff']} style={styles.container}>
-        
+
         {!isdead && (
-        <View style={styles.topButtons}>
-          <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
-          <TouchableOpacity onPress={() => navigation.navigate('Stats')} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Flashcards')} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
-        </View>)}
+          <View style={styles.topButtons}>
+            <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Stats')} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Flashcards')} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
+          </View>)}
 
         {isdead && (<View style={styles.topButtons}>
-          <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity> 
+          <TouchableOpacity onPress={() => navigation.navigate('Mypets')} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity>
         </View>)}
 
         <View style={styles.petContainer}>
@@ -121,15 +123,15 @@ const HomePage = ({ navigation }) => {
           {goodbye ? <PetGoodbye /> : <Pet onChange={handleGoodbye} />}
         </View>
 
-        {!isdead && (  
-        <View style={styles.bottomButtons}>
+        {!isdead && (
+          <View style={styles.bottomButtons}>
 
-          <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Bath') : navigation.navigate('Bath')} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Eat') : navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Play') : navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('PlayerStats') : navigation.navigate('PlayerStats')} style={styles.iconButton}><Ionicons name="person-circle-outline" size={30} color="#87CEEB" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={styles.iconButton}><Ionicons name="cart" size={30} color="#f7d794" /></TouchableOpacity>
-        </View> 
+            <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Bath') : navigation.navigate('Bath')} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
+            <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Eat') : navigation.navigate('Eat')} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
+            <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Play') : navigation.navigate('Game')} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
+            <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('PlayerStats') : navigation.navigate('PlayerStats')} style={styles.iconButton}><Ionicons name="person-circle-outline" size={30} color="#87CEEB" /></TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={styles.iconButton}><Ionicons name="cart" size={30} color="#f7d794" /></TouchableOpacity>
+          </View>
         )}
 
       </LinearGradient>
@@ -166,7 +168,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    overflow: 'hidden', 
+    overflow: 'hidden',
     position: 'relative',
   },
   stripesContainer: {
@@ -178,7 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   verticalStripe: {
-    flex: 1, 
+    flex: 1,
   },
   iconButton: {
     alignItems: 'center',
