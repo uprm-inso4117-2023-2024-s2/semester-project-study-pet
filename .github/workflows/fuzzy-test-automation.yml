@@ -26,6 +26,7 @@ jobs:
     - name: Start application
       run: npm run web &
     - name: Wait for application to start
+    #Verify this line later
       run: |
         until curl --output /dev/null --silent --head --fail http://localhost:8081/health; do
           echo "Waiting for application to start..."
