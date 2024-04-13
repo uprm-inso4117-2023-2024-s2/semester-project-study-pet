@@ -24,16 +24,15 @@ jobs:
     - name: Install dependencies
       run: npm install
     - name: Start application
-      run: npm web &
+      run: npm run web &
     - name: Wait for application to start
       run: |
-        until curl --output /dev/null --silent --head --fail http://localhost:3000/health; do
+        until curl --output /dev/null --silent --head --fail http://localhost:8081/health; do
           echo "Waiting for application to start..."
-          sleep 5
+          sleep 10
         done
     - name: Run tests
       run: npm test
     - name: Kill application
       if: always()
       run: kill $(jobs -p) || true
-      #testing
