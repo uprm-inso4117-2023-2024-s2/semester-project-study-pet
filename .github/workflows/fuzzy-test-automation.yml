@@ -11,21 +11,17 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 18.x
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '18.x'
     - name: Install dependencies
       run: npm install
     - name: Start application
-      run: npm run web &
-    - name: Wait for application to start
+      run: CI=true npm run web
+    - name: Wait for application to start - 2
     #Verify this line later
       run: |
         until curl --output /dev/null --silent --head --fail http://localhost:8081/health; do
@@ -33,7 +29,7 @@ jobs:
           sleep 10
         done
     - name: Run tests
-      run: npm test
+      run: npm run test-fuzzy
     - name: Kill application
       if: always()
       run: kill $(jobs -p) || true
