@@ -24,7 +24,7 @@ jobs:
     - name: Install dependencies
       run: npm install
     - name: Start application
-      run: npm start &
+      run: npm web &
     - name: Wait for application to start
       run: |
         until curl --output /dev/null --silent --head --fail http://localhost:3000/health; do
@@ -36,3 +36,4 @@ jobs:
     - name: Kill application
       if: always()
       run: kill $(jobs -p) || true
+      #testing
