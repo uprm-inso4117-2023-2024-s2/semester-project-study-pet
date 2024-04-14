@@ -178,7 +178,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFBBE0',
-    paddingBottom: 50,
+    paddingBottom: 60,
+    maxHeight:'100vh',
   },
   textStyle: {
     fontSize: 32,
