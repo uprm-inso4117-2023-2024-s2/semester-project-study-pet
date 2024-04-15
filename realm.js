@@ -10,7 +10,7 @@ class Pet {
             lastInteractionTime: 'date',
             careMistakes: 'int',
             pettype: 'string',
-            images: 'list',
+            images: 'list<string>',
             sleepTime: 'string',
             isAsleep: 'bool',
         },
