@@ -1,6 +1,6 @@
 import Realm from 'realm'
 
-class Pet {
+class Pet extends Realm.Object{
     static schema = {
         name: 'Pet',
         properties: {
@@ -10,7 +10,7 @@ class Pet {
             lastInteractionTime: 'date',
             careMistakes: 'int',
             pettype: 'string',
-            images: 'list<string>',
+            images: {type: 'list', objectType: 'string'},
             sleepTime: 'string',
             isAsleep: 'bool',
         },

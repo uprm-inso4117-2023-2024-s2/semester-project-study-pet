@@ -10,9 +10,17 @@ describe('Realm Database Functionality', () => {
     });
   });
 
+//   test('Database is initialized with the correct schema', () => {
+//     // Ensure that the realm instance is created with the correct schema
+//     const schema = realm.schema.find(s => s.name === 'Pet');
+//     expect(schema).toBeDefined();
+//     expect(schema.properties).toEqual(Pet.schema.properties);
+//   });
+
   test('Database is initialized with the correct schema', () => {
     // Ensure that the realm instance is created with the correct schema
-    const schema = realm.schema.find(s => s.name === 'Pet');
+    console.log(Pet);
+    const schema = realm.objects('Pet').schema;
     expect(schema).toBeDefined();
     expect(schema.properties).toEqual(Pet.schema.properties);
   });
