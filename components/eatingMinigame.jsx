@@ -32,22 +32,22 @@ const questionsData = [
 
 // Function to shuffle an array (Fisher-Yates shuffle algorithm)
 const shuffleArray = (array) => {
-    let currentIndex = array.length,  randomIndex;
-    
+    let currentIndex = array.length, randomIndex;
+
     // While there remain elements to shuffle...
     while (currentIndex !== 0) {
-  
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-  
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]];
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
     }
-  
+
     return array;
-  }
+}
 
 const MiniGame = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -62,35 +62,35 @@ const MiniGame = () => {
     useEffect(() => {
 
         const filteredQuestions = () => {
-        const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
-        //console.log("difficulty:", selectedDifficulty);
-    
-        // Ensure the array does not exceed 9 elements
-        const maxQuestions = shuffledQuestions.slice(0, 9);
-    
-        let fraction;
-        switch (selectedDifficulty) {
-            case "easy":
-            fraction = 1 / 3;
-            break;
-            case "medium":
-            fraction = 2 / 3;
-            break;
-            case "hard":
-            fraction = 1; // All questions
-            break;
-            default:
-            fraction = 1 / 3;
-        }
-    
-        // Apply the fraction to the potentially shortened list of up to 9 questions
-        const numberToShow = Math.ceil(maxQuestions.length * fraction);
-        return maxQuestions.slice(0, numberToShow);
+            const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
+            //console.log("difficulty:", selectedDifficulty);
+
+            // Ensure the array does not exceed 9 elements
+            const maxQuestions = shuffledQuestions.slice(0, 9);
+
+            let fraction;
+            switch (selectedDifficulty) {
+                case "easy":
+                    fraction = 1 / 3;
+                    break;
+                case "medium":
+                    fraction = 2 / 3;
+                    break;
+                case "hard":
+                    fraction = 1; // All questions
+                    break;
+                default:
+                    fraction = 1 / 3;
+            }
+
+            // Apply the fraction to the potentially shortened list of up to 9 questions
+            const numberToShow = Math.ceil(maxQuestions.length * fraction);
+            return maxQuestions.slice(0, numberToShow);
         };
-    
+
         setQuestions(filteredQuestions());
-    
-      }, [selectedDifficulty]);
+
+    }, [selectedDifficulty]);
 
     const handleAnswerSelection = (selectedAnswerIndex) => {
         const currentQuestion = questions[currentQuestionIndex];
@@ -198,21 +198,21 @@ const MiniGame = () => {
                 {/* This are 3 temporary buttons to test the difficulty */}
                 <TouchableOpacity onPress={() => setSelectedDifficulty('easy')}>
                     <Text style={styles.buttonText}>easy</Text>
-                    </TouchableOpacity>
+                </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => setSelectedDifficulty('medium')}>
+                <TouchableOpacity onPress={() => setSelectedDifficulty('medium')}>
                     <Text style={styles.buttonText}>medium</Text>
-                    </TouchableOpacity>
+                </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => setSelectedDifficulty('hard')}>
+                <TouchableOpacity onPress={() => setSelectedDifficulty('hard')}>
                     <Text style={styles.buttonText}>hard</Text>
-                    </TouchableOpacity>
+                </TouchableOpacity>
 
-                    <Text>Selected Value: {selectedDifficulty}</Text>
-                    {/* End of temporary code */}
-              <View style={styles.titleContainer}>
-                  <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
-              </View>
+                <Text>Selected Value: {selectedDifficulty}</Text>
+                {/* End of temporary code */}
+                <View style={styles.titleContainer}>
+                    <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
+                </View>
                 <View style={styles.gameContainer}>
                     <View style={styles.questionContainer}>
                         <Text style={styles.question}>{questions[currentQuestionIndex].question}</Text>
@@ -231,7 +231,7 @@ const MiniGame = () => {
                     ))}
                 </View>
             </View>
-        ); 
+        );
     }
 };
 
