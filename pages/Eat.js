@@ -1,21 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { useFonts } from 'expo-font';
 import MiniGame from '../components/eatingMinigame';
-import { loadHunger } from '../components/hungerStorage';
+import Pet, { loadHunger } from '../components/Pet';
 
-// TODO: Add happiness functionality
 export default function App() {
-  const [isFontLoaded] = useFonts({
+  const p = new Pet();
+  const [isFontLoaded, setIsFontLoaded] = useState(false);
+  const [hunger, setHunger] = useState(p.state.hunger);
+
+  useEffect(() => {
+    const fetchHunger = async () => {
+      const hungerValue = await loadHunger();
+      setHunger(hungerValue);
+    };
+
+    fetchHunger();
+  }, []);
+
+  const [loadedFont] = useFonts({
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
+
+  useEffect(() => {
+    if (loadedFont) {
+      setIsFontLoaded(true);
+    }
+  }, [loadedFont]);
 
   if (!isFontLoaded) {
     return null;
   }
 
-  if (loadHunger() <= 100) {
+  if (p.state.hunger <= 10) {
     return (
       <View style={styles.container}>
         <Text style={{ fontFamily: "Jua-Regular", fontSize: 40 }}>

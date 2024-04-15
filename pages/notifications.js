@@ -4,24 +4,24 @@ import { AppState, Platform, Alert } from 'react-native';
 
 export const handleButtonPress = async () => {
     await scheduleNotification();
-};  
+};
 
 export async function scheduleNotification() {
     await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Your Pet misses you",
-        body: "Lets Study!",
-      },
-      trigger: null,
+        content: {
+            title: "Your Pet misses you",
+            body: "Lets Study!",
+        },
+        trigger: null,
     });
 }
 
 // Handle incoming notifications
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: false,
-      shouldSetBadge: true,
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: true,
     }),
 });
 
@@ -40,7 +40,7 @@ export const handlePermissionRequest = async () => {
             } catch (e) {
                 console.log("PermissionsAndroid is not available on this platform");
             }
-            
+
             if (PermissionsAndroid) {
                 status = (await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.RECEIVE_NOTIFICATIONS
