@@ -14,5 +14,4 @@ module.exports = {
     "**/?(*.)+(spec|test).[tj]s?(x)"
   ],
   clearMocks: true,
-  testEnvironment: "node",
 };

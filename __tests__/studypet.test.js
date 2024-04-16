@@ -5,7 +5,7 @@ describe('the flashcards page', () => {
     let driver;
 
     beforeEach(async () => {
-        driver = await new Builder().forBrowser(Browser.FIREFOX).build();
+        driver = await new Builder().forBrowser(Browser.FIREFOX).build(); // why is this set up for firefox, it should be a universal browser???
     });
 
     it("navigates to the flashcards page", async () => {
