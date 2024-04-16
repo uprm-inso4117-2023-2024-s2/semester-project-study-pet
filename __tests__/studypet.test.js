@@ -4,9 +4,9 @@ import {NoSuchElementError} from "selenium-webdriver/lib/error";
 describe('the flashcards page', () => {
     let driver;
 
-    beforeEach(async () => {
-        driver = await new Builder().forBrowser(Browser.FIREFOX).build(); // why is this set up for firefox, it should be a universal browser???
-    });
+    // beforeEach(async () => {
+    //     driver = await new Builder().forBrowser(Browser.FIREFOX).build(); // why is this set up for firefox, it should be a universal browser???
+    // });
 
     it("navigates to the flashcards page", async () => {
         await driver.get("http://localhost:8081");
