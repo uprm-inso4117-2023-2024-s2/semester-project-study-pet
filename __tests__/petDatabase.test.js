@@ -1,6 +1,5 @@
-// petDatabase.test.js
-import realm from '../realm.js'; // Import your realm instance
-import Pet from '../realm.js'; // Import your schema if needed
+import realm from '../realm.js'; 
+import Pet from '../realm.js'; 
 
 describe('Realm Database Functionality', () => {
   beforeEach(() => {
@@ -10,12 +9,6 @@ describe('Realm Database Functionality', () => {
     });
   });
 
-//   test('Database is initialized with the correct schema', () => {
-//     // Ensure that the realm instance is created with the correct schema
-//     const schema = realm.schema.find(s => s.name === 'Pet');
-//     expect(schema).toBeDefined();
-//     expect(schema.properties).toEqual(Pet.schema.properties);
-//   });
 
   test('Database is initialized with the correct schema', () => {
     // Ensure that the realm instance is created with the correct schema
@@ -82,5 +75,5 @@ describe('Realm Database Functionality', () => {
     expect(deletedFluffy).toBeUndefined();
   });
 
-  // Add more test cases for querying as needed
+
 });
