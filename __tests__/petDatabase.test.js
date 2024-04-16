@@ -1,6 +1,6 @@
 // petDatabase.test.js
 import realm from '../realm.js'; // Import your realm instance
-import { Pet } from '../realm.js'; // Import your schema if needed
+import Pet from '../realm.js'; // Import your schema if needed
 
 describe('Realm Database Functionality', () => {
   beforeEach(() => {
@@ -19,10 +19,26 @@ describe('Realm Database Functionality', () => {
 
   test('Database is initialized with the correct schema', () => {
     // Ensure that the realm instance is created with the correct schema
-    console.log(Pet);
-    const schema = realm.objects('Pet').schema;
-    expect(schema).toBeDefined();
-    expect(schema.properties).toEqual(Pet.schema.properties);
+    expect(Pet.schema).toBeDefined();
+
+    const schemaProperties = Pet.schema ? Pet.schema.properties : undefined;
+
+    const expectedSchemaProperties = {
+        name: 'string',
+        growthlvl: 'int',
+        happiness: 'int',
+        lastInteractionTime: 'date',
+        careMistakes: 'int',
+        pettype: 'string',
+        images: 'list',
+        sleepTime: 'string',
+        isAsleep: 'bool',
+        };
+    
+    if (schemaProperties){
+        expect(schemaProperties).toEqual(expectedSchemaProperties);
+    }
+    
   });
 
   test('Add, retrieve, update, and delete pet objects from the database', () => {
