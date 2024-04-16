@@ -2,33 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { loadHappiness, saveHappiness } from './happinessStorage';
 import { loadHunger, saveHunger } from './hungerStorage';
-const questionsData = [
-    {
-        question: 'What is the chemical symbol for oxygen?',
-        answers: ['H2O', 'O2', 'CO2', 'N2'],
-        correctAnswerIndex: 1,
-    },
-    {
-        question: 'Which planet is known as the Red Planet?',
-        answers: ['Mars', 'Jupiter', 'Venus', 'Saturn'],
-        correctAnswerIndex: 0,
-    },
-    {
-        question: 'What is the process of converting light energy into chemical energy in plants?',
-        answers: ['Respiration', 'Transpiration', 'Photosynthesis', 'Fermentation'],
-        correctAnswerIndex: 2,
-    },
-    {
-        question: 'What gas do humans exhale during respiration?',
-        answers: ['Oxygen', 'Carbon Dioxide', 'Nitrogen', 'Hydrogen'],
-        correctAnswerIndex: 1,
-    },
-    {
-        question: 'What is the largest mammal on Earth?',
-        answers: ['Elephant', 'Blue Whale', 'Giraffe', 'Hippopotamus'],
-        correctAnswerIndex: 1,
-    },
-];
+import questionsData from '../assets/data/questions_EatingMinigame.json'
 
 // Function to shuffle an array (Fisher-Yates shuffle algorithm)
 const shuffleArray = (array) => {
@@ -225,6 +199,7 @@ const MiniGame = () => {
                             onPress={() => handleAnswerSelection(index)}
                             onMouseEnter={() => setHoveredIndex(index)}
                             onMouseLeave={() => setHoveredIndex(null)}
+                            testID='answerButton'
                         >
                             <Text style={styles.answerText}>{answer}</Text>
                         </TouchableOpacity>
