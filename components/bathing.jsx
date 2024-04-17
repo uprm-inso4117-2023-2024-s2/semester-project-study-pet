@@ -10,6 +10,7 @@ const BathGame = () => {
   const [score, setScore] = useState(0);
   const [happiness, setHappiness] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState('medium');
 
   useEffect(() => {
     const mockFlashcards = [
@@ -25,14 +26,43 @@ const BathGame = () => {
       { question: 'Which bird can fly backwards?', answer: 'Hummingbird' },
     ];
 
-    
-    const shuffledFlashcards = shuffleArray(mockFlashcards);
-    setFlashcards(shuffledFlashcards);
+    const shuffledFlashcards = shuffleArray(mockFlashcards).slice(0, 9);
+
+    const filteredQuestions = () => {
+      //const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
+      //console.log("difficulty:", selectedDifficulty);
+
+      // Ensure the array does not exceed 9 elements
+      //const maxQuestions = shuffledQuestions.slice(0, 9);
+
+      let fraction;
+      switch (selectedDifficulty) {
+        case "easy":
+          fraction = 1 / 3;
+          break;
+        case "medium":
+          fraction = 2 / 3;
+          break;
+        case "hard":
+          fraction = 1; // All questions
+          break;
+        default:
+          fraction = 1 / 3;
+      }
+
+      // Apply the fraction to the potentially shortened list of up to 9 questions
+      const numberToShow = Math.ceil(shuffledFlashcards.length * fraction);
+      return shuffledFlashcards.slice(0, numberToShow);
+    };
+
+    //const shuffledFlashcards = shuffleArray(mockFlashcards);
+    //setFlashcards(shuffledFlashcards);
+    setFlashcards(filteredQuestions());
 
     
     const randomUserHand = shuffledFlashcards.map(card => card.answer);
     setUserHand(shuffleArray(randomUserHand));
-  }, []);
+  }, [selectedDifficulty]);
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -110,6 +140,22 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
+        {/* This are 3 temporary buttons to test the difficulty */}
+        <TouchableOpacity onPress={() => setSelectedDifficulty('easy')}>
+              <Text style={styles.buttonText}>easy</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => setSelectedDifficulty('medium')}>
+              <Text style={styles.buttonText}>medium</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => setSelectedDifficulty('hard')}>
+              <Text style={styles.buttonText}>hard</Text>
+            </TouchableOpacity>
+
+            <Text>Selected Value: {selectedDifficulty}</Text>
+            {/* End of temporary code */}
+
         <View style={styles.questionContainer}>
           <Text style={styles.question}>{flashcards[currentQuestionIndex]?.question}</Text>
         </View>
@@ -119,6 +165,7 @@ useEffect(() => {
               key={index}
               style={styles.card}
               onPress={() => handleAnswer(answer)}
+              testID='answerButton'
             >
               <Text style={styles.answerText}>{answer}</Text>
             </TouchableOpacity>
