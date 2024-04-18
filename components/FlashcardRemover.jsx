@@ -104,6 +104,7 @@ export default function FlashcardRemover({ onRemove, onRemoveAll }) {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 35,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
