@@ -63,6 +63,25 @@ export default function Flashcards() {
       }
   
       const studySetIndex = studySets.findIndex(set => set.title === studySet);
+      const studySetFlashcards = studySets[studySetIndex].flashcards;
+  
+      if (studySets.length === 1) {
+        showAlert('Error', 'Cannot remove the last remaining study set.');
+        return;
+      }
+  
+      if (studySetFlashcards.length === 1 && studySets.filter(set => set.flashcards.length === 1).length > 1) {
+        await removeFlashcard({ studySet, question });
+        setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
+        loadStudySets();
+        Alert.alert('Removed', 'Flashcard removed successfully');
+        return;
+      }
+  
+      if (studySetIndex === studySets.length - 1 && studySetFlashcards.length === 1) {
+        showAlert('Error', 'Cannot remove the last flashcard inside the last study set.');
+        return;
+      }
   
       // If question is empty, remove entire study set
       if (!question.trim()) {
@@ -73,7 +92,7 @@ export default function Flashcards() {
         return;
       }
   
-      const existingFlashcardIndex = studySets[studySetIndex].flashcards.findIndex(card => card.question === question);
+      const existingFlashcardIndex = studySetFlashcards.findIndex(card => card.question === question);
   
       if (existingFlashcardIndex === -1) {
         showAlert('Error', 'Question does not exist in Study Set.');
