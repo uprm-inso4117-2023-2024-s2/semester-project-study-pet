@@ -119,11 +119,18 @@ export default function Flashcards() {
         showAlert('Error', 'There are no existing study sets to remove.');
         return;
       }
-      // Remove all study sets
-      await removeFlashcard({ studySet: '', question: '' });
+  
+      // Sort study sets by creation date in descending order
+      const sortedStudySets = [...studySets].sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+  
+      // Remove all study sets except the oldest one
+      for (let i = 1; i < sortedStudySets.length; i++) {
+        await removeFlashcard({ studySet: sortedStudySets[i].title, question: '' });
+      }
+  
       setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
       loadStudySets();
-      Alert.alert('Removed', 'All flashcards and study sets removed successfully');
+      Alert.alert('Removed', 'All flashcards and study sets removed successfully, except for the oldest one');
     } catch (error) {
       showAlert('Error', error.message);
     }
@@ -272,3 +279,4 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
 });
+
