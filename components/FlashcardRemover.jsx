@@ -21,34 +21,17 @@ export default function FlashcardRemover({ onRemove, onRemoveAll }) {
     Alert.alert('Error', 'In order to remove all flashcards and study sets, please leave both fields empty.');
   };
 
-  const handleConfirmRemoveAll = () => {
-    Alert.alert(
-      'Remove All',
-      'Are you sure you want to remove all flashcards and study sets?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        {
-          text: 'Remove All',
-          onPress: () => {
-            onRemoveAll();
-            setStudySet('');
-            setQuestion('');
-          }
-        }
-      ],
-      { cancelable: true }
-    );
+  const handleRemoveAllOperation = () => {
+    onRemoveAll();
+    setStudySet('');
+    setQuestion('');
   };
 
   const handleRemoveAll = () => {
     if (studySet.trim() || question.trim()) {
       handleRemoveAllError();
     } else if (studySet.trim() === '' && question.trim() === '' && onRemoveAll) {
-      handleConfirmRemoveAll();
+      handleRemoveAllOperation();
     } else {
       Alert.alert('Error', 'No study sets available to remove.');
     }
