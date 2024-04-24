@@ -29,7 +29,7 @@ describe('the flashcards page', () => {
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        const addFlashCard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]"));
+        const addFlashCard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]/div[1]/div"));
         addFlashCard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
@@ -67,7 +67,7 @@ describe('the flashcards page', () => {
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        const addFlashCard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]"));
+        const addFlashCard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]/div[1]/div"));
         addFlashCard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
@@ -84,7 +84,7 @@ describe('the flashcards page', () => {
         const create = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
         create.click();
 
-        const removeFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[4]"));
+        const removeFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]/div[2]/div"));
         removeFlashcard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
