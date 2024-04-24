@@ -157,19 +157,21 @@ export default function Flashcards() {
         </View>
       </ScrollView>
 
-      <TouchableOpacity
-        style={styles.plusButton}
-        onPress={() => setVisibility({ ...isFlashCardCreatorVisible, isFlashCardCreatorVisible: true })}
-      >
-        <Text style={styles.plusButtonText}>+</Text>
-      </TouchableOpacity>
+      <View style={{ paddingBottom: 50, }}>
+        <TouchableOpacity
+          style={styles.plusButton}
+          onPress={() => setVisibility({ ...isFlashCardCreatorVisible, isFlashCardCreatorVisible: true })}
+        >
+          <Text style={styles.plusButtonText}>+</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.minusButton}
-        onPress={() => setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: true })}
-      >
-        <Text style={styles.minusButtonText}>-</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.minusButton}
+          onPress={() => setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: true })}
+        >
+          <Text style={styles.minusButtonText}>-</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -178,7 +180,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFBBE0',
-    paddingBottom: 50,
+    paddingBottom: 60,
+    maxHeight:'100vh',
   },
   textStyle: {
     fontSize: 32,
