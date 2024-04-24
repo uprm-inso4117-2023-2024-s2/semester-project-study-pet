@@ -62,6 +62,11 @@ export default function Flashcards() {
         return;
       }
   
+      if (studySets.length === 1 && !question.trim()) {
+        showAlert('Error', 'Cannot remove study set, because it is the only one available.');
+        return;
+      }
+  
       const studySetIndex = studySets.findIndex(set => set.title === studySet);
       const studySetFlashcards = studySets[studySetIndex].flashcards;
   
