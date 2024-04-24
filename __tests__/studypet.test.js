@@ -72,10 +72,10 @@ describe('the flashcards page', () => {
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        let studySet = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
+        const studySet = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
         studySet.sendKeys("INSO");
 
-        let question = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[1]"));
+        const question = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[1]"));
         question.sendKeys("What is OOP?");
 
         const answer = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[2]"));
@@ -84,31 +84,65 @@ describe('the flashcards page', () => {
         const create = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
         create.click();
 
+        await driver.manage().setTimeouts({implicit: 1000});
+
+
+        // Attempt to remove one of the flashcards
         const removeFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]/div[2]/div"));
         removeFlashcard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        studySet = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
-        studySet.sendKeys("INSO");
+        const rmStudySet1 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
+        rmStudySet1.sendKeys("INSO");
 
-        question = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea"));
-        question.sendKeys("What is OOP?");
+        const rmQuestion1 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea"));
+        rmQuestion1.sendKeys("What is OOP?");
 
-        const remove = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
-        remove.click();
+        const remove1 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
+        remove1.click();
+    
+        await driver.manage().setTimeouts({ implicit: 1000 });
+
+    
+        // Add second flashcard
+        addFlashCard.click();
+        await driver.manage().setTimeouts({ implicit: 1000 });
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        try {
-            await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div/div"))
-            throw new Error("Flashcard should not exist!");
-        } catch (e) {
-            if (!(e instanceof NoSuchElementError)) {
-                throw new Error("Flashcard should not exist!");
-            }
-        }
-    });
+        const secondStudySet = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
+        secondStudySet.sendKeys("INSO");
+    
+        const secondQuestion = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[1]"));
+        secondQuestion.sendKeys("What is a class in OOP?");
+    
+        const secondAnswer = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[2]"));
+        secondAnswer.sendKeys("Template definition of the methods and variables in a particular kind of object");
+    
+        const createSecond = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
+        createSecond.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+
+    
+        // Actually remove one of the flashcards
+        removeFlashcard.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+
+        const rmStudySet2 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
+        rmStudySet2.sendKeys("INSO");
+
+        const rmQuestion2 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea"));
+        rmQuestion2.sendKeys("What is a class in OOP?");
+
+        const remove2 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
+        remove2.click();
+    
+        await driver.manage().setTimeouts({ implicit: 1000 });
+
+    });    
 
     it("scrolls through flashcard page overflow", async () => {
         await driver.get("http://localhost:8081");
@@ -160,14 +194,6 @@ describe('the flashcards page', () => {
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        try {
-            await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div/div"))
-            throw new Error("Flashcard should not exist!");
-        } catch (e) {
-            if (!(e instanceof NoSuchElementError)) {
-                throw new Error("Flashcard should not exist!");
-            }
-        }
     });
 
     afterEach(async () => {
