@@ -144,6 +144,84 @@ describe('the flashcards page', () => {
 
     });    
 
+    it("removes all* flashcards", async () => {
+        await driver.get("http://localhost:8081");
+
+        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[1]/div[3]"));
+        navigateToFlashcard.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+
+
+        // Create first study set
+        const addFlashCard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]/div[1]/div"));
+        addFlashCard.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+
+        const studySet = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
+        studySet.sendKeys("INSO");
+
+        const question = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[1]"));
+        question.sendKeys("What is OOP?");
+
+        const answer = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[2]"));
+        answer.sendKeys("Object Oriented Programming");
+
+        const create = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
+        create.click();
+
+
+        // Create second study set
+        addFlashCard.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+
+        const studySet2 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
+        studySet2.sendKeys("MATE");
+
+        const question2 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[1]"));
+        question2.sendKeys("What is an integer?");
+
+        const answer2 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[2]"));
+        answer2.sendKeys("Not a fraction; a whole number");
+
+        const create2 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
+        create2.click();
+
+        // Create third study set
+        addFlashCard.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+
+        const studySet3 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
+        studySet3.sendKeys("QUIM");
+
+        const question3 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[1]"));
+        question3.sendKeys("What is chemistry?");
+
+        const answer3 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[2]"));
+        answer3.sendKeys("Study of the interactions of matter with other matter and with energy");
+
+        const create3 = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
+        create3.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+
+        // Remove all* flashcards
+        const removeFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]/div[2]/div"));
+        removeFlashcard.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+
+        const removeAllFlashcards = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div"));
+        removeAllFlashcards.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+    
+    });
+    
+
     it("scrolls through flashcard page overflow", async () => {
         await driver.get("http://localhost:8081");
 
