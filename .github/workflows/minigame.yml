@@ -1,0 +1,23 @@
+name: Minigame test automation
+
+on:
+    pull_request:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+            - property-testing
+
+
+jobs: 
+    unit_test:
+        name: Unit Test
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '14'
+            - run: npm install
+            - run: npx jest minigame.test.js
+
