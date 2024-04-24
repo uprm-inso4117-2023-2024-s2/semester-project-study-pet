@@ -110,6 +110,66 @@ describe('the flashcards page', () => {
         }
     });
 
+    it("scrolls through flashcard page overflow", async () => {
+        await driver.get("http://localhost:8081");
+
+        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[1]/div[3]"));
+        navigateToFlashcard.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+
+        const addFlashCard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]/div[1]/div"));
+        addFlashCard.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+
+        let studySet = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
+        studySet.sendKeys("INSO");
+
+        let question = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[1]"));
+        question.sendKeys("What is OOP?");
+
+        const answer = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[2]"));
+        answer.sendKeys("Object Oriented Programming");
+
+        const create = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
+        create.click();
+
+        const removeFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]/div[2]/div"));
+        removeFlashcard.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+
+        studySet = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
+        studySet.sendKeys("INSO");
+
+        question = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea"));
+        question.sendKeys("What is OOP?");
+
+        await driver.executeScript("arguments[0].scrollIntoView();", studySet);
+        await driver.sleep(1000);
+
+        await driver.executeScript("window.scrollTo(0, 0);");
+        await driver.sleep(1000);
+
+        const isAtTopAfterScroll = await driver.executeScript("return (window.pageYOffset === 0)");
+        expect(isAtTopAfterScroll).toBe(true);
+
+        const remove = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
+        remove.click();
+
+        await driver.manage().setTimeouts({implicit: 1000});
+
+        try {
+            await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div/div"))
+            throw new Error("Flashcard should not exist!");
+        } catch (e) {
+            if (!(e instanceof NoSuchElementError)) {
+                throw new Error("Flashcard should not exist!");
+            }
+        }
+    });
+
     afterEach(async () => {
         await driver.quit();
     });
