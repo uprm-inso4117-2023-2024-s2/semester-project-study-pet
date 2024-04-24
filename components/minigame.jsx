@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { loadHappiness, saveHappiness } from './happinessStorage';
 import questionsData from '../assets/data/questions.json'
+import useDifficulty from './useDifficulty';
 
 // Function to shuffle an array (Fisher-Yates shuffle algorithm)
 const shuffleArray = (array) => {
@@ -28,7 +29,7 @@ const MiniGame = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [score, setScore] = useState(0);
   const [happiness, setHappiness] = useState(0);
-  const [selectedDifficulty, setSelectedDifficulty] = useState('medium'); // The selectedDifficulty has to be changed to the current pet difficulty
+  const { selectedDifficulty, setSelectedDifficulty } = useDifficulty();
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {

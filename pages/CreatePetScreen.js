@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, TouchableOpacity, Modal, Platform, DatePickerAndroid } from "react-native";
+import useDifficulty from '../path/to/useDifficulty';
 import { petEventEmitter } from "./EventEmitter";
 
 const CreatePetScreen = ({ navigation }) => {
   const [petName, setPetName] = useState("");
   const [examDate, setExamDate] = useState("");
-  const [difficulty, setDifficulty] = useState("easy");
+  const [ selectedDifficulty, setSelectedDifficulty ] = useDifficulty();
   const [diffModalVisible, setdiffModalVisible] = useState(false);
   const [typeModalVisible, settypeModalVisible] = useState(false);
   const [dateError, setDateError] = useState("");
@@ -28,7 +29,7 @@ const CreatePetScreen = ({ navigation }) => {
     const newPet = {
       name: petName,
       examDate: examDate,
-      difficulty: difficulty,
+      selectedDifficulty: selectedDifficulty,
       happiness: 100,
       hunger: 100,
       type: type,
@@ -72,7 +73,7 @@ const CreatePetScreen = ({ navigation }) => {
             <TouchableOpacity
               key={option}
               onPress={() => {
-                setDifficulty(option);
+                setSelectedDifficulty(option);
                 setdiffModalVisible(false);
               }}
             >
