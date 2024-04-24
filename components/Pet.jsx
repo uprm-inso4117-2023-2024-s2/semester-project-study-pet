@@ -134,12 +134,12 @@ class Pet extends Component {
 
     // Receives event from Mypets.js when a new pet is created
     // Eventually this would need to be changed to function with choosing an existent pet data
-    petEventEmitter.on("petType", (type) => {
-      this.setState({ pettype: type }, () => {
-        this.updateImages();
-        console.log("Type of pet received", type);
-      });
-    });
+    // petEventEmitter.on("petType", (type) => {
+    //   this.setState({ pettype: type }, () => {
+    //     this.updateImages();
+    //     console.log("Type of pet received", type);
+    //   });
+    // });
 
     // If user hasn't choose a pet type, set images to default (frog)
     if (this.state.images.length <= 0) {
@@ -147,6 +147,8 @@ class Pet extends Component {
         images: this.state.frogimages,
       }));
     }
+
+    this.updateImages();
     
     this.setState((prevState) => {
       // Initialize an object to hold the state update
