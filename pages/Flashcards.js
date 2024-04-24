@@ -63,8 +63,23 @@ export default function Flashcards() {
       }
   
       const studySetIndex = studySets.findIndex(set => set.title === studySet);
+      const studySetFlashcards = studySets[studySetIndex].flashcards;
   
-      // If question is empty, remove entire study set
+      if (studySetFlashcards.length === 1 && studySets.length === 1) {
+        showAlert('Error', 'Cannot remove the last remaining flashcard inside the last study set.');
+        return;
+      }
+  
+      if (studySetFlashcards.length === 1 && studySetIndex === studySets.length - 1) {
+        // If the last study set contains only one flashcard
+        // Remove the flashcard directly
+        await removeFlashcard({ studySet, question });
+        setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
+        loadStudySets();
+        Alert.alert('Removed', 'Flashcard removed successfully');
+        return;
+      }
+  
       if (!question.trim()) {
         await removeFlashcard({ studySet, question });
         setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
@@ -73,7 +88,7 @@ export default function Flashcards() {
         return;
       }
   
-      const existingFlashcardIndex = studySets[studySetIndex].flashcards.findIndex(card => card.question === question);
+      const existingFlashcardIndex = studySetFlashcards.findIndex(card => card.question === question);
   
       if (existingFlashcardIndex === -1) {
         showAlert('Error', 'Question does not exist in Study Set.');
@@ -89,6 +104,7 @@ export default function Flashcards() {
     }
   };
   
+  
   const studySetExists = (studySetTitle) => {
     return studySets.some(set => set.title === studySetTitle);
   };
@@ -100,11 +116,18 @@ export default function Flashcards() {
         showAlert('Error', 'There are no existing study sets to remove.');
         return;
       }
-      // Remove all study sets
-      await removeFlashcard({ studySet: '', question: '' });
+  
+      // Sort study sets by creation date in descending order
+      const sortedStudySets = [...studySets].sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+  
+      // Remove all study sets except the oldest one
+      for (let i = 1; i < sortedStudySets.length; i++) {
+        await removeFlashcard({ studySet: sortedStudySets[i].title, question: '' });
+      }
+  
       setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
       loadStudySets();
-      Alert.alert('Removed', 'All flashcards and study sets removed successfully');
+      Alert.alert('Removed', 'All flashcards and study sets removed successfully, except for the oldest one');
     } catch (error) {
       showAlert('Error', error.message);
     }
@@ -253,3 +276,4 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
 });
+
