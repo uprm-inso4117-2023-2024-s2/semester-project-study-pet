@@ -5,6 +5,7 @@ on:
     workflow_dispatch:
     push:
         branches:
+            - main
             - property-testing
 
 
@@ -18,5 +19,7 @@ jobs:
               with:
                   node-version: '14'
             - run: npm install
+            - run: npm audit fix
+            - run: npm install 
             - run: npx jest minigame.test.js
 
