@@ -8,32 +8,24 @@ Feature: Game
   Scenario: Navigate To The Game Page
     Then User At Game Page
 
-  Scenario: User Gets 0/5 Correct
-    When User Plays Through The Game Scoring 0
-    Then Scoring Should Be 0
+  Scenario Outline: User Plays the Game
+    When User Sets Difficulty to "<Difficulty>"
+    And User Plays Through The Game Scoring <Score> out of <Total Questions>
+    Then Scoring Should Be <Score> of <Total Questions>
 
-  Scenario: User Gets 1/5 Correct
-    When User Plays Through The Game Scoring 1
-    Then Scoring Should Be 1
-
-  Scenario: User Gets 2/5 Correct
-    When User Plays Through The Game Scoring 2
-    Then Scoring Should Be 2
-
-  Scenario: User Gets 3/5 Correct
-    When User Plays Through The Game Scoring 3
-    Then Scoring Should Be 3
-
-  Scenario: User Gets 4/5 Correct
-    When User Plays Through The Game Scoring 4
-    Then Scoring Should Be 4
-
-  Scenario: User Gets 5/5 Correct
-    When User Plays Through The Game Scoring 5
-    Then Scoring Should Be 5
-
-  Scenario: User Can Play Again
-    When User Plays Through The Game Scoring 5
-    And User At Finished Screen
-    And User Clicks The Play Again Button
-    Then User At The First Question
+    Examples:
+      | Difficulty | Score | Total Questions |
+      | Easy | 0 | 2 |
+      | Easy | 1 | 2 |
+      | Easy | 2 | 2 |
+      | Medium | 0 | 4 |
+      | Medium | 1 | 4 |
+      | Medium | 2 | 4 |
+      | Medium | 3 | 4 |
+      | Medium | 4 | 4 |
+      | Hard | 0 | 5 |
+      | Hard | 1 | 5 |
+      | Hard | 2 | 5 |
+      | Hard | 3 | 5 |
+      | Hard | 4 | 5 |
+      | Hard | 5 | 5 |
