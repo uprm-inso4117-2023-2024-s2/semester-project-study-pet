@@ -24,46 +24,46 @@ class Pet extends Component {
       // All Dog and Cat related are currently placeholders for new pets
       dogimages: [
         require('./PetImages/DogImages/animatedDog.png'),
-        require('./PetImages/DogImages/animatedDog(sad).gif'),
-        require('./PetImages/DogImages/animatedDog(happy).gif'),
-        require('./PetImages/DogImages/animatedDog(happy)1.gif'),
-        require('./PetImages/DogImages/animatedDog(dead).gif'),
+        require('./PetImages/DogImages/animatedDog(sad).png'),
+        require('./PetImages/DogImages/animatedDog(angry).png'),
+        require('./PetImages/DogImages/animatedDog(happy).png'),
+        require('./PetImages/DogImages/animatedDog(dead).png'),
       ],
       // Placeholder for new pet
       catimages: [
         require('./PetImages/CatImages/animatedCat.png'),
-        require('./PetImages/CatImages/animatedCat(sad).gif'),
-        require('./PetImages/CatImages/animatedCat(happy).gif'),
-        require('./PetImages/CatImages/animatedCat(happy)1.gif'),
-        require('./PetImages/CatImages/animatedCat(dead).gif'),
+        require('./PetImages/CatImages/animatedCat(sad).png'),
+        require('./PetImages/CatImages/animatedCat(angry).png'),
+        require('./PetImages/CatImages/animatedCat(happy).png'),
+        require('./PetImages/CatImages/animatedCat(dead).png'),
       ], 
       bunnyimages: [
-        require('./PetImages/BunnyImages/animatedBunny.png'), // Has to be changed to gif
-        require('./PetImages/CatImages/animatedCat(sad).gif'), // <--- Have to be changed to bunny images
-        require('./PetImages/CatImages/animatedCat(happy).gif'), // <---
-        require('./PetImages/CatImages/animatedCat(happy)1.gif'), // <---
-        require('./PetImages/CatImages/animatedCat(dead).gif'), // <---
+        require('./PetImages/BunnyImages/animatedBunny.png'),
+        require('./PetImages/BunnyImages/animatedBunny(sad).png'), 
+        require('./PetImages/BunnyImages/animatedBunny(angry).png'), 
+        require('./PetImages/BunnyImages/animatedBunny(happy).png'),
+        require('./PetImages/BunnyImages/animatedBunny(dead).png'), 
       ], 
       penguinimages: [
-        require('./PetImages/PenguinImages/animatedPenguin.png'), // Has to be changed to gif
-        require('./PetImages/CatImages/animatedCat(sad).gif'), // <--- Have to be changed to Penguin images
-        require('./PetImages/CatImages/animatedCat(happy).gif'), // <---
-        require('./PetImages/CatImages/animatedCat(happy)1.gif'), // <---
-        require('./PetImages/CatImages/animatedCat(dead).gif'), // <---
+        require('./PetImages/PenguinImages/animatedPenguin.png'), 
+        require('./PetImages/PenguinImages/animatedPenguin(sad).png'), 
+        require('./PetImages/PenguinImages/animatedPenguin(angry).png'), 
+        require('./PetImages/PenguinImages/animatedPenguin(happy).png'), 
+        require('./PetImages/PenguinImages/animatedPenguin(dead).png'),
       ], 
       pigimages: [
-        require('./PetImages/PigImages/animatedPig.png'), // Has to be changed to gif
-        require('./PetImages/CatImages/animatedCat(sad).gif'), // <--- Have to be changed to pig images
-        require('./PetImages/CatImages/animatedCat(happy).gif'), // <---
-        require('./PetImages/CatImages/animatedCat(happy)1.gif'), // <---
-        require('./PetImages/CatImages/animatedCat(dead).gif'), // <---
+        require('./PetImages/PigImages/animatedPig.png'), 
+        require('./PetImages/PigImages/animatedPig(sad).png'), 
+        require('./PetImages/PigImages/animatedPig(angry).png'),
+        require('./PetImages/PigImages/animatedPig(happy).png'), 
+        require('./PetImages/PigImages/animatedPig(dead).png'), 
       ], 
       bearimages: [
-        require('./PetImages/BearImages/animatedBear.png'), // Has to be changed to gif
-        require('./PetImages/CatImages/animatedCat(sad).gif'), // <--- Have to be changed to bear images
-        require('./PetImages/CatImages/animatedCat(happy).gif'), // <---
-        require('./PetImages/CatImages/animatedCat(happy)1.gif'), // <---
-        require('./PetImages/CatImages/animatedCat(dead).gif'), // <---
+        require('./PetImages/BearImages/animatedBear.png'),
+        require('./PetImages/BearImages/animatedBear(sad).png'),
+        require('./PetImages/BearImages/animatedBear(angry).png'), 
+        require('./PetImages/BearImages/animatedBear(happy).png'), 
+        require('./PetImages/BearImages/animatedBear(dead).png'), 
       ], 
       // More pets can be added here
       currentImageIndex: 0,
@@ -289,12 +289,7 @@ class Pet extends Component {
       } else if(growthlvl === 3 && this.state.hunger >= 50){
         currentImage = images[2]
       } else if (growthlvl === 3 && this.state.happiness >= 80) {
-        if(this.state.pettype == 'frog') {
-          currentImage = images[3] // Happy Adult Frog
-        }                                                             // Change this if and else statemente when the animations of the other pets are added
-        else {
-          currentImage = images[0] // Happy Adult Frog
-        }
+          currentImage = images[3] // Happy Adult Frog                                         
       } else if (growthlvl === 3 && this.state.happiness >= 40){
         currentImage = images[0] // Regular Adult Frog
       } else if (growthlvl === 3 && (this.state.happiness <= 30 || this.state.happiness >= 30)) {

@@ -1,5 +1,3 @@
-import React from 'react';
-import { render } from '@testing-library/react-native';
 import Pet from '../../components/Pet';
 
 // Utility function to wait for state updates in React components
@@ -32,18 +30,14 @@ describe('Pet Component Image Loading', () => {
             require('../../components/youngfrog.png'),
           ]});
 
-      // Manually set the pet type and reset images array
-      //pet.state.pettype = pettype;
-      //pet.state.images = [];
-
       // Manually call the method that updates the images
-      //pet.updateImages(); 
-      //jest.runAllTimers();
+      pet.updateImages(); 
+      jest.runAllTimers();
 
-      //await pet.updateImages();
+      await pet.updateImages();
 
       // Wait for the component to process the state update
-      //await waitForComponentToUpdate(pet);
+      await waitForComponentToUpdate(pet);
 
       // Check that the state now includes the correct images
       expect(pet.state.frogimages).toEqual(expectedImages);
