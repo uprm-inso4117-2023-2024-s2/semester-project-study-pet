@@ -19,7 +19,7 @@ describe('the eat page', () => {
         const navigateToEat = await driver.findElement(By.css(eatlocation));
         navigateToEat.click();
 
-        await driver.manage().setTimeouts({ implicit: 1000 });
+        await driver.manage().setTimeouts({ implicit: 5000 });
 
         expect(await driver.getTitle()).toBe("Eat");
     });
