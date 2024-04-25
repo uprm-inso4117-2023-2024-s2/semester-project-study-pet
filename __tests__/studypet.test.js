@@ -5,7 +5,7 @@ describe('the flashcards page', () => {
     let driver;
 
     beforeEach(async () => {
-        driver = await new Builder().forBrowser(Browser.FIREFOX).build();
+        driver = await new Builder().forBrowser(Browser.CHROME).build(); // changed setup to support Chrome, a more common browser
     });
 
     it("navigates to the flashcards page", async () => {
@@ -119,7 +119,7 @@ describe('the eat page', () => {
     let driver;
 
     beforeEach(async () => {
-        driver = await new Builder().forBrowser(Browser.FIREFOX).build();
+        driver = await new Builder().forBrowser(Browser.CHROME).build(); // changed setup to support chrome, a more common browser
     });
 
     it("navigates to the eat page", async () => {
