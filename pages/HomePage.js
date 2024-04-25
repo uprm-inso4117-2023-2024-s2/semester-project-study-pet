@@ -76,14 +76,19 @@ const HomePage = ({ navigation }) => {
 
   useEffect(() => {
     const checkPermission = async () => {
-      let permission = await Notifications.getPermissionsAsync();
-      let status = permission?.status || ''; // Use optional chaining to avoid accessing properties of undefined
-      if (status !== 'granted') {
-        Alert.alert(
-          'Permission required',
-          'You need to grant permission to receive notifications',
-          [{ text: 'OK' }]
-        );
+      try{
+        let permission = await Notifications.getPermissionsAsync();
+        let status = permission?.status || ''; // Use optional chaining to avoid accessing properties of undefined
+        if (status !== 'granted') {
+          Alert.alert(
+            'Permission required',
+            'You need to grant permission to receive notifications',
+            [{ text: 'OK' }]
+          );
+        }
+      } catch (error) {
+        console.error('Error checking permission:', error);
+        // Handle error gracefully, e.g., show an error message to the user
       }
     };
 
