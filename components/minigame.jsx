@@ -166,6 +166,7 @@ const MiniGame = () => {
               onPress={() => handleAnswerSelection(index)}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
+              testID='answerButton'
             >
               <Text style={styles.answerText}>{answer}</Text>
             </TouchableOpacity>
