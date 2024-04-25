@@ -4,7 +4,7 @@ import { loadHappiness, saveHappiness } from './happinessStorage';
 import questionsData from '../assets/data/questions.json'
 
 // Function to shuffle an array (Fisher-Yates shuffle algorithm)
-const shuffleArray = (array) => {
+export const shuffleArray = (array) => {
   let currentIndex = array.length,  randomIndex;
   
   // While there remain elements to shuffle...
@@ -21,6 +21,33 @@ const shuffleArray = (array) => {
 
   return array;
 }
+//exported for ease of testing
+export const filteredQuestions = (questions, selectedDifficulty) => {
+  const shuffledQuestions = shuffleArray([...questions]); // Assuming shuffleArray is defined elsewhere
+        //console.log("difficulty:", selectedDifficulty);
+
+      // Ensure the array does not exceed 9 elements
+  const maxQuestions = shuffledQuestions.slice(0, 9);
+
+  let fraction;
+  switch (selectedDifficulty) {
+    case "easy":
+      fraction = 1 / 3;
+      break;
+    case "medium":
+      fraction = 2 / 3;
+      break;
+    case "hard":
+      fraction = 1; // All questions
+      break;
+    default:
+      fraction = 1 / 3;
+  }
+    // Apply the fraction to the potentially shortened list of up to 9 questions
+    const numberToShow = Math.ceil(maxQuestions.length * fraction);
+    return maxQuestions.slice(0, numberToShow);
+};
+
 
 const MiniGame = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -32,36 +59,7 @@ const MiniGame = () => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-
-    const filteredQuestions = () => {
-      const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
-      //console.log("difficulty:", selectedDifficulty);
-
-      // Ensure the array does not exceed 9 elements
-      const maxQuestions = shuffledQuestions.slice(0, 9);
-
-      let fraction;
-      switch (selectedDifficulty) {
-        case "easy":
-          fraction = 1 / 3;
-          break;
-        case "medium":
-          fraction = 2 / 3;
-          break;
-        case "hard":
-          fraction = 1; // All questions
-          break;
-        default:
-          fraction = 1 / 3;
-      }
-
-      // Apply the fraction to the potentially shortened list of up to 9 questions
-      const numberToShow = Math.ceil(maxQuestions.length * fraction);
-      return maxQuestions.slice(0, numberToShow);
-    };
-
-    setQuestions(filteredQuestions());
-
+  setQuestions(filteredQuestions(questionsData, selectedDifficulty));
   }, [selectedDifficulty]);
 
   // Function to handle answer selection  const [happiness, setHappiness] = useState(0);
@@ -107,7 +105,7 @@ const MiniGame = () => {
 
   if (gameOver) {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} data-testid="gameContainer">
         <View style={styles.gameContainer}>
           <View style={styles.gameOverContainer}>
               <Text style={styles.finishedText}>Finished!</Text>
@@ -122,7 +120,7 @@ const MiniGame = () => {
 
 
                         <View style={styles.hrow}>
-                            <Text style={styles.statText}>
+                            <Text style={styles.statText} data-testid="happinessText">
                                 Happiness: {happiness}
                             </Text>
                             <Image
@@ -168,6 +166,7 @@ const MiniGame = () => {
               onPress={() => handleAnswerSelection(index)}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
+              testID='answerButton'
             >
               <Text style={styles.answerText}>{answer}</Text>
             </TouchableOpacity>
