@@ -10,7 +10,7 @@ class Pet extends Component {
   constructor(props) {
     super(props);
     // Pet animations, when the new pet stages are drawn, set the index below on the render function
-    
+
     this.state = {
       frogimages: [
         require('./PetImages/FrogImages/animatedFrog.gif'),
@@ -65,6 +65,7 @@ class Pet extends Component {
         require('./PetImages/BearImages/animatedBear(happy).png'), 
         require('./PetImages/BearImages/animatedBear(dead).png'), 
       ], 
+        
       // More pets can be added here
       currentImageIndex: 0,
       name: 'Firulai',
@@ -110,13 +111,13 @@ class Pet extends Component {
         break;
       // More pets can be added here
     };
-  
+
     this.setState({ images });
   }
 
   componentDidMount() {
     this.loadHappinessFromStorage();
-    this.loadHungerFromStorage(); 
+    this.loadHungerFromStorage();
     this.loadSleepScheduleFromStorage();
 
     // Simulate happiness increasing over time
@@ -149,30 +150,32 @@ class Pet extends Component {
     }
 
     this.updateImages();
-    
+   
     this.setState((prevState) => {
       // Initialize an object to hold the state update
       let updates = {};
-    
+
       // Check if careMistakes are >= 10
       if (prevState.careMistakes >= 10) {
         // Emit event petDeath. This is for the "Homepage.js" file to receive it
         petEventEmitter.emit('petDeath', true);
-        
+
         // Update currentImageIndex to the last image
         updates = { currentImageIndex: prevState.images.length - 1 };
       } else {
         // If careMistakes are less than 10, emit petAlive
         petEventEmitter.emit('petAlive', true);
       }
-    
+
       // Return the updates to be applied to the state
       return updates;
     });
 
     // Check for care mistakes every 15 minutes
     const careMistakeInterval = setInterval(() => {
-      if (this.state.isAsleep) return; // Don't count care mistakes when pet is asleep
+      if (this.state.isAsleep) {
+        return;
+      } // Don't count care mistakes when pet is asleep
 
       const currentTime = new Date();
       const lastInteractionTime = new Date(this.state.lastInteractionTime);
@@ -189,7 +192,7 @@ class Pet extends Component {
       const { examDate, startDate } = this.state;
       const timeToExam = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
       const daysUntilExam = Math.ceil((examDate - startDate) / (1000 * 60 * 60 * 24));
-     
+
       let growthLevel;
       if (daysUntilExam <= timeToExam / 3) {
         growthLevel = 3;
@@ -201,14 +204,15 @@ class Pet extends Component {
 
       this.setState({ growthlvl: growthLevel });
 
-      if (growthLevel >= 3) clearInterval(growthInterval); // Stop growth after adult stage
-    }, 0); 
-    
+      if (growthLevel >= 3) {
+        clearInterval(growthInterval);
+      } // Stop growth after adult stage
+    }, 0);
 
     // Check for sleep time every minute
     const sleepInterval = setInterval(() => {
       const isAsleep = isPetAsleep(this.state.sleepTime);
-      this.setState({ isAsleep }, () => this.saveSleepToStorage(isAsleep) );
+      this.setState({ isAsleep }, () => this.saveSleepToStorage(isAsleep));
     }, 1000 * 60);
   }
 
@@ -239,7 +243,7 @@ class Pet extends Component {
     try {
       const sleepTime = await loadSleepTime();
       const isAsleep = await loadSleep();
-      this.setState({ 
+      this.setState({
         sleepTime,
         isAsleep: isAsleep === 'true',
       });
@@ -274,19 +278,19 @@ class Pet extends Component {
   render() {
     const { examDate, name, images, growthlvl, isAsleep } = this.state;
     let currentImage;
-    
-    if (examDate <= new Date()){
+
+    if (examDate <= new Date()) {
       this.props.onChange(true)
       console.log("AAAAAAA")
     }
 
-    if(this.state.careMistakes < 10) {
+    if (this.state.careMistakes < 10) {
       // Select the image based on growth level
       if (growthlvl === 1) {
         currentImage = images[5]; // Baby stage image
-      } else if(growthlvl === 2){
+      } else if (growthlvl === 2) {
         currentImage = images[6] // Young state iamge
-      } else if(growthlvl === 3 && this.state.hunger >= 50){
+      } else if (growthlvl === 3 && this.state.hunger >= 50) {
         currentImage = images[2]
       } else if (growthlvl === 3 && this.state.happiness >= 80) {
           currentImage = images[3] // Happy Adult Frog                                         
@@ -308,24 +312,24 @@ class Pet extends Component {
     // } else {
     //   currentImage = images[0]; // Adult stage image
     // }
-    
+
     //This piece of code changes the current image of the pet depending on the growth level
     //<Image source={images[currentImageIndex]} style={styles.image} />  this is the original code for the pet photo
     return (
 
       <View>
-        {images && images.length > 0 &&(
-        <View style={{alignItems: 'center', position: 'relative'}}>
+        {images && images.length > 0 && (
+          <View style={{ alignItems: 'center', position: 'relative' }}>
             {isAsleep ? <Text>Your pet is asleep Zz</Text> :
               <Image source={currentImage} style={styles.image} />
             }
-        </View>
+          </View>
         )}
         <Text style={styles.name}>{name}</Text>
         {/* <Text>Care Mistakes: {careMistakes}</Text> */}
-        <Text style={styles.growth}>Growth Level: {growthlvl}</Text> 
-        
-        {/* <Text>Care Mistakes: {careMistakes}</Text> */} 
+        <Text style={styles.growth}>Growth Level: {growthlvl}</Text>
+
+        {/* <Text>Care Mistakes: {careMistakes}</Text> */}
 
         {/*uncomment line above to show care mistakes on the screen*/}
       </View>

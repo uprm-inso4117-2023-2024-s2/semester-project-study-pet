@@ -1,0 +1,1 @@
+module.exports = 'test-happiness-image';
