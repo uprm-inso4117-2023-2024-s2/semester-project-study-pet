@@ -5,7 +5,7 @@ import { useFonts } from 'expo-font';
 import MiniGame from '../components/eatingMinigame';
 import Pet, { loadHunger } from '../components/Pet';
 
-export default function App() {
+export default function App({ route }) {
   const p = new Pet();
   const [isFontLoaded, setIsFontLoaded] = useState(false);
   const [hunger, setHunger] = useState(p.state.hunger);
@@ -47,7 +47,7 @@ export default function App() {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.miniGameContainer}>
-          <MiniGame />
+          <MiniGame isAsleep={route.params?.isAsleep} />
         </View>
       </ScrollView>
       <StatusBar style="auto" />
