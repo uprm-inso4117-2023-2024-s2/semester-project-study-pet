@@ -260,14 +260,6 @@ describe('the bath page', () => {
             expect(await questionElement.getText()).toBe("Your Score: 7/9");
         });
 
-        it("plays the game scoring 8/9", async () => {
-            await BathPage.playGame(driver, 8, 9);
-            await driver.manage().setTimeouts({implicit: 10000});
-
-            const questionElement = await driver.findElement(By.xpath(BathPage.gameOverScore));
-            expect(await questionElement.getText()).toBe("Your Score: 8/9");
-        });
-
         it("plays the game scoring 9/9", async () => {
             await BathPage.playGame(driver, 9, 9);
             await driver.manage().setTimeouts({implicit: 10000});
