@@ -12,7 +12,7 @@ describe('the eat page', () => {
 
         expect(await driver.getTitle()).toBe("Home");
 
-        const navigateToEat = await driver.findElement(By.xpath(HomePage.flashcards));
+        const navigateToEat = await driver.findElement(By.xpath(HomePage.eat));
         navigateToEat.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
@@ -26,5 +26,5 @@ describe('the eat page', () => {
 });
 
 class HomePage {
-    static flashcards = "/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[3]/div[2]";
+    static eat = "//*[@id=\"pet-eat-button\"]";
 }
