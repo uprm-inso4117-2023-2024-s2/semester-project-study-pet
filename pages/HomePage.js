@@ -58,6 +58,8 @@ const loadSoundFiles = async () => {
 const HomePage = ({ navigation }) => {
   const [isdead, setIsdead] = useState(false);
   const [notificationScheduled, setNotificationScheduled] = useState(false);
+  const [goodbye, setGoodbye] = useState(false);
+  const [isAsleep, setIsAsleep] = useState(false);
 
   useEffect(() => {
     const handleAppStateChange = async (nextAppState) => {
@@ -135,24 +137,17 @@ const HomePage = ({ navigation }) => {
     // Set the "isdead" state to false, so the buttons appear"
     setIsdead(false);
   });
-
-  const [goodbye, setGoodbye] = useState(false);
-  const handleGoodbye = (newValue) => {
-    setGoodbye(newValue);
-  };
-
-  const [isAsleep, setIsAsleep] = useState(false);
-
+  
   useEffect(() => {
     loadIsAsleepFromStorage(setIsAsleep);
-
+    
     const sleepInterval = setInterval(async () => {
       await loadIsAsleepFromStorage(setIsAsleep);
-    }, 1000 * 60);
-
+    }, 500);
+    
     return () => clearInterval(sleepInterval);
   }, [isAsleep]);
-
+  
   const showSleepAlert = (action) => {
     Alert.alert(
       `${action} Not Allowed!`,
@@ -160,10 +155,14 @@ const HomePage = ({ navigation }) => {
       [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ],
-      { cancelable: false }
+      { cancelable: false, id: `pet-${action.toLowerCase()}-alert` }
     );
   };
-
+  
+  const handleGoodbye = (newValue) => {
+    setGoodbye(newValue);
+  };
+  
   return (
     <View style={{ flex: 1, paddingTop: 20, backgroundColor: '#f7ffe7', }}>
       <LinearGradient colors={['#f7ffe7', '#edf5ff']} style={styles.container}>
@@ -188,11 +187,11 @@ const HomePage = ({ navigation }) => {
         {!isdead && (
           <View style={styles.bottomButtons}>
 
-            <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Bath') : (playSound('bath'), navigation.navigate('Bath'))} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
-            <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Eat') : (playSound('eat'), navigation.navigate('Eat'))} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
-            <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('Play') : (playSound('game'), navigation.navigate('Game'))} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
-            <TouchableOpacity onPress={() => isAsleep ? showSleepAlert('PlayerStats') : (playSound('button'), navigation.navigate('PlayerStats'))} style={styles.iconButton}><Ionicons name="person-circle-outline" size={30} color="#87CEEB" /></TouchableOpacity>
-            <TouchableOpacity onPress={() => (playSound('shop'), navigation.navigate('Shop'))} style={styles.iconButton}><Ionicons name="cart" size={30} color="#f7d794" /></TouchableOpacity>
+            <TouchableOpacity id='pet-bath-button' onPress={() => isAsleep ? showSleepAlert('Bath') : (playSound('bath'), navigation.navigate('Bath', {isAsleep}))} style={styles.iconButton}><FontAwesome6 name="soap" size={30} color="#cdb4db" /></TouchableOpacity>
+            <TouchableOpacity id='pet-eat-button' onPress={() => isAsleep ? showSleepAlert('Eat') : (playSound('eat'), navigation.navigate('Eat', {isAsleep}))} style={styles.iconButton}><MaterialCommunityIcons name="cupcake" size={30} color="#ffafcc" /></TouchableOpacity>
+            <TouchableOpacity id='pet-play-button' onPress={() => isAsleep ? showSleepAlert('Play') : (playSound('game'), navigation.navigate('Game', {isAsleep}))} style={styles.iconButton}><Ionicons name="game-controller" size={30} color="#a2d2ff" /></TouchableOpacity>
+            <TouchableOpacity id='pet-stats-button' onPress={() => isAsleep ? showSleepAlert('PlayerStats') : (playSound('button'), navigation.navigate('PlayerStats', {isAsleep}))} style={styles.iconButton}><Ionicons name="person-circle-outline" size={30} color="#87CEEB" /></TouchableOpacity>
+            <TouchableOpacity id='pet-shop-button' onPress={() => (playSound('shop'), navigation.navigate('Shop'))} style={styles.iconButton}><Ionicons name="cart" size={30} color="#f7d794" /></TouchableOpacity>
           </View>
         )}
 

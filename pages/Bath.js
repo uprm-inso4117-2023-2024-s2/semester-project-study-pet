@@ -5,13 +5,13 @@ import { useFonts } from "expo-font";
 import BathGame from '../components/bathing'; // Changed import
 
 
-const Bath = ({ navigation }) => {
+const Bath = ({ navigation, route }) => {
 
   const [poopCount, setPoopCount] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      if (poopCount < 3) {
+      if (poopCount < 3 && !route.params?.isAsleep) {
         setPoopCount(prevCount => prevCount + 1);
       }
     }, 10000); // Increase count every 10 seconds
@@ -38,7 +38,7 @@ const Bath = ({ navigation }) => {
         <Text style={styles.titleText}>Let's take a Bath</Text>
       </View>
       <View style={styles.miniGameContainer}>
-        <BathGame /> 
+        <BathGame isAsleep={route.params?.isAsleep} /> 
       </View>
       <View style={{ flex: 1 }} />
       <TouchableOpacity onPress={handlePoopPress} style={styles.poopButton}>
