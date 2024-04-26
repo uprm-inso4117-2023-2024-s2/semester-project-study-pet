@@ -128,6 +128,9 @@ const MiniGame = () => {
                     break;
             }
 
+            console.log("hungerIncrement:", hungerIncrement);
+            console.log("happinessIncrement:", happinessIncrement);
+
             const newHunger = hunger - hungerIncrement;
             const newHappiness = happiness + happinessIncrement;
 
