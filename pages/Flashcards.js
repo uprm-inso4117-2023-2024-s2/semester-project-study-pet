@@ -62,21 +62,17 @@ export default function Flashcards() {
         return;
       }
   
+      // Check if there's only one study set remaining
+      if (studySets.length === 1 && !question.trim()) {
+        showAlert('Error', 'Cannot remove the only study set.');
+        return;
+      }
+  
       const studySetIndex = studySets.findIndex(set => set.title === studySet);
       const studySetFlashcards = studySets[studySetIndex].flashcards;
   
       if (studySetFlashcards.length === 1 && studySets.length === 1) {
         showAlert('Error', 'Cannot remove the last remaining flashcard inside the last study set.');
-        return;
-      }
-  
-      if (studySetFlashcards.length === 1 && studySetIndex === studySets.length - 1) {
-        // If the last study set contains only one flashcard
-        // Remove the flashcard directly
-        await removeFlashcard({ studySet, question });
-        setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
-        loadStudySets();
-        Alert.alert('Removed', 'Flashcard removed successfully');
         return;
       }
   
