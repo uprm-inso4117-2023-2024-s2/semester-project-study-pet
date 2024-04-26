@@ -64,7 +64,7 @@ export default function Flashcards() {
   
       // Check if there's only one study set remaining
       if (studySets.length === 1 && !question.trim()) {
-        showAlert('Error', 'Cannot remove the only study set.');
+        showAlert('Error', 'Cannot remove the only study set remaining.');
         return;
       }
   
