@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text } from 'react-native';
 import MiniGame from '../components/minigame'; // Import the Minigame component
@@ -10,11 +10,27 @@ export default function App({ route }) {
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
 
+  const [backgroundColor, setBackgroundColor] = useState('#FFBBE0');
+
+  // Variable to indicate whether to perform usability testing
+  const usabilityTesting = true;
+
+  useEffect(() => {
+    if (usabilityTesting) {
+      const randomNumber = Math.floor(Math.random() * 10);
+      // If the random number is less or equal than 4, change the background color
+      if (randomNumber <= 4) {
+        setBackgroundColor('#FFE4E7');
+      }
+    }
+  }, []);
+
   if (!isFontLoaded) {
-    return null; // for now, render nothing
+    return null;
   }
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
       </View>
@@ -29,7 +45,6 @@ export default function App({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFBBE0',
     alignItems: 'center',
     justifyContent: 'center',
   },
