@@ -8,7 +8,7 @@ Feature: Shop
   Scenario: Navigate To The Bath Page
     Then User At Shop Page
 
-  Scenario Outline: Filter
+  Scenario Outline: Filtering
     When User Filters by "<Filter>"
     Then "<Filter>" Items Show
 
@@ -32,7 +32,7 @@ Feature: Shop
         | Los Diablos Ski Mask | 460 |
         | All | 360 |
 
-    Scenario: Reset Money
+    Scenario: Resetting Money
       When User Buys "All"
       And User Resets Money
       Then Money Left is "999"
