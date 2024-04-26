@@ -49,7 +49,7 @@ export const filteredQuestions = (questions, selectedDifficulty) => {
 };
 
 
-const MiniGame = () => {
+const MiniGame = ({ isAsleep }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -95,7 +95,7 @@ const MiniGame = () => {
 
   // Update happiness only when the game is over and ensure it doesn't exceed 100
   useEffect(() => {
-      if (gameOver) {
+      if (gameOver && !isAsleep) {
           const newHappiness = happiness + score;
           const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
           setHappiness(cappedHappiness);
@@ -166,6 +166,7 @@ const MiniGame = () => {
               onPress={() => handleAnswerSelection(index)}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
+              testID='answerButton'
             >
               <Text style={styles.answerText}>{answer}</Text>
             </TouchableOpacity>

@@ -24,7 +24,7 @@ To install Study Pet, follow these steps:
 
 To use Study Pet follow these steps:
 
-1. Start the Expo server: `expo start`
+1. Start the Expo server: `npx expo start`
 
 ### Running on Android Emulator
 
@@ -42,7 +42,13 @@ To use Study Pet follow these steps:
 ### Running on Physical Device
 
 - Open the Expo client app on your iOS or Android phone.
-- Scan the QR code printed by `expo start` with Expo Go (Android) or the Camera app (iOS).
+- Scan the QR code printed by `npx expo start` with Expo Go (Android) or the Camera app (iOS).
+
+### Running Tests
+To run tests:
+1. Run the project on Phone or Web
+2. Find file name of the test (located in `_tests_/`)
+3. Run `npx jest "filename"` in the terminal
 
 ## Feature Highlights!
 

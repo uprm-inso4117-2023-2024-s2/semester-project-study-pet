@@ -10,7 +10,7 @@ class Pet extends Component {
   constructor(props) {
     super(props);
     // Pet animations, when the new pet stages are drawn, set the index below on the render function
-    
+
     this.state = {
       frogimages: [
         require('./PetImages/FrogImages/animatedFrog.gif'),
@@ -24,47 +24,48 @@ class Pet extends Component {
       // All Dog and Cat related are currently placeholders for new pets
       dogimages: [
         require('./PetImages/DogImages/animatedDog.png'),
-        require('./PetImages/DogImages/animatedDog(sad).gif'),
-        require('./PetImages/DogImages/animatedDog(happy).gif'),
-        require('./PetImages/DogImages/animatedDog(happy)1.gif'),
-        require('./PetImages/DogImages/animatedDog(dead).gif'),
+        require('./PetImages/DogImages/animatedDog(sad).png'),
+        require('./PetImages/DogImages/animatedDog(angry).png'),
+        require('./PetImages/DogImages/animatedDog(happy).png'),
+        require('./PetImages/DogImages/animatedDog(dead).png'),
       ],
       // Placeholder for new pet
       catimages: [
         require('./PetImages/CatImages/animatedCat.png'),
-        require('./PetImages/CatImages/animatedCat(sad).gif'),
-        require('./PetImages/CatImages/animatedCat(happy).gif'),
-        require('./PetImages/CatImages/animatedCat(happy)1.gif'),
-        require('./PetImages/CatImages/animatedCat(dead).gif'),
+        require('./PetImages/CatImages/animatedCat(sad).png'),
+        require('./PetImages/CatImages/animatedCat(angry).png'),
+        require('./PetImages/CatImages/animatedCat(happy).png'),
+        require('./PetImages/CatImages/animatedCat(dead).png'),
       ], 
       bunnyimages: [
-        require('./PetImages/BunnyImages/animatedBunny.png'), // Has to be changed to gif
-        require('./PetImages/CatImages/animatedCat(sad).gif'), // <--- Have to be changed to bunny images
-        require('./PetImages/CatImages/animatedCat(happy).gif'), // <---
-        require('./PetImages/CatImages/animatedCat(happy)1.gif'), // <---
-        require('./PetImages/CatImages/animatedCat(dead).gif'), // <---
+        require('./PetImages/BunnyImages/animatedBunny.png'),
+        require('./PetImages/BunnyImages/animatedBunny(sad).png'), 
+        require('./PetImages/BunnyImages/animatedBunny(angry).png'), 
+        require('./PetImages/BunnyImages/animatedBunny(happy).png'),
+        require('./PetImages/BunnyImages/animatedBunny(dead).png'), 
       ], 
       penguinimages: [
-        require('./PetImages/PenguinImages/animatedPenguin.png'), // Has to be changed to gif
-        require('./PetImages/CatImages/animatedCat(sad).gif'), // <--- Have to be changed to Penguin images
-        require('./PetImages/CatImages/animatedCat(happy).gif'), // <---
-        require('./PetImages/CatImages/animatedCat(happy)1.gif'), // <---
-        require('./PetImages/CatImages/animatedCat(dead).gif'), // <---
+        require('./PetImages/PenguinImages/animatedPenguin.png'), 
+        require('./PetImages/PenguinImages/animatedPenguin(sad).png'), 
+        require('./PetImages/PenguinImages/animatedPenguin(angry).png'), 
+        require('./PetImages/PenguinImages/animatedPenguin(happy).png'), 
+        require('./PetImages/PenguinImages/animatedPenguin(dead).png'),
       ], 
       pigimages: [
-        require('./PetImages/PigImages/animatedPig.png'), // Has to be changed to gif
-        require('./PetImages/CatImages/animatedCat(sad).gif'), // <--- Have to be changed to pig images
-        require('./PetImages/CatImages/animatedCat(happy).gif'), // <---
-        require('./PetImages/CatImages/animatedCat(happy)1.gif'), // <---
-        require('./PetImages/CatImages/animatedCat(dead).gif'), // <---
+        require('./PetImages/PigImages/animatedPig.png'), 
+        require('./PetImages/PigImages/animatedPig(sad).png'), 
+        require('./PetImages/PigImages/animatedPig(angry).png'),
+        require('./PetImages/PigImages/animatedPig(happy).png'), 
+        require('./PetImages/PigImages/animatedPig(dead).png'), 
       ], 
       bearimages: [
-        require('./PetImages/BearImages/animatedBear.png'), // Has to be changed to gif
-        require('./PetImages/CatImages/animatedCat(sad).gif'), // <--- Have to be changed to bear images
-        require('./PetImages/CatImages/animatedCat(happy).gif'), // <---
-        require('./PetImages/CatImages/animatedCat(happy)1.gif'), // <---
-        require('./PetImages/CatImages/animatedCat(dead).gif'), // <---
+        require('./PetImages/BearImages/animatedBear.png'),
+        require('./PetImages/BearImages/animatedBear(sad).png'),
+        require('./PetImages/BearImages/animatedBear(angry).png'), 
+        require('./PetImages/BearImages/animatedBear(happy).png'), 
+        require('./PetImages/BearImages/animatedBear(dead).png'), 
       ], 
+        
       // More pets can be added here
       currentImageIndex: 0,
       name: 'Firulai',
@@ -110,13 +111,13 @@ class Pet extends Component {
         break;
       // More pets can be added here
     };
-  
+
     this.setState({ images });
   }
 
   componentDidMount() {
     this.loadHappinessFromStorage();
-    this.loadHungerFromStorage(); 
+    this.loadHungerFromStorage();
     this.loadSleepScheduleFromStorage();
 
     // Simulate happiness increasing over time
@@ -134,12 +135,12 @@ class Pet extends Component {
 
     // Receives event from Mypets.js when a new pet is created
     // Eventually this would need to be changed to function with choosing an existent pet data
-    petEventEmitter.on("petType", (type) => {
-      this.setState({ pettype: type }, () => {
-        this.updateImages();
-        console.log("Type of pet received", type);
-      });
-    });
+    // petEventEmitter.on("petType", (type) => {
+    //   this.setState({ pettype: type }, () => {
+    //     this.updateImages();
+    //     console.log("Type of pet received", type);
+    //   });
+    // });
 
     // If user hasn't choose a pet type, set images to default (frog)
     if (this.state.images.length <= 0) {
@@ -147,30 +148,34 @@ class Pet extends Component {
         images: this.state.frogimages,
       }));
     }
-    
+
+    this.updateImages();
+   
     this.setState((prevState) => {
       // Initialize an object to hold the state update
       let updates = {};
-    
+
       // Check if careMistakes are >= 10
       if (prevState.careMistakes >= 10) {
         // Emit event petDeath. This is for the "Homepage.js" file to receive it
         petEventEmitter.emit('petDeath', true);
-        
+
         // Update currentImageIndex to the last image
         updates = { currentImageIndex: prevState.images.length - 1 };
       } else {
         // If careMistakes are less than 10, emit petAlive
         petEventEmitter.emit('petAlive', true);
       }
-    
+
       // Return the updates to be applied to the state
       return updates;
     });
 
     // Check for care mistakes every 15 minutes
     const careMistakeInterval = setInterval(() => {
-      if (this.state.isAsleep) return; // Don't count care mistakes when pet is asleep
+      if (this.state.isAsleep) {
+        return;
+      } // Don't count care mistakes when pet is asleep
 
       const currentTime = new Date();
       const lastInteractionTime = new Date(this.state.lastInteractionTime);
@@ -187,7 +192,7 @@ class Pet extends Component {
       const { examDate, startDate } = this.state;
       const timeToExam = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
       const daysUntilExam = Math.ceil((examDate - startDate) / (1000 * 60 * 60 * 24));
-     
+
       let growthLevel;
       if (daysUntilExam <= timeToExam / 3) {
         growthLevel = 3;
@@ -199,15 +204,16 @@ class Pet extends Component {
 
       this.setState({ growthlvl: growthLevel });
 
-      if (growthLevel >= 3) clearInterval(growthInterval); // Stop growth after adult stage
-    }, 0); 
-    
+      if (growthLevel >= 3) {
+        clearInterval(growthInterval);
+      } // Stop growth after adult stage
+    }, 0);
 
-    // Check for sleep time every minute
+    // Check for sleep time every half a second
     const sleepInterval = setInterval(() => {
       const isAsleep = isPetAsleep(this.state.sleepTime);
-      this.setState({ isAsleep }, () => this.saveSleepToStorage(isAsleep) );
-    }, 1000 * 60);
+      this.setState({ isAsleep }, () => this.saveSleepToStorage(isAsleep));
+    }, 500);
   }
 
   loadHappinessFromStorage = async () => {
@@ -237,7 +243,7 @@ class Pet extends Component {
     try {
       const sleepTime = await loadSleepTime();
       const isAsleep = await loadSleep();
-      this.setState({ 
+      this.setState({
         sleepTime,
         isAsleep: isAsleep === 'true',
       });
@@ -272,27 +278,22 @@ class Pet extends Component {
   render() {
     const { examDate, name, images, growthlvl, isAsleep } = this.state;
     let currentImage;
-    
-    if (examDate <= new Date()){
+
+    if (examDate <= new Date()) {
       this.props.onChange(true)
       console.log("AAAAAAA")
     }
 
-    if(this.state.careMistakes < 10) {
+    if (this.state.careMistakes < 10) {
       // Select the image based on growth level
       if (growthlvl === 1) {
         currentImage = images[5]; // Baby stage image
-      } else if(growthlvl === 2){
+      } else if (growthlvl === 2) {
         currentImage = images[6] // Young state iamge
-      } else if(growthlvl === 3 && this.state.hunger >= 50){
+      } else if (growthlvl === 3 && this.state.hunger >= 50) {
         currentImage = images[2]
       } else if (growthlvl === 3 && this.state.happiness >= 80) {
-        if(this.state.pettype == 'frog') {
-          currentImage = images[3] // Happy Adult Frog
-        }                                                             // Change this if and else statemente when the animations of the other pets are added
-        else {
-          currentImage = images[0] // Happy Adult Frog
-        }
+          currentImage = images[3] // Happy Adult Frog                                         
       } else if (growthlvl === 3 && this.state.happiness >= 40){
         currentImage = images[0] // Regular Adult Frog
       } else if (growthlvl === 3 && (this.state.happiness <= 30 || this.state.happiness >= 30)) {
@@ -311,24 +312,24 @@ class Pet extends Component {
     // } else {
     //   currentImage = images[0]; // Adult stage image
     // }
-    
+
     //This piece of code changes the current image of the pet depending on the growth level
     //<Image source={images[currentImageIndex]} style={styles.image} />  this is the original code for the pet photo
     return (
 
       <View>
-        {images && images.length > 0 &&(
-        <View style={{alignItems: 'center', position: 'relative'}}>
-            {isAsleep ? <Text>Your pet is asleep Zz</Text> :
+        {images && images.length > 0 && (
+          <View style={{ alignItems: 'center', position: 'relative' }}>
+            {isAsleep ? <Text id='pet-asleep-message'>Your pet is asleep Zz</Text> :
               <Image source={currentImage} style={styles.image} />
             }
-        </View>
+          </View>
         )}
         <Text style={styles.name}>{name}</Text>
         {/* <Text>Care Mistakes: {careMistakes}</Text> */}
-        <Text style={styles.growth}>Growth Level: {growthlvl}</Text> 
-        
-        {/* <Text>Care Mistakes: {careMistakes}</Text> */} 
+        <Text style={styles.growth}>Growth Level: {growthlvl}</Text>
+
+        {/* <Text>Care Mistakes: {careMistakes}</Text> */}
 
         {/*uncomment line above to show care mistakes on the screen*/}
       </View>
