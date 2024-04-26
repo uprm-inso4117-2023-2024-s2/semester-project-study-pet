@@ -13,7 +13,7 @@ describe('the flashcards page', () => {
 
         expect(await driver.getTitle()).toBe("Home");
 
-        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[1]/div[3]"));
+        const navigateToFlashcard = await driver.findElement(By.xpath(HomePage.flashcards));
         navigateToFlashcard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
@@ -24,84 +24,84 @@ describe('the flashcards page', () => {
     it("creates a flashcard", async () => {
         await driver.get("http://localhost:8081");
 
-        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[1]/div[3]"));
+        const navigateToFlashcard = await driver.findElement(By.xpath(HomePage.flashcards));
         navigateToFlashcard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        const addFlashCard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]"));
+        const addFlashCard = await driver.findElement(By.xpath(FlashcardsPage.addFlashcard));
         addFlashCard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        const studySet = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
+        const studySet = await driver.findElement(By.xpath(FlashcardsPage.studySetInput));
         studySet.sendKeys("INSO");
 
-        const question = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[1]"));
+        const question = await driver.findElement(By.xpath(FlashcardsPage.addFlashcardQuestionInput));
         question.sendKeys("What is OOP?");
 
-        const answer = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[2]"));
+        const answer = await driver.findElement(By.xpath(FlashcardsPage.answerInput));
         answer.sendKeys("Object Oriented Programming");
 
-        const create = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
+        const create = await driver.findElement(By.xpath(FlashcardsPage.createButton));
         create.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        const flashcardTextQuestionSide = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div/div"));
+        const flashcardTextQuestionSide = await driver.findElement(By.xpath(FlashcardsPage.flashcardQuestion));
         expect(await flashcardTextQuestionSide.getText()).toBe("What is OOP?");
 
         flashcardTextQuestionSide.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        const flashcardTextAnswerSide = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div/div"));
+        const flashcardTextAnswerSide = await driver.findElement(By.xpath(FlashcardsPage.flashcardQuestion));
         expect(await flashcardTextAnswerSide.getText()).toBe("Object Oriented Programming");
     });
 
     it("removes a flashcard", async () => {
         await driver.get("http://localhost:8081");
 
-        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[1]/div[3]"));
+        const navigateToFlashcard = await driver.findElement(By.xpath(HomePage.flashcards));
         navigateToFlashcard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        const addFlashCard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]"));
+        const addFlashCard = await driver.findElement(By.xpath(FlashcardsPage.addFlashcard));
         addFlashCard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        let studySet = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
+        let studySet = await driver.findElement(By.xpath(FlashcardsPage.studySetInput));
         studySet.sendKeys("INSO");
 
-        let question = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[1]"));
+        let question = await driver.findElement(By.xpath(FlashcardsPage.addFlashcardQuestionInput));
         question.sendKeys("What is OOP?");
 
-        const answer = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[2]"));
+        const answer = await driver.findElement(By.xpath(FlashcardsPage.answerInput));
         answer.sendKeys("Object Oriented Programming");
 
-        const create = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
+        const create = await driver.findElement(By.xpath(FlashcardsPage.createButton));
         create.click();
 
-        const removeFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[4]"));
+        const removeFlashcard = await driver.findElement(By.xpath(FlashcardsPage.removeFlashcard));
         removeFlashcard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
 
-        studySet = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input"));
+        studySet = await driver.findElement(By.xpath(FlashcardsPage.studySetInput));
         studySet.sendKeys("INSO");
 
-        question = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea"));
+        question = await driver.findElement(By.xpath(FlashcardsPage.removeFlashcardQuestionInput));
         question.sendKeys("What is OOP?");
 
-        const remove = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"));
+        const remove = await driver.findElement(By.xpath(FlashcardsPage.createButton));
         remove.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
 
         try {
-            await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div/div"))
+            await driver.findElement(By.xpath(FlashcardsPage.flashcardQuestion))
             throw new Error("Flashcard should not exist!");
         } catch (e) {
             if (!(e instanceof NoSuchElementError)) {
@@ -114,3 +114,21 @@ describe('the flashcards page', () => {
         await driver.quit();
     });
 });
+
+class HomePage {
+    static flashcards = "/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[1]/div[3]";
+}
+
+class FlashcardsPage {
+    static addFlashcard = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[3]";
+    static removeFlashcard = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[4]";
+
+    static studySetInput = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/input";
+    static answerInput = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[2]";
+    static createButton = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]";
+
+    static addFlashcardQuestionInput = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea[1]";
+    static removeFlashcardQuestionInput = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]/div/textarea";
+
+    static flashcardQuestion = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div/div";
+}
