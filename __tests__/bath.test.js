@@ -1,5 +1,4 @@
 import {Browser, Builder, By} from "selenium-webdriver"
-import {NoSuchElementError} from "selenium-webdriver/lib/error";
 
 const mockFlashcards = [
     {question: 'What is the capital of France?', answer: 'Paris'},
@@ -271,22 +270,22 @@ describe('the bath page', () => {
 });
 
 class HomePage {
-    static bathPage = "/html/body/div[1]/div/div/div[2]/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[3]/div[1]";
+    static bathPage = "//*[@id=\"pet-bath-button\"]";
 }
 
 class BathPage {
-    static easyDifficulty = "/html/body/div[1]/div/div/div[2]/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]";
-    static mediumDifficulty = "/html/body/div[1]/div/div/div[2]/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[2]";
-    static hardDifficulty = "/html/body/div[1]/div/div/div[2]/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[3]";
-    static selectedDifficulty = "/html/body/div[1]/div/div/div[2]/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[4]";
+    static easyDifficulty = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[1]";
+    static mediumDifficulty = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[2]";
+    static hardDifficulty = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[3]";
+    static selectedDifficulty = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[4]";
 
-    static question = "/html/body/div[1]/div/div/div[2]/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[5]/div";
+    static question = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[5]/div";
 
     // Must add index to get a specific answer element [1 to 9]
     // E.g. append [1] to get the first answer available
-    static answer = "/html/body/div[1]/div/div/div[2]/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[6]/div";
+    static answer = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div[6]/div";
 
-    static gameOverScore = "/html/body/div[1]/div/div/div[2]/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div/div[2]";
+    static gameOverScore = "/html/body/div[1]/div/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div/div/div[2]";
 
     static async playGame(driver, score, total) {
         for (let i = 0; i < total; i++) {
