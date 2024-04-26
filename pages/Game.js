@@ -5,7 +5,7 @@ import MiniGame from '../components/minigame'; // Import the Minigame component
 import { useFonts } from "expo-font";
 
 
-export default function App() {
+export default function App({ route }) {
   const [isFontLoaded] = useFonts({
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
@@ -19,7 +19,7 @@ export default function App() {
         <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
       </View>
       <View style={styles.miniGameContainer}>
-        <MiniGame />
+        <MiniGame isAsleep={route.params?.isAsleep} />
       </View>
       <StatusBar style="auto" />
     </View>

@@ -5,8 +5,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Pet from '../components/Pet';
 
-function PlayerStats() {
+function PlayerStats({ route }) {
   const navigation = useNavigation();
+  const isAsleep = route.params?.isAsleep;
 
   const [flashcardCount, setFlashcardCount] = useState(0); // Initialize flashcard counter
   const [poopCount, setPoopCount] = useState(0); // Initialize poop counter
@@ -17,19 +18,25 @@ function PlayerStats() {
   };
 
   const handleFlashcardAnswer = () => {
-    // Increment flashcard counter when user answers a flashcard question
-    setFlashcardCount(prevCount => prevCount + 1);
+    if (!isAsleep) {
+      // Increment flashcard counter when user answers a flashcard question
+      setFlashcardCount(prevCount => prevCount + 1);
+    }
   };
 
   const handlePoopPickup = () => {
-    // Increment poop counter when user picks up poop
-    setPoopCount(prevCount => prevCount + 1);
+    if (!isAsleep) {
+      // Increment poop counter when user picks up poop
+      setPoopCount(prevCount => prevCount + 1);
+    }
   };
 
   const handlePetAdoption = () => {
-    // Increment pet counter when user adopts a pet, up to a maximum of 3 pets
-    if (petCount < 3) {
-      setPetCount(prevCount => prevCount + 1);
+    if (!isAsleep) {
+      // Increment pet counter when user adopts a pet, up to a maximum of 3 pets
+      if (petCount < 3) {
+        setPetCount(prevCount => prevCount + 1);
+      }
     }
   };
 
