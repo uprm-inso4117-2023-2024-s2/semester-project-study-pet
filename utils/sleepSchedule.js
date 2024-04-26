@@ -12,10 +12,17 @@ const isPetAsleep = (time) => {
     sleepTime.setMinutes(minutes);
     sleepTime.setSeconds(0);
     
-    const currentTime = new Date();
-
     const wakeUpTime = new Date(sleepTime.getTime() + 8 * 60 * 60 * 1000); // 8 hours in milliseconds
     
+    const currentTime = new Date();
+    
+    if (currentTime >= sleepTime && currentTime < wakeUpTime) {
+        return true;
+    }
+
+    sleepTime.setDate(sleepTime.getDate() - 1);
+    wakeUpTime.setDate(wakeUpTime.getDate() - 1);
+
     return currentTime >= sleepTime && currentTime < wakeUpTime;
 };
 
