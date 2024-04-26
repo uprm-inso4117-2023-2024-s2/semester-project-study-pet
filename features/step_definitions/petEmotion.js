@@ -1,3 +1,8 @@
+const {Given, When, Then} = require('@cucumber/cucumber');
+
+let pet
+
+
 Given('the pet\'s growth level is {int}', function (growthLevel) {
     pet = new Pet({ growthlvl: growthLevel, images: [
       require('../../components/PetImages/FrogImages/animatedFrog.gif'),
