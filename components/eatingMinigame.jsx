@@ -107,23 +107,44 @@ const MiniGame = () => {
 
     useEffect(() => {
         if (gameOver) {
-            const newHunger = hunger - score * 10;
-            const cappedHunger = Math.max(newHunger, 0); // Cap hunger at 0
-            setHunger(cappedHunger);
-            saveHunger(cappedHunger);
-        }
-    }, [gameOver, score, hunger]);
+            // Calculate hunger and happiness based on the difficulty factor and score
+            let hungerIncrement = 0;
+            let happinessIncrement = 0;
 
-    // Update happiness only when the game is over and ensure it doesn't exceed 100
-    useEffect(() => {
-        if (gameOver) {
-            const newHappiness = happiness + score;
-            const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
+            switch (selectedDifficulty) {
+                case "easy":
+                    hungerIncrement = score * 5; // Adjust as needed
+                    happinessIncrement = score * 2; // Adjust as needed
+                    break;
+                case "medium":
+                    hungerIncrement = score * 10; // Adjust as needed
+                    happinessIncrement = score * 5; // Adjust as needed
+                    break;
+                case "hard":
+                    hungerIncrement = score * 15; // Adjust as needed
+                    happinessIncrement = score * 10; // Adjust as needed
+                    break;
+                default:
+                    break;
+            }
+
+            const newHunger = hunger - hungerIncrement;
+            const newHappiness = happiness + happinessIncrement;
+
+            // Cap hunger at 0
+            const cappedHunger = Math.max(newHunger, 0);
+            // Cap happiness at 100
+            const cappedHappiness = Math.min(newHappiness, 100);
+
+            // Update hunger and happiness
+            setHunger(cappedHunger);
             setHappiness(cappedHappiness);
+
+            // Save updated hunger and happiness
+            saveHunger(cappedHunger);
             saveHappiness(cappedHappiness);
         }
-    }, [gameOver, score, happiness]);
-
+    }, [gameOver, score, hunger, happiness, selectedDifficulty]);
 
     if (gameOver) {
         return (
