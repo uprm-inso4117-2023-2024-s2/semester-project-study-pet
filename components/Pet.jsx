@@ -151,23 +151,32 @@ class Pet extends Component {
 
     this.updateImages();
    
-    this.setState((prevState) => {
-      // Initialize an object to hold the state update
-      let updates = {};
+    const emittedEvents = {};
 
-      // Check if careMistakes are >= 10
+    // Precondition: careMistakes is an integer value
+    assert(typeof prevState.careMistakes === 'number', "Precondition failed: careMistakes is not a number");
+
+    this.setState((prevState) => {
+      let updates = {};
       if (prevState.careMistakes >= 10) {
-        // Emit event petDeath. This is for the "Homepage.js" file to receive it
-        petEventEmitter.emit('petDeath', true);
+        assert(prevState.careMistakes >= 10, "Invariant failed: careMistakes is less than 10");
+        petEventEmitter.emit('petDeath');
+        emittedEvents['petDeath'] = true;
+        
+        // Postcondition for the petDeath event
+        assert(!!emittedEvents['petDeath'], "Postcondition failed: petDeath event was not emitted");
 
         // Update currentImageIndex to the last image
         updates = { currentImageIndex: prevState.images.length - 1 };
+        
       } else {
-        // If careMistakes are less than 10, emit petAlive
-        petEventEmitter.emit('petAlive', true);
-      }
+        assert(prevState.careMistakes < 10, "Invariant failed: careMistakes is not less than 10");
+        petEventEmitter.emit('petAlive');
+        emittedEvents['petAlive'] = true;
 
-      // Return the updates to be applied to the state
+        // Postcondition for the petAlive event
+        assert(!!emittedEvents['petAlive'], "Postcondition failed: petAlive event was not emitted");
+      }
       return updates;
     });
 
