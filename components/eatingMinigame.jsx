@@ -113,16 +113,16 @@ const MiniGame = () => {
 
             switch (selectedDifficulty) {
                 case "easy":
-                    hungerIncrement = score * 5; // Adjust as needed
-                    happinessIncrement = score * 2; // Adjust as needed
+                    hungerIncrement = score * 15; // Adjust as needed
+                    happinessIncrement = score * 10; // Adjust as needed
                     break;
                 case "medium":
                     hungerIncrement = score * 10; // Adjust as needed
                     happinessIncrement = score * 5; // Adjust as needed
                     break;
                 case "hard":
-                    hungerIncrement = score * 15; // Adjust as needed
-                    happinessIncrement = score * 10; // Adjust as needed
+                    hungerIncrement = score * 5; // Adjust as needed
+                    happinessIncrement = score * 2; // Adjust as needed
                     break;
                 default:
                     break;

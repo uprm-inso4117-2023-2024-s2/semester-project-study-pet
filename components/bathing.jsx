@@ -99,16 +99,16 @@ const BathGame = () => {
     switch (selectedDifficulty) {
       case "easy":
         console.log("Happiness Increment:", isCorrect ? 2 : 0, "Difficulty:", "easy");
-        return isCorrect ? 2 : 0;
+        return isCorrect ? 6 : 0;
       case "medium":
         console.log("Happiness Increment:", isCorrect ? 3 : 1, "Difficulty:", "medium");
-        return isCorrect ? 3 : 1;
+        return isCorrect ? 4 : 1;
       case "hard":
         console.log("Happiness Increment:", isCorrect ? 5 : 2, "Difficulty:", "hard");
-        return isCorrect ? 5 : 2;
+        return isCorrect ? 2 : 2;
       default:
         console.log("Happiness Increment:", isCorrect ? 2 : 0, "Difficulty:", "default");
-        return isCorrect ? 2 : 0;
+        return isCorrect ? 4 : 0;
     }
   };
 

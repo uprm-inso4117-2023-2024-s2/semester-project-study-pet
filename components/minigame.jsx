@@ -101,13 +101,13 @@ const MiniGame = () => {
       // Determine increments based on difficulty
       switch (selectedDifficulty) {
         case "easy":
-          happinessIncrement = score * 2;
+          happinessIncrement = score * 10;
           break;
         case "medium":
           happinessIncrement = score * 5;
           break;
         case "hard":
-          happinessIncrement = score * 10;
+          happinessIncrement = score * 2;
           break;
         default:
           happinessIncrement = score * 5;
