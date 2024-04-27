@@ -23,7 +23,7 @@ const shuffleArray = (array) => {
     return array;
 }
 
-const MiniGame = () => {
+const MiniGame = ({ isAsleep }) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -106,7 +106,7 @@ const MiniGame = () => {
     }, []);
 
     useEffect(() => {
-        if (gameOver) {
+        if (gameOver && !isAsleep) {
             // Calculate hunger and happiness based on the difficulty factor and score
             let hungerIncrement = 0;
             let happinessIncrement = 0;
@@ -138,6 +138,15 @@ const MiniGame = () => {
 
             // Update hunger and happiness
             setHunger(cappedHunger);
+            saveHunger(cappedHunger);
+        }
+    }, [gameOver, score, hunger]);
+
+    // Update happiness only when the game is over and ensure it doesn't exceed 100
+    useEffect(() => {
+        if (gameOver && !isAsleep) {
+            const newHappiness = happiness + score;
+            const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
             setHappiness(cappedHappiness);
 
             // Save updated hunger and happiness

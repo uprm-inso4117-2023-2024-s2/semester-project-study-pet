@@ -12,7 +12,8 @@
   "coverageAnalysis": "perTest",
   "mutate": [
     "components/**/*.js",
-    "utils/**/*.js"
+    "utils/**/*.js",
+    "__tests__/FuzzyTesting/*.js"
   ],
   "mutator": {
     "plugins": []

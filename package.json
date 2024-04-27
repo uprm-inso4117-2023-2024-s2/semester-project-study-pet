@@ -48,7 +48,7 @@
     "@stryker-mutator/core": "^8.2.6",
     "@stryker-mutator/jest-runner": "^8.2.6",
     "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/jest-native": "^5.4.3",
+    "@testing-library/jest-native": "4.0.0",
     "@testing-library/react": "^15.0.2",
     "@testing-library/react-native": "^12.4.5",
     "babel-jest": "^29.7.0",

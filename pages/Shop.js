@@ -10,50 +10,14 @@ import {
 } from "react-native";
 import { StyleSheet } from "react-native";
 import { useFonts } from "expo-font";
+import { allShopItems, allShopCategories } from "../utils/shopAssets";
 
 const Shop = ({ studyPoints, setStudyPoints }) => {
   const [dummy] = useFonts({
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
   const [category, setCategory] = useState("All");
-  const categories = ["All", "Food", "Toys", "Clothes", "Other"];
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: "Orange Juice",
-      category: "Food",
-      cost: 10,
-      image: "https://via.placeholder.com/50",
-    },
-    {
-      id: 2,
-      name: "Apple Juice",
-      category: "Food",
-      cost: 20,
-      image: "https://via.placeholder.com/50",
-    },
-    {
-      id: 3,
-      name: "Banana Juice",
-      category: "Food",
-      cost: 20,
-      image: "https://via.placeholder.com/50",
-    },
-    {
-      id: 4,
-      name: "Ball",
-      category: "Toys",
-      cost: 50,
-      image: "https://via.placeholder.com/50",
-    },
-    {
-      id: 5,
-      name: "Los Diablos Ski Mask",
-      category: "Clothes",
-      cost: 40,
-      image: "https://via.placeholder.com/50",
-    },
-  ]);
+  const [items, setItems] = useState(allShopItems);
 
   const buyItem = (item) => {
     if (studyPoints >= item.cost) {
@@ -66,7 +30,7 @@ const Shop = ({ studyPoints, setStudyPoints }) => {
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => buyItem(item)}>
+    <TouchableOpacity id={`shop-item-${item.id}`} onPress={() => buyItem(item)}>
       <View style={styles.item}>
         <Image source={{ uri: item.image }} style={styles.image} />
         <View
@@ -76,8 +40,8 @@ const Shop = ({ studyPoints, setStudyPoints }) => {
             flexDirection: "row",
           }}
         >
-          <Text style={styles.itemName}>{item.name}</Text>
-          <Text style={styles.itemCost}>{item.cost}</Text>
+          <Text id={`shop-item-${item.id}-name`} style={styles.itemName}>{item.name}</Text>
+          <Text id={`shop-item-${item.id}-cost`} style={styles.itemCost}>{item.cost}</Text>
         </View>
         <Ionicons
           name="logo-bitcoin"
@@ -92,6 +56,7 @@ const Shop = ({ studyPoints, setStudyPoints }) => {
   const renderCategory = ({ item }) => (
     <View style={styles.category}>
       <TouchableOpacity
+        id={`shop-category-${item}`}
         onPress={() => setCategory(item)}
         styles={styles.category}
       >
@@ -112,6 +77,7 @@ const Shop = ({ studyPoints, setStudyPoints }) => {
           }}
         >
           <Text
+            id={`shop-study-points`}
             style={{
               fontSize: 26,
               fontFamily: "Jua-Regular",
@@ -134,7 +100,7 @@ const Shop = ({ studyPoints, setStudyPoints }) => {
             padding: 5,
             flexDirection: "row",
           }}
-          data={categories}
+          data={allShopCategories}
           renderItem={renderCategory}
           horizontal={true}
         />
@@ -145,7 +111,7 @@ const Shop = ({ studyPoints, setStudyPoints }) => {
         )}
         renderItem={renderItem}
       />
-      <Pressable style={{ padding: 10 }} onPress={() => setStudyPoints(999)}>
+      <Pressable id={`shop-reset-points-button`} style={{ padding: 10 }} onPress={() => setStudyPoints(999)}>
         <Text style={{ fontSize: 26, fontFamily: "Jua-Regular" }}>
           Reset points
         </Text>
