@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, TouchableOpacity, Modal, Platform, DatePickerAndroid } from "react-native";
-import useDifficulty from '../path/to/useDifficulty';
+import { View, Text, TextInput, Button, TouchableOpacity, Modal } from "react-native";
 import { petEventEmitter } from "./EventEmitter";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CreatePetScreen = ({ navigation }) => {
   const [petName, setPetName] = useState("");
   const [examDate, setExamDate] = useState("");
-  const [ selectedDifficulty, setSelectedDifficulty ] = useDifficulty();
-  const [diffModalVisible, setdiffModalVisible] = useState(false);
-  const [typeModalVisible, settypeModalVisible] = useState(false);
+  const [difficulty, setDifficulty] = useState("easy");
+  const [diffModalVisible, setDiffModalVisible] = useState(false);
+  const [typeModalVisible, setTypeModalVisible] = useState(false);
   const [dateError, setDateError] = useState("");
   const [type, setType] = useState("frog");
 
@@ -29,7 +29,7 @@ const CreatePetScreen = ({ navigation }) => {
     const newPet = {
       name: petName,
       examDate: examDate,
-      selectedDifficulty: selectedDifficulty,
+      difficulty: difficulty,
       happiness: 100,
       hunger: 100,
       type: type,
@@ -40,7 +40,10 @@ const CreatePetScreen = ({ navigation }) => {
 
     console.log("New Pet:", newPet);
 
-    navigation.navigate('Create study set', { petType: newPet.name });
+    navigation.navigate('Create study set', { petType: newPet.name, difficulty: newPet.difficulty });
+  
+    AsyncStorage.setItem('selectedDifficulty', difficulty); // Save selected difficulty
+  
   };
 
   return (
@@ -60,21 +63,21 @@ const CreatePetScreen = ({ navigation }) => {
         }}
       />
       {dateError ? <Text style={{ color: 'red' }}>{dateError}</Text> : null}
-      <TouchableOpacity onPress={() => setdiffModalVisible(true)}>
+      <TouchableOpacity onPress={() => setDiffModalVisible(true)}>
         <Text>Select Difficulty: {difficulty}</Text>
       </TouchableOpacity>
       <Modal
         transparent={true}
         visible={diffModalVisible}
-        onRequestClose={() => setdiffModalVisible(false)}
+        onRequestClose={() => setDiffModalVisible(false)}
       >
         <View style={{ marginTop: 100, marginLeft: 20, marginRight: 20, backgroundColor: 'white', padding: 20 }}>
           {difficultyOptions.map((option) => (
             <TouchableOpacity
               key={option}
               onPress={() => {
-                setSelectedDifficulty(option);
-                setdiffModalVisible(false);
+                setDifficulty(option);
+                setDiffModalVisible(false);
               }}
             >
               <Text>{option}</Text>
@@ -83,13 +86,13 @@ const CreatePetScreen = ({ navigation }) => {
         </View>
       </Modal>
 
-      <TouchableOpacity onPress={() => settypeModalVisible(true)}>
+      <TouchableOpacity onPress={() => setTypeModalVisible(true)}>
         <Text>Select Pet Type: {type}</Text>
       </TouchableOpacity>
       <Modal
         transparent={true}
         visible={typeModalVisible}
-        onRequestClose={() => settypeModalVisible(false)}
+        onRequestClose={() => setTypeModalVisible(false)}
       >
         <View style={{ marginTop: 100, marginLeft: 20, marginRight: 20, backgroundColor: 'white', padding: 20 }}>
           {typeOptions.map((option) => (
@@ -97,7 +100,7 @@ const CreatePetScreen = ({ navigation }) => {
               key={option}
               onPress={() => {
                 setType(option);
-                settypeModalVisible(false);
+                setTypeModalVisible(false);
               }}
             >
               <Text>{option}</Text>

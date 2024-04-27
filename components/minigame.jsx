@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from 'react';
 import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { loadHappiness, saveHappiness } from './happinessStorage';
-import questionsData from '../assets/data/questions.json'
-import useDifficulty from './useDifficulty';
+import questionsData from '../assets/data/questions.json';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Function to shuffle an array (Fisher-Yates shuffle algorithm)
 const shuffleArray = (array) => {
@@ -29,11 +29,25 @@ const MiniGame = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [score, setScore] = useState(0);
   const [happiness, setHappiness] = useState(0);
-  const { selectedDifficulty, setSelectedDifficulty } = useDifficulty();
   const [questions, setQuestions] = useState([]);
+  const [selectedDifficulty, setSelectedDifficulty] = useState('');
 
   useEffect(() => {
+    const loadDifficulty = async () => {
+      try {
+        const difficulty = await AsyncStorage.getItem('selectedDifficulty');
+        if (difficulty) {
+          setSelectedDifficulty(difficulty);
+          loadQuestions(difficulty);
+        }
+      } catch (error) {
+        console.error('Error loading difficulty:', error);
+      }
+    };
+    loadDifficulty();
+  }, []);
 
+  const loadQuestions = (selectedDifficulty) => {
     const filteredQuestions = () => {
       const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
       //console.log("difficulty:", selectedDifficulty);
@@ -62,11 +76,7 @@ const MiniGame = () => {
     };
 
     setQuestions(filteredQuestions());
-
-  }, [selectedDifficulty]);
-
-  // Function to handle answer selection  const [happiness, setHappiness] = useState(0);
- 
+  };
 
   const handleAnswerSelection = (selectedAnswerIndex) => {
     const currentQuestion = questions[currentQuestionIndex];
@@ -91,19 +101,16 @@ const MiniGame = () => {
               console.error('Error loading happiness data:', error);
           }
       };
-
-      loadHappinessData();
+    loadHappinessData();
   }, []);
 
-
-  // Update happiness only when the game is over and ensure it doesn't exceed 100
   useEffect(() => {
-      if (gameOver) {
-          const newHappiness = happiness + score;
-          const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
-          setHappiness(cappedHappiness);
-          saveHappiness(cappedHappiness);
-      }
+    if (gameOver) {
+      const newHappiness = happiness + score;
+      const cappedHappiness = Math.min(newHappiness, 100);
+      setHappiness(cappedHappiness);
+      saveHappiness(cappedHappiness);
+    }
   }, [gameOver, score, happiness]);
 
   if (gameOver) {
@@ -111,27 +118,23 @@ const MiniGame = () => {
       <View style={styles.container}>
         <View style={styles.gameContainer}>
           <View style={styles.gameOverContainer}>
-              <Text style={styles.finishedText}>Finished!</Text>
-              <Text style={styles.resultText}>
-                You got {score} out of {questions.length} correct!
+            <Text style={styles.finishedText}>Finished!</Text>
+            <Text style={styles.resultText}>
+              You got {score} out of {questions.length} correct!
+            </Text>
+            <Image
+              style={styles.frogStyle}
+              source={require('../assets/pets/frog/Frog.jpg')}
+            />
+            <View style={styles.hrow}>
+              <Text style={styles.statText}>
+                Happiness: {happiness}
               </Text>
               <Image
-                            style={styles.frogStyle}
-                            source={require('../assets/pets/frog/Frog.jpg')}>
-                        </Image>
-
-
-
-                        <View style={styles.hrow}>
-                            <Text style={styles.statText}>
-                                Happiness: {happiness}
-                            </Text>
-                            <Image
-                                style={styles.image}
-                                source={require('../components/happiness.jpg')}
-                            >
-                            </Image>
-                        </View>
+                style={styles.image}
+                source={require('../components/happiness.jpg')}
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -141,22 +144,7 @@ const MiniGame = () => {
   if (questions.length > 0 && currentQuestionIndex < questions.length) {
     return (
       <View style={styles.container}>
-          {/* This are 3 temporary buttons to test the difficulty */}
-          <TouchableOpacity onPress={() => setSelectedDifficulty('easy')}>
-              <Text style={styles.buttonText}>easy</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => setSelectedDifficulty('medium')}>
-              <Text style={styles.buttonText}>medium</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => setSelectedDifficulty('hard')}>
-              <Text style={styles.buttonText}>hard</Text>
-            </TouchableOpacity>
-
-            <Text>Selected Value: {selectedDifficulty}</Text>
-            {/* End of temporary code */}
-
+        <Text style={styles.difficultyContainer}>Difficulty level: {selectedDifficulty}</Text>
         <View style={styles.gameContainer}>
           <View style={styles.questionContainer}>
             <Text style={styles.question}>{questions[currentQuestionIndex].question}</Text>
@@ -190,22 +178,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: 'transparent', 
   },
-  titleContainer: {
-    marginTop: 10,
-    backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 15,
-    marginVertical: 10,
-    marginHorizontal: 8,
-},
-titleText: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: 'black',
-    fontFamily: 'Jua-Regular',
+  difficultyContainer: {
     textAlign: 'center',
-    textAlignVertical: 'top',
-},
+    fontSize: '24px',
+    fontFamily: 'Jua-Regular',
+    marginBottom: 30,
+    width: '100%',
+    justifyContent: 'center',
+  },
   gameContainer: {
     backgroundColor: 'white',
     padding: 40,
@@ -250,21 +230,6 @@ titleText: {
   gameOverContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  whiteContainer: {
-    backgroundColor: 'white',
-    padding: 40,
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 4,
-      height: 4,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   finishedText: {
     fontSize: 48,

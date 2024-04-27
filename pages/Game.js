@@ -4,8 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import MiniGame from '../components/minigame'; // Import the Minigame component
 import { useFonts } from "expo-font";
 
-
-export default function App() {
+export default function App({ navigation, route }) {
   const [isFontLoaded] = useFonts({
     "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
@@ -13,13 +12,16 @@ export default function App() {
   if (!isFontLoaded) {
     return null; // for now, render nothing
   }
+
+  const { selectedDifficulty } = route.params || {};
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Choose all correct. Good Luck!</Text>
       </View>
       <View style={styles.miniGameContainer}>
-        <MiniGame />
+        <MiniGame navigation={navigation} route={route} selectedDifficulty={selectedDifficulty} /> 
       </View>
       <StatusBar style="auto" />
     </View>
