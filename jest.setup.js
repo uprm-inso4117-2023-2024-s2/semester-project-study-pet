@@ -18,4 +18,6 @@ module.exports = {
     "**/?(*.)+(spec|test).[tj]s?(x)"
   ],
   clearMocks: true,
+  preset: "react-native",
+  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
 };

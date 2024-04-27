@@ -95,8 +95,8 @@ class PetGoodbye extends Component {
       <View style={{alignItems: 'center', position: 'relative'}}>
         <Image source={currentImage} style={styles.image} />
         <Image source={currentBackground} style={styles.background} />
-        <TouchableOpacity onPress={()=>{this.handleClick()}} style={styles.button} >
-          <Image source={textBox} style={styles.textBox} />
+        <TouchableOpacity onPress={this.handleClick} style={styles.button} testID="button">
+          <Image source={textBox} style={styles.textBox} testID="textBox" />
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>{this.handleClick()}} style={styles.button} >
           <Image source={bigTextBox} style={styles.bigtextBox} />
