@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, TouchableOpacity, Modal, Platform, DatePickerAndroid } from "react-native";
+import { View, Text, TextInput, Button, TouchableOpacity, Modal } from "react-native";
 
 const CreatePetScreen = ({ navigation }) => {
   const [petName, setPetName] = useState("");
@@ -39,14 +39,16 @@ const CreatePetScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Create a New Pet</Text>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#f0f0f0" }}>
+      <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 20, color: "blue" }}>Create a New Pet</Text>
       <TextInput
+        style={{ width: 300, height: 40, borderWidth: 1, borderRadius: 5, borderWidth: 2, borderColor: '#3498db', marginBottom: 10, paddingHorizontal: 10, backgroundColor: "#fff9c4", color: "#3498db" }}
         placeholder="Pet Name"
         value={petName}
         onChangeText={(text) => setPetName(text)}
       />
       <TextInput
+        style={{ width: 300, height: 40, borderWidth: 1, borderRadius: 5, borderWidth: 2, borderColor: '#e67e22', marginBottom: 10, paddingHorizontal: 10, backgroundColor: "#fff9c4", color: "#e67e22" }}
         placeholder="Exam Date (dd/mm/yyyy)"
         value={examDate}
         onChangeText={(text) => {
@@ -54,9 +56,9 @@ const CreatePetScreen = ({ navigation }) => {
           setDateError("");
         }}
       />
-      {dateError ? <Text style={{ color: 'red' }}>{dateError}</Text> : null}
+      {dateError ? <Text style={{ color: 'red', marginBottom: 10 }}>{dateError}</Text> : null}
       <TouchableOpacity onPress={() => setdiffModalVisible(true)}>
-        <Text>Select Difficulty: {difficulty}</Text>
+        <Text style={{ color: "green", marginBottom: 10 }}>Select Difficulty: {difficulty}</Text>
       </TouchableOpacity>
       <Modal
         transparent={true}
@@ -79,14 +81,14 @@ const CreatePetScreen = ({ navigation }) => {
       </Modal>
 
       <TouchableOpacity onPress={() => settypeModalVisible(true)}>
-        <Text>Select Pet Type: {type}</Text>
+        <Text style={{ color: "#f39c12", marginBottom: 10 }}>Select Pet Type: {type}</Text>
       </TouchableOpacity>
       <Modal
         transparent={true}
         visible={typeModalVisible}
         onRequestClose={() => settypeModalVisible(false)}
       >
-        <View style={{ marginTop: 100, marginLeft: 20, marginRight: 20, backgroundColor: 'white', padding: 20 }}>
+        <View style={{ marginTop: 100, marginLeft: 20, marginRight: 20, backgroundColor: '#fff9c4', padding: 20 }}>
           {typeOptions.map((option) => (
             <TouchableOpacity
               key={option}
@@ -101,7 +103,7 @@ const CreatePetScreen = ({ navigation }) => {
         </View>
       </Modal>
 
-      <Button title="Create Pet" onPress={createNewPet} />
+      <Button title="Create Pet" onPress={createNewPet} color="#841584" />
     </View>
   );
 };
