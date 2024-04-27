@@ -62,9 +62,20 @@ export default function Flashcards() {
         return;
       }
   
-      const studySetIndex = studySets.findIndex(set => set.title === studySet);
+      // Check if there's only one study set remaining
+      if (studySets.length === 1 && !question.trim()) {
+        showAlert('Error', 'Cannot remove the only study set remaining.');
+        return;
+      }
   
-      // If question is empty, remove entire study set
+      const studySetIndex = studySets.findIndex(set => set.title === studySet);
+      const studySetFlashcards = studySets[studySetIndex].flashcards;
+  
+      if (studySetFlashcards.length === 1 && studySets.length === 1) {
+        showAlert('Error', 'Cannot remove the last remaining flashcard inside the last study set.');
+        return;
+      }
+  
       if (!question.trim()) {
         await removeFlashcard({ studySet, question });
         setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
@@ -73,7 +84,7 @@ export default function Flashcards() {
         return;
       }
   
-      const existingFlashcardIndex = studySets[studySetIndex].flashcards.findIndex(card => card.question === question);
+      const existingFlashcardIndex = studySetFlashcards.findIndex(card => card.question === question);
   
       if (existingFlashcardIndex === -1) {
         showAlert('Error', 'Question does not exist in Study Set.');
@@ -89,6 +100,7 @@ export default function Flashcards() {
     }
   };
   
+  
   const studySetExists = (studySetTitle) => {
     return studySets.some(set => set.title === studySetTitle);
   };
@@ -100,11 +112,18 @@ export default function Flashcards() {
         showAlert('Error', 'There are no existing study sets to remove.');
         return;
       }
-      // Remove all study sets
-      await removeFlashcard({ studySet: '', question: '' });
+  
+      // Sort study sets by creation date in descending order
+      const sortedStudySets = [...studySets].sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+  
+      // Remove all study sets except the oldest one
+      for (let i = 1; i < sortedStudySets.length; i++) {
+        await removeFlashcard({ studySet: sortedStudySets[i].title, question: '' });
+      }
+  
       setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: false });
       loadStudySets();
-      Alert.alert('Removed', 'All flashcards and study sets removed successfully');
+      Alert.alert('Removed', 'All flashcards and study sets removed successfully, except for the oldest one');
     } catch (error) {
       showAlert('Error', error.message);
     }
@@ -157,19 +176,21 @@ export default function Flashcards() {
         </View>
       </ScrollView>
 
-      <TouchableOpacity
-        style={styles.plusButton}
-        onPress={() => setVisibility({ ...isFlashCardCreatorVisible, isFlashCardCreatorVisible: true })}
-      >
-        <Text style={styles.plusButtonText}>+</Text>
-      </TouchableOpacity>
+      <View style={{ paddingBottom: 50, }}>
+        <TouchableOpacity
+          style={styles.plusButton}
+          onPress={() => setVisibility({ ...isFlashCardCreatorVisible, isFlashCardCreatorVisible: true })}
+        >
+          <Text style={styles.plusButtonText}>+</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.minusButton}
-        onPress={() => setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: true })}
-      >
-        <Text style={styles.minusButtonText}>-</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.minusButton}
+          onPress={() => setVisibility({ ...isFlashCardRemoverVisible, isFlashCardRemoverVisible: true })}
+        >
+          <Text style={styles.minusButtonText}>-</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -178,7 +199,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFBBE0',
-    paddingBottom: 50,
+    paddingBottom: 60,
+    maxHeight:'100vh',
   },
   textStyle: {
     fontSize: 32,
@@ -250,3 +272,4 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
 });
+

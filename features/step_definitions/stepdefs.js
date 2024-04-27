@@ -185,8 +185,8 @@ Then("Money Left is {string}", async (balance) => {
 });
 
 class HomePage {
-    static navigateToGamePage = "/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[3]/div[3]";
-    static navigateToShopPage = "/html/body/div[1]/div/div/div[2]/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[3]/div[5]";
+    static navigateToGamePage = "//*[@id=\"pet-play-button\"]";
+    static navigateToShopPage = "//*[@id=\"pet-shop-button\"]";
 }
 
 class GamePageMiniGame {
