@@ -188,10 +188,10 @@ const HomePage = ({ navigation }) => {
 
       {!isdead && (
       <View style={styles.topButtons}>
-        <TouchableOpacity onPressIn={() => (playSound('button'), navigation.navigate('Mypets'))} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity>
-        <TouchableOpacity onPressIn={() => (playSound('button'), navigation.navigate('Stats'))} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
-        <TouchableOpacity onPressIn={() => (playSound('button'), navigation.navigate('Flashcards'))} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
-        <TouchableOpacity onPressIn={() => (playSound('button'), navigation.navigate('Settings'))} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
+        <TouchableOpacity onPress={() => (playSound('button'), navigation.navigate('Mypets'))} style={styles.iconButton}><Ionicons name="paw" size={30} color="#517fa4" /></TouchableOpacity>
+        <TouchableOpacity onPress={() => (playSound('button'), navigation.navigate('Stats'))} style={styles.iconButton}><Ionicons name="stats-chart" size={30} color="#517fa4" /></TouchableOpacity>
+        <TouchableOpacity onPress={() => (playSound('button'), navigation.navigate('Flashcards'))} style={styles.iconButton}><Ionicons name="book" size={30} color="#517fa4" /></TouchableOpacity>
+        <TouchableOpacity onPress={() => (playSound('button'), navigation.navigate('Settings'))} style={styles.iconButton}><Ionicons name="settings" size={30} color="#517fa4" /></TouchableOpacity>
       </View>)}
 
       {isdead && (<View style={styles.topButtons}>

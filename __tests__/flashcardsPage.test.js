@@ -13,7 +13,7 @@ describe('the flashcards page', () => {
 
         expect(await driver.getTitle()).toBe("Home");
 
-        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[1]/div[3]"));
+        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div[3]/div"));
         navigateToFlashcard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
@@ -24,7 +24,7 @@ describe('the flashcards page', () => {
     it("creates a flashcard", async () => {
         await driver.get("http://localhost:8081");
 
-        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[1]/div[3]"));
+        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div[3]/div"));
         navigateToFlashcard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
@@ -62,7 +62,7 @@ describe('the flashcards page', () => {
     it("removes a flashcard", async () => {
         await driver.get("http://localhost:8081");
 
-        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[1]/div[3]"));
+        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div[3]/div"));
         navigateToFlashcard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
@@ -147,7 +147,7 @@ describe('the flashcards page', () => {
     it("removes all* flashcards", async () => {
         await driver.get("http://localhost:8081");
 
-        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[1]/div[3]"));
+        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div[3]/div"));
         navigateToFlashcard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
@@ -225,7 +225,7 @@ describe('the flashcards page', () => {
     it("scrolls through flashcard page overflow", async () => {
         await driver.get("http://localhost:8081");
 
-        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div/div[1]/div[3]"));
+        const navigateToFlashcard = await driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div[2]/div[3]/div"));
         navigateToFlashcard.click();
 
         await driver.manage().setTimeouts({implicit: 1000});
