@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, TouchableOpacity, Modal, Platform, DatePickerAndroid } from "react-native";
+import { petEventEmitter } from "./EventEmitter";
 
 const CreatePetScreen = ({ navigation }) => {
   const [petName, setPetName] = useState("");
@@ -32,6 +33,9 @@ const CreatePetScreen = ({ navigation }) => {
       hunger: 100,
       type: type,
     };
+
+    // Trigger event for the Pet.jsx to receive the type
+    petEventEmitter.emit("petType", type);
 
     console.log("New Pet:", newPet);
 
