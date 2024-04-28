@@ -80,20 +80,7 @@ const MiniGame = (isAsleep) => {
   // Function to handle answer selection  const [happiness, setHappiness] = useState(0);
 
 
-  const handleAnswerSelection = (selectedAnswerIndex) => {
-    const currentQuestion = questions[currentQuestionIndex];
-    if (selectedAnswerIndex === currentQuestion.correctAnswerIndex) {
-      setScore(score + 1);
-    }
-
-    if (currentQuestionIndex === questions.length - 1) {
-      setGameOver(true);
-    } else {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
-  };
-
-
+ 
   useEffect(() => {
     const loadHappinessData = async () => {
       try {
@@ -146,7 +133,18 @@ const MiniGame = (isAsleep) => {
     );
   }
 }
+const handleAnswerSelection = (selectedAnswerIndex) => {
+  const currentQuestion = questions[currentQuestionIndex];
+  if (selectedAnswerIndex === currentQuestion.correctAnswerIndex) {
+    setScore(score + 1);
+  }
 
+  if (currentQuestionIndex === questions.length - 1) {
+    setGameOver(true);
+  } else {
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+  }
+};
   if (questions.length > 0 && currentQuestionIndex < questions.length) {
     return (
       <View style={styles.container}>
