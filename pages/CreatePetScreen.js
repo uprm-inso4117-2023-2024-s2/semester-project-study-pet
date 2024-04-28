@@ -2,7 +2,25 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, TouchableOpacity, Modal } from "react-native";
 import { petEventEmitter } from "./EventEmitter";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View, Text, TextInput, Button, TouchableOpacity, Modal, Image } from "react-native";
+import frogImage from '../components/PetImages/FrogImages/animatedFrog.gif';
+import dogImage from '../components/PetImages/DogImages/animatedDog.png';
+import catImage from '../components/PetImages/CatImages/animatedCat.png';
+import bunnyImage from '../components/PetImages/BunnyImages/animatedBunny.png';
+import penguinImage from '../components/PetImages/PenguinImages/animatedPenguin.png';
+import pigImage from '../components/PetImages/PigImages/animatedPig.png';
+import bearImage from '../components/PetImages/BearImages/animatedBear.png';
 
+
+const petImages = {
+  frog: frogImage,
+  dog: dogImage,
+  cat: catImage,
+  bunny: bunnyImage,
+  penguin: penguinImage,
+  pig: pigImage,
+  bear: bearImage,
+};
 const CreatePetScreen = ({ navigation }) => {
   const [petName, setPetName] = useState("");
   const [examDate, setExamDate] = useState("");
@@ -41,6 +59,7 @@ const CreatePetScreen = ({ navigation }) => {
     console.log("New Pet:", newPet);
 
     navigation.navigate('Create study set', { petType: newPet.name, difficulty: newPet.difficulty });
+    navigation.navigate('Create study set', { petType: newPet.name });
   
     AsyncStorage.setItem('selectedDifficulty', difficulty); // Save selected difficulty
   
