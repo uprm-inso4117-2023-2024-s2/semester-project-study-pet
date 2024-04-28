@@ -48,7 +48,7 @@ const MiniGame = (isAsleep) => {
   }, []);
 
   const loadQuestions = (selectedDifficulty) => {
-   
+    const filteredQuestions = () => {
       const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
       //console.log("difficulty:", selectedDifficulty);
 
@@ -68,13 +68,13 @@ const MiniGame = (isAsleep) => {
           break;
         default:
           fraction = 1 / 3;
-      
+      }
 
       // Apply the fraction to the potentially shortened list of up to 9 questions
       const numberToShow = Math.ceil(maxQuestions.length * fraction);
       return maxQuestions.slice(0, numberToShow);
     };
-  
+    setQuestions(filteredQuestions());
 
 
   // Function to handle answer selection  const [happiness, setHappiness] = useState(0);
@@ -137,7 +137,8 @@ const MiniGame = (isAsleep) => {
               <Image
                 style={styles.image}
                 source={require('../components/happiness.jpg')}
-              />
+              >
+              </Image>
             </View>
           </View>
         </View>
@@ -183,6 +184,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 20,
     backgroundColor: 'transparent',
+  },
+  difficultyContainer: {
+    textAlign: 'center',
+    fontSize: '24px',
+    fontFamily: 'Jua-Regular',
+    marginBottom: 30,
+    width: '100%',
+    justifyContent: 'center',
   },
   titleContainer: {
     marginTop: 10,

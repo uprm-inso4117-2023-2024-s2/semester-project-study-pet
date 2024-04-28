@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, TouchableOpacity, Modal } from "react-native";
 import { petEventEmitter } from "./EventEmitter";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View, Text, TextInput, Button, TouchableOpacity, Modal, Image } from "react-native";
 import frogImage from '../components/PetImages/FrogImages/animatedFrog.gif';
 import dogImage from '../components/PetImages/DogImages/animatedDog.png';
 import catImage from '../components/PetImages/CatImages/animatedCat.png';
