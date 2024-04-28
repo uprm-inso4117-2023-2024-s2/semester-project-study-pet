@@ -5,8 +5,8 @@ import questionsData from '../assets/data/questions.json'
 
 // Function to shuffle an array (Fisher-Yates shuffle algorithm)
 export const shuffleArray = (array) => {
-  let currentIndex = array.length,  randomIndex;
-  
+  let currentIndex = array.length, randomIndex;
+
   // While there remain elements to shuffle...
   while (currentIndex !== 0) {
 
@@ -24,9 +24,9 @@ export const shuffleArray = (array) => {
 //exported for ease of testing
 export const filteredQuestions = (questions, selectedDifficulty) => {
   const shuffledQuestions = shuffleArray([...questions]); // Assuming shuffleArray is defined elsewhere
-        //console.log("difficulty:", selectedDifficulty);
+  //console.log("difficulty:", selectedDifficulty);
 
-      // Ensure the array does not exceed 9 elements
+  // Ensure the array does not exceed 9 elements
   const maxQuestions = shuffledQuestions.slice(0, 9);
 
   let fraction;
@@ -43,9 +43,9 @@ export const filteredQuestions = (questions, selectedDifficulty) => {
     default:
       fraction = 1 / 3;
   }
-    // Apply the fraction to the potentially shortened list of up to 9 questions
-    const numberToShow = Math.ceil(maxQuestions.length * fraction);
-    return maxQuestions.slice(0, numberToShow);
+  // Apply the fraction to the potentially shortened list of up to 9 questions
+  const numberToShow = Math.ceil(maxQuestions.length * fraction);
+  return maxQuestions.slice(0, numberToShow);
 };
 
 
@@ -59,11 +59,11 @@ const MiniGame = ({ isAsleep }) => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-  setQuestions(filteredQuestions(questionsData, selectedDifficulty));
+    setQuestions(filteredQuestions(questionsData, selectedDifficulty));
   }, [selectedDifficulty]);
 
   // Function to handle answer selection  const [happiness, setHappiness] = useState(0);
- 
+
 
   const handleAnswerSelection = (selectedAnswerIndex) => {
     const currentQuestion = questions[currentQuestionIndex];
@@ -79,56 +79,74 @@ const MiniGame = ({ isAsleep }) => {
   };
 
 
-    useEffect(() => {
-      const loadHappinessData = async () => {
-          try {
-              const loadedHappiness = await loadHappiness();
-              setHappiness(loadedHappiness);
-          } catch (error) {
-              console.error('Error loading happiness data:', error);
-          }
-      };
+  useEffect(() => {
+    const loadHappinessData = async () => {
+      try {
+        const loadedHappiness = await loadHappiness();
+        setHappiness(loadedHappiness);
+      } catch (error) {
+        console.error('Error loading happiness data:', error);
+      }
+    };
 
-      loadHappinessData();
+    loadHappinessData();
   }, []);
 
 
-  // Update happiness only when the game is over and ensure it doesn't exceed 100
+  // Update happiness only when the game is over and ensure they don't exceed their maximum values
   useEffect(() => {
-      if (gameOver && !isAsleep) {
-          const newHappiness = happiness + score;
-          const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
-          setHappiness(cappedHappiness);
-          saveHappiness(cappedHappiness);
+    if (gameOver) {
+      let happinessIncrement = 0;
+
+      // Determine increments based on difficulty
+      switch (selectedDifficulty) {
+        case "easy":
+          happinessIncrement = score * 10;
+          break;
+        case "medium":
+          happinessIncrement = score * 5;
+          break;
+        case "hard":
+          happinessIncrement = score * 2;
+          break;
+        default:
+          happinessIncrement = score * 5;
       }
-  }, [gameOver, score, happiness]);
+
+      // Update happiness
+      const newHappiness = happiness + happinessIncrement;
+      const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
+      setHappiness(cappedHappiness);
+      saveHappiness(cappedHappiness);
+    }
+  }, [gameOver, score, selectedDifficulty]);
 
   if (gameOver) {
     return (
       <View style={styles.container} data-testid="gameContainer">
         <View style={styles.gameContainer}>
           <View style={styles.gameOverContainer}>
-              <Text style={styles.finishedText}>Finished!</Text>
-              <Text style={styles.resultText}>
-                You got {score} out of {questions.length} correct!
+            <Text style={styles.finishedText}>Finished!</Text>
+            <Text style={styles.resultText}>
+              You got {score} out of {questions.length} correct!
+            </Text>
+            <Image
+              style={styles.frogStyle}
+              source={require('../assets/pets/frog/Frog.jpg')}>
+            </Image>
+
+
+
+            <View style={styles.hrow}>
+              <Text style={styles.statText} data-testid="happinessText">
+                Happiness: {happiness}
               </Text>
               <Image
-                            style={styles.frogStyle}
-                            source={require('../assets/pets/frog/Frog.jpg')}>
-                        </Image>
-
-
-
-                        <View style={styles.hrow}>
-                            <Text style={styles.statText} data-testid="happinessText">
-                                Happiness: {happiness}
-                            </Text>
-                            <Image
-                                style={styles.image}
-                                source={require('../components/happiness.jpg')}
-                            >
-                            </Image>
-                        </View>
+                style={styles.image}
+                source={require('../components/happiness.jpg')}
+              >
+              </Image>
+            </View>
           </View>
         </View>
       </View>
@@ -138,21 +156,21 @@ const MiniGame = ({ isAsleep }) => {
   if (questions.length > 0 && currentQuestionIndex < questions.length) {
     return (
       <View style={styles.container}>
-          {/* This are 3 temporary buttons to test the difficulty */}
-          <TouchableOpacity onPress={() => setSelectedDifficulty('easy')}>
-              <Text style={styles.buttonText}>easy</Text>
-            </TouchableOpacity>
+        {/* This are 3 temporary buttons to test the difficulty */}
+        <TouchableOpacity onPress={() => setSelectedDifficulty('easy')}>
+          <Text style={styles.buttonText}>easy</Text>
+        </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => setSelectedDifficulty('medium')}>
-              <Text style={styles.buttonText}>medium</Text>
-            </TouchableOpacity>
+        <TouchableOpacity onPress={() => setSelectedDifficulty('medium')}>
+          <Text style={styles.buttonText}>medium</Text>
+        </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => setSelectedDifficulty('hard')}>
-              <Text style={styles.buttonText}>hard</Text>
-            </TouchableOpacity>
+        <TouchableOpacity onPress={() => setSelectedDifficulty('hard')}>
+          <Text style={styles.buttonText}>hard</Text>
+        </TouchableOpacity>
 
-            <Text>Selected Value: {selectedDifficulty}</Text>
-            {/* End of temporary code */}
+        <Text>Selected Value: {selectedDifficulty}</Text>
+        {/* End of temporary code */}
 
         <View style={styles.gameContainer}>
           <View style={styles.questionContainer}>
@@ -186,7 +204,7 @@ const styles = StyleSheet.create({
     alignItems: 'top',
     justifyContent: 'center',
     paddingHorizontal: 20,
-    backgroundColor: 'transparent', 
+    backgroundColor: 'transparent',
   },
   titleContainer: {
     marginTop: 10,
@@ -195,15 +213,15 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginVertical: 10,
     marginHorizontal: 8,
-},
-titleText: {
+  },
+  titleText: {
     fontSize: 32,
     fontWeight: 'bold',
     color: 'black',
     fontFamily: 'Jua-Regular',
     textAlign: 'center',
     textAlignVertical: 'top',
-},
+  },
   gameContainer: {
     backgroundColor: 'white',
     padding: 40,
@@ -270,7 +288,7 @@ titleText: {
     marginBottom: 20,
     textAlign: 'center',
     fontFamily: 'Jua-Regular',
-    color: '#FF69B4', 
+    color: '#FF69B4',
   },
   resultText: {
     fontSize: 24,
@@ -282,20 +300,20 @@ titleText: {
   hrow: {
     flexDirection: 'row',
     alignItems: 'center',
-},
-frogStyle: {
+  },
+  frogStyle: {
     width: 200,
     height: 200,
     marginTop: 5,
     marginBottom: 20,
-},
-image: {
+  },
+  image: {
     width: 50,
     height: 50,
     marginTop: 20,
     resizeMode: 'contain',
-},
-statText: {
+  },
+  statText: {
     fontSize: 26,
     marginRight: 5,
     fontFamily: 'Jua-Regular',

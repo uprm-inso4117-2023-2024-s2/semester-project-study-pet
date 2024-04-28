@@ -1,5 +1,5 @@
-import {React,  useState, useEffect } from 'react';
-import { Image,View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { React, useState, useEffect } from 'react';
+import { Image, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { loadHappiness, saveHappiness } from './happinessStorage';
 
 const BathGame = ({ isAsleep }) => {
@@ -59,7 +59,7 @@ const BathGame = ({ isAsleep }) => {
     //setFlashcards(shuffledFlashcards);
     setFlashcards(filteredQuestions());
 
-    
+
     const randomUserHand = shuffledFlashcards.map(card => card.answer);
     setUserHand(shuffleArray(randomUserHand));
   }, [selectedDifficulty]);
@@ -74,7 +74,7 @@ const BathGame = ({ isAsleep }) => {
 
   const handleAnswer = (selectedAnswer) => {
     if (answeredQuestions.includes(currentQuestionIndex)) {
-      return; 
+      return;
     }
 
     setAnsweredQuestions([...answeredQuestions, currentQuestionIndex]);
@@ -83,7 +83,7 @@ const BathGame = ({ isAsleep }) => {
       setScore(score + 1);
     }
 
-    
+
     setUserHand(userHand.filter(answer => answer !== selectedAnswer));
 
     if (answeredQuestions.length === flashcards.length - 1) {
@@ -95,27 +95,44 @@ const BathGame = ({ isAsleep }) => {
     setCurrentQuestionIndex(nextQuestionIndex);
   };
 
+  const calculateHappinessIncrease = (isCorrect) => {
+    switch (selectedDifficulty) {
+      case "easy":
+        console.log("Happiness Increment:", isCorrect ? 2 : 0, "Difficulty:", "easy");
+        return isCorrect ? 6 : 0;
+      case "medium":
+        console.log("Happiness Increment:", isCorrect ? 3 : 1, "Difficulty:", "medium");
+        return isCorrect ? 4 : 1;
+      case "hard":
+        console.log("Happiness Increment:", isCorrect ? 5 : 2, "Difficulty:", "hard");
+        return isCorrect ? 2 : 2;
+      default:
+        console.log("Happiness Increment:", isCorrect ? 2 : 0, "Difficulty:", "default");
+        return isCorrect ? 4 : 0;
+    }
+  };
+
   useEffect(() => {
     const loadHappinessData = async () => {
-        try {
-            const loadedHappiness = await loadHappiness();
-            setHappiness(loadedHappiness);
-        } catch (error) {
-            console.error('Error loading happiness data:', error);
-        }
+      try {
+        const loadedHappiness = await loadHappiness();
+        setHappiness(loadedHappiness);
+      } catch (error) {
+        console.error('Error loading happiness data:', error);
+      }
     };
 
     loadHappinessData();
-}, []);
+  }, []);
 
-useEffect(() => {
-  if (gameOver && !isAsleep) {
-      const newHappiness = score  + happiness;
+  useEffect(() => {
+    if (gameOver) {
+      const newHappiness = happiness + calculateHappinessIncrease(score);
       const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
       setHappiness(cappedHappiness);
       saveHappiness(cappedHappiness);
-  }
-}, [gameOver, score, happiness]);
+    }
+  }, [gameOver, score]);
 
   if (gameOver) {
     return (
@@ -124,15 +141,15 @@ useEffect(() => {
           <Text style={styles.gameOverText}>Game Over!</Text>
           <Text style={styles.scoreText}>Your Score: {score}/{flashcards.length}</Text>
           <View style={styles.hrow}>
-                            <Text style={styles.statText}>
-                                Happiness: {happiness}
-                            </Text>
-                            <Image
-                                style={styles.image}
-                                source={require('../components/happiness.jpg')}
-                            >
-                            </Image>
-                        </View>
+            <Text style={styles.statText}>
+              Happiness: {happiness}
+            </Text>
+            <Image
+              style={styles.image}
+              source={require('../components/happiness.jpg')}
+            >
+            </Image>
+          </View>
         </View>
       </View>
     );
@@ -140,37 +157,37 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
-        {/* This are 3 temporary buttons to test the difficulty */}
-        <TouchableOpacity onPress={() => setSelectedDifficulty('easy')}>
-              <Text style={styles.buttonText}>easy</Text>
-            </TouchableOpacity>
+      {/* This are 3 temporary buttons to test the difficulty */}
+      <TouchableOpacity onPress={() => setSelectedDifficulty('easy')}>
+        <Text style={styles.buttonText}>easy</Text>
+      </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => setSelectedDifficulty('medium')}>
-              <Text style={styles.buttonText}>medium</Text>
-            </TouchableOpacity>
+      <TouchableOpacity onPress={() => setSelectedDifficulty('medium')}>
+        <Text style={styles.buttonText}>medium</Text>
+      </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => setSelectedDifficulty('hard')}>
-              <Text style={styles.buttonText}>hard</Text>
-            </TouchableOpacity>
+      <TouchableOpacity onPress={() => setSelectedDifficulty('hard')}>
+        <Text style={styles.buttonText}>hard</Text>
+      </TouchableOpacity>
 
-            <Text>Selected Value: {selectedDifficulty}</Text>
-            {/* End of temporary code */}
+      <Text>Selected Value: {selectedDifficulty}</Text>
+      {/* End of temporary code */}
 
-        <View style={styles.questionContainer}>
-          <Text style={styles.question}>{flashcards[currentQuestionIndex]?.question}</Text>
-        </View>
-        <View style={styles.userHand}>
-          {userHand.map((answer, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.card}
-              onPress={() => handleAnswer(answer)}
-              testID='answerButton'
-            >
-              <Text style={styles.answerText}>{answer}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+      <View style={styles.questionContainer}>
+        <Text style={styles.question}>{flashcards[currentQuestionIndex]?.question}</Text>
+      </View>
+      <View style={styles.userHand}>
+        {userHand.map((answer, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.card}
+            onPress={() => handleAnswer(answer)}
+            testID='answerButton'
+          >
+            <Text style={styles.answerText}>{answer}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 };
@@ -180,7 +197,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20, 
+    padding: 20,
   },
   scrollContainer: {
     alignItems: 'center',
@@ -191,7 +208,7 @@ const styles = StyleSheet.create({
     marginTop: 80,
     borderRadius: 15,
     marginBottom: 20,
-    elevation: 5, 
+    elevation: 5,
   },
   question: {
     fontSize: 24,
@@ -204,12 +221,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10, 
+    marginTop: 10,
   },
   card: {
     backgroundColor: 'white',
     alignItems: 'center',
-    padding: 15, 
+    padding: 15,
     margin: 10,
     borderRadius: 120,
     borderWidth: 2,
@@ -224,8 +241,8 @@ const styles = StyleSheet.create({
     maxWidth: '100%',
     overflow: 'hidden',
   },
-  
-  
+
+
   gameOverContainer: {
     backgroundColor: 'white',
     padding: 20,
