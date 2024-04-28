@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, TouchableOpacity, Modal } from "react-native";
+import { petEventEmitter } from "./EventEmitter";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CreatePetScreen = ({ navigation }) => {
   const [petName, setPetName] = useState("");
@@ -33,9 +35,15 @@ const CreatePetScreen = ({ navigation }) => {
       type: type,
     };
 
+    // Trigger event for the Pet.jsx to receive the type
+    petEventEmitter.emit("petType", type);
+
     console.log("New Pet:", newPet);
 
-    navigation.navigate('Create study set', { petType: newPet.name });
+    navigation.navigate('Create study set', { petType: newPet.name, difficulty: newPet.difficulty });
+  
+    AsyncStorage.setItem('selectedDifficulty', difficulty); // Save selected difficulty
+  
   };
 
   return (
@@ -107,5 +115,4 @@ const CreatePetScreen = ({ navigation }) => {
     </View>
   );
 };
-
 export default CreatePetScreen;

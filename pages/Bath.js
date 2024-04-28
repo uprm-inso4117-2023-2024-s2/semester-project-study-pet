@@ -9,6 +9,8 @@ const Bath = ({ navigation, route }) => {
 
   const [poopCount, setPoopCount] = useState(0);
 
+  const { selectedDifficulty } = route.params || {};
+
   useEffect(() => {
     const timer = setInterval(() => {
       if (poopCount < 3 && !route.params?.isAsleep) {
@@ -38,7 +40,7 @@ const Bath = ({ navigation, route }) => {
         <Text style={styles.titleText}>Let's take a Bath</Text>
       </View>
       <View style={styles.miniGameContainer}>
-        <BathGame isAsleep={route.params?.isAsleep} /> 
+        <BathGame navigation={navigation} route={route} selectedDifficulty={selectedDifficulty} /> 
       </View>
       <View style={{ flex: 1 }} />
       <TouchableOpacity onPress={handlePoopPress} style={styles.poopButton}>

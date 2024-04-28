@@ -1,6 +1,7 @@
 import {React,  useState, useEffect } from 'react';
 import { Image,View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { loadHappiness, saveHappiness } from './happinessStorage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BathGame = ({ isAsleep }) => {
   const [flashcards, setFlashcards] = useState([]);
@@ -10,7 +11,21 @@ const BathGame = ({ isAsleep }) => {
   const [score, setScore] = useState(0);
   const [happiness, setHappiness] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-  const [selectedDifficulty, setSelectedDifficulty] = useState('medium');
+  const [selectedDifficulty, setSelectedDifficulty] = useState('');
+
+  useEffect(() => {
+    const loadDifficulty = async () => {
+      try {
+        const difficulty = await AsyncStorage.getItem('selectedDifficulty');
+        if (difficulty) {
+          setSelectedDifficulty(difficulty);
+        }
+      } catch (error) {
+        console.error('Error loading difficulty:', error);
+      }
+    };
+    loadDifficulty();
+  }, []);
 
   useEffect(() => {
     const mockFlashcards = [
@@ -140,22 +155,7 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
-        {/* This are 3 temporary buttons to test the difficulty */}
-        <TouchableOpacity onPress={() => setSelectedDifficulty('easy')}>
-              <Text style={styles.buttonText}>easy</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => setSelectedDifficulty('medium')}>
-              <Text style={styles.buttonText}>medium</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => setSelectedDifficulty('hard')}>
-              <Text style={styles.buttonText}>hard</Text>
-            </TouchableOpacity>
-
-            <Text>Selected Value: {selectedDifficulty}</Text>
-            {/* End of temporary code */}
-
+      <Text style={styles.difficultyContainer}>Difficulty level: {selectedDifficulty}</Text>
         <View style={styles.questionContainer}>
           <Text style={styles.question}>{flashcards[currentQuestionIndex]?.question}</Text>
         </View>
@@ -181,6 +181,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20, 
+  },
+  difficultyContainer: {
+    fontSize: '24px',
+    fontFamily: 'Jua-Regular',
+    marginTop: 30,
+    paddingTop: 40,
+    alignItems: 'center',
   },
   scrollContainer: {
     alignItems: 'center',
