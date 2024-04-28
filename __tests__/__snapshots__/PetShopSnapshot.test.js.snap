@@ -1,0 +1,1056 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shop Component UI renders correctly and matches snapshot 1`] = `
+<View
+  style={
+    {
+      "backgroundColor": "#89CFF0",
+      "flex": 1,
+      "paddingBottom": 25,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "justifyContent": "space-evenly",
+          "marginLeft": 10,
+          "width": 60,
+        }
+      }
+    >
+      <Text
+        id="shop-study-points"
+        style={
+          {
+            "alignSelf": "center",
+            "fontFamily": "Jua-Regular",
+            "fontSize": 26,
+          }
+        }
+      >
+        100
+      </Text>
+      Ionicons
+    </View>
+    <RCTScrollView
+      data={
+        [
+          "All",
+          "Food",
+          "Toys",
+          "Clothes",
+          "Other",
+        ]
+      }
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={true}
+      keyExtractor={[Function]}
+      onContentSizeChange={[Function]}
+      onLayout={[Function]}
+      onMomentumScrollBegin={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      removeClippedSubviews={false}
+      renderItem={[Function]}
+      scrollEventThrottle={0.0001}
+      stickyHeaderIndices={[]}
+      style={
+        {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "margin": 5,
+          "padding": 5,
+        }
+      }
+      viewabilityConfigCallbackPairs={[]}
+    >
+      <View>
+        <View
+          onFocusCapture={[Function]}
+          onLayout={[Function]}
+          style={
+            [
+              {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              {
+                "backgroundColor": "#98FB98",
+                "borderRadius": 10,
+                "margin": 5,
+                "padding": 5,
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="shop-category-All"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "fontFamily": "Jua-Regular",
+                    "fontSize": 26,
+                  }
+                }
+              >
+                All
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          onFocusCapture={[Function]}
+          onLayout={[Function]}
+          style={
+            [
+              {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              {
+                "backgroundColor": "#98FB98",
+                "borderRadius": 10,
+                "margin": 5,
+                "padding": 5,
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="shop-category-Food"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "fontFamily": "Jua-Regular",
+                    "fontSize": 26,
+                  }
+                }
+              >
+                Food
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          onFocusCapture={[Function]}
+          onLayout={[Function]}
+          style={
+            [
+              {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              {
+                "backgroundColor": "#98FB98",
+                "borderRadius": 10,
+                "margin": 5,
+                "padding": 5,
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="shop-category-Toys"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "fontFamily": "Jua-Regular",
+                    "fontSize": 26,
+                  }
+                }
+              >
+                Toys
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          onFocusCapture={[Function]}
+          onLayout={[Function]}
+          style={
+            [
+              {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              {
+                "backgroundColor": "#98FB98",
+                "borderRadius": 10,
+                "margin": 5,
+                "padding": 5,
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="shop-category-Clothes"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "fontFamily": "Jua-Regular",
+                    "fontSize": 26,
+                  }
+                }
+              >
+                Clothes
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          onFocusCapture={[Function]}
+          onLayout={[Function]}
+          style={
+            [
+              {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              {
+                "backgroundColor": "#98FB98",
+                "borderRadius": 10,
+                "margin": 5,
+                "padding": 5,
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="shop-category-Other"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "fontFamily": "Jua-Regular",
+                    "fontSize": 26,
+                  }
+                }
+              >
+                Other
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+  <RCTScrollView
+    data={
+      [
+        {
+          "category": "Food",
+          "cost": 10,
+          "id": 1,
+          "image": "https://via.placeholder.com/50",
+          "name": "Orange Juice",
+        },
+        {
+          "category": "Food",
+          "cost": 20,
+          "id": 2,
+          "image": "https://via.placeholder.com/50",
+          "name": "Apple Juice",
+        },
+        {
+          "category": "Food",
+          "cost": 20,
+          "id": 3,
+          "image": "https://via.placeholder.com/50",
+          "name": "Banana Juice",
+        },
+        {
+          "category": "Toys",
+          "cost": 50,
+          "id": 4,
+          "image": "https://via.placeholder.com/50",
+          "name": "Ball",
+        },
+        {
+          "category": "Clothes",
+          "cost": 40,
+          "id": 5,
+          "image": "https://via.placeholder.com/50",
+          "name": "Los Diablos Ski Mask",
+        },
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={0.0001}
+    stickyHeaderIndices={[]}
+    viewabilityConfigCallbackPairs={[]}
+  >
+    <View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="shop-item-1"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "backgroundColor": "#ffffff",
+                "borderRadius": 10,
+                "flexDirection": "row",
+                "margin": 5,
+                "padding": 5,
+              }
+            }
+          >
+            <Image
+              source={
+                {
+                  "uri": "https://via.placeholder.com/50",
+                }
+              }
+              style={
+                {
+                  "alignSelf": "center",
+                  "height": 50,
+                  "width": 50,
+                }
+              }
+            />
+            <View
+              style={
+                {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <Text
+                id="shop-item-1-name"
+                style={
+                  {
+                    "alignSelf": "center",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                    "marginLeft": 10,
+                  }
+                }
+              >
+                Orange Juice
+              </Text>
+              <Text
+                id="shop-item-1-cost"
+                style={
+                  {
+                    "alignSelf": "center",
+                    "fontSize": 16,
+                  }
+                }
+              >
+                10
+              </Text>
+            </View>
+            Ionicons
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="shop-item-2"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "backgroundColor": "#ffffff",
+                "borderRadius": 10,
+                "flexDirection": "row",
+                "margin": 5,
+                "padding": 5,
+              }
+            }
+          >
+            <Image
+              source={
+                {
+                  "uri": "https://via.placeholder.com/50",
+                }
+              }
+              style={
+                {
+                  "alignSelf": "center",
+                  "height": 50,
+                  "width": 50,
+                }
+              }
+            />
+            <View
+              style={
+                {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <Text
+                id="shop-item-2-name"
+                style={
+                  {
+                    "alignSelf": "center",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                    "marginLeft": 10,
+                  }
+                }
+              >
+                Apple Juice
+              </Text>
+              <Text
+                id="shop-item-2-cost"
+                style={
+                  {
+                    "alignSelf": "center",
+                    "fontSize": 16,
+                  }
+                }
+              >
+                20
+              </Text>
+            </View>
+            Ionicons
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="shop-item-3"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "backgroundColor": "#ffffff",
+                "borderRadius": 10,
+                "flexDirection": "row",
+                "margin": 5,
+                "padding": 5,
+              }
+            }
+          >
+            <Image
+              source={
+                {
+                  "uri": "https://via.placeholder.com/50",
+                }
+              }
+              style={
+                {
+                  "alignSelf": "center",
+                  "height": 50,
+                  "width": 50,
+                }
+              }
+            />
+            <View
+              style={
+                {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <Text
+                id="shop-item-3-name"
+                style={
+                  {
+                    "alignSelf": "center",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                    "marginLeft": 10,
+                  }
+                }
+              >
+                Banana Juice
+              </Text>
+              <Text
+                id="shop-item-3-cost"
+                style={
+                  {
+                    "alignSelf": "center",
+                    "fontSize": 16,
+                  }
+                }
+              >
+                20
+              </Text>
+            </View>
+            Ionicons
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="shop-item-4"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "backgroundColor": "#ffffff",
+                "borderRadius": 10,
+                "flexDirection": "row",
+                "margin": 5,
+                "padding": 5,
+              }
+            }
+          >
+            <Image
+              source={
+                {
+                  "uri": "https://via.placeholder.com/50",
+                }
+              }
+              style={
+                {
+                  "alignSelf": "center",
+                  "height": 50,
+                  "width": 50,
+                }
+              }
+            />
+            <View
+              style={
+                {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <Text
+                id="shop-item-4-name"
+                style={
+                  {
+                    "alignSelf": "center",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                    "marginLeft": 10,
+                  }
+                }
+              >
+                Ball
+              </Text>
+              <Text
+                id="shop-item-4-cost"
+                style={
+                  {
+                    "alignSelf": "center",
+                    "fontSize": 16,
+                  }
+                }
+              >
+                50
+              </Text>
+            </View>
+            Ionicons
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="shop-item-5"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "backgroundColor": "#ffffff",
+                "borderRadius": 10,
+                "flexDirection": "row",
+                "margin": 5,
+                "padding": 5,
+              }
+            }
+          >
+            <Image
+              source={
+                {
+                  "uri": "https://via.placeholder.com/50",
+                }
+              }
+              style={
+                {
+                  "alignSelf": "center",
+                  "height": 50,
+                  "width": 50,
+                }
+              }
+            />
+            <View
+              style={
+                {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <Text
+                id="shop-item-5-name"
+                style={
+                  {
+                    "alignSelf": "center",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                    "marginLeft": 10,
+                  }
+                }
+              >
+                Los Diablos Ski Mask
+              </Text>
+              <Text
+                id="shop-item-5-cost"
+                style={
+                  {
+                    "alignSelf": "center",
+                    "fontSize": 16,
+                  }
+                }
+              >
+                40
+              </Text>
+            </View>
+            Ionicons
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    id="shop-reset-points-button"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "padding": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "fontFamily": "Jua-Regular",
+          "fontSize": 26,
+        }
+      }
+    >
+      Reset points
+    </Text>
+  </View>
+</View>
+`;

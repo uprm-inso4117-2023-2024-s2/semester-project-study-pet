@@ -3,14 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import Pet, { loadHappiness, loadHunger } from '../components/Pet';
+import { loadHappiness } from '../components/happinessStorage';
+import { loadHunger } from '../components/hungerStorage';
+import Pet from '../components/Pet';
 
 function Stats() {
-
   const pet = new Pet();
-
   const navigation = useNavigation();
-  const [happiness, setHappiness] = useState(pet.state.happiness);
+  const [happiness, setHappiness] = useState(0);
   const [hunger, setHunger] = useState(pet.state.hunger);
 
   useEffect(() => {
@@ -26,8 +26,7 @@ function Stats() {
       }
     };
     loadPetData();
-  }, []);
-
+  }, [happiness, hunger]);
 
   const goBack = () => {
     navigation.goBack();
@@ -74,11 +73,11 @@ function Stats() {
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#f39c12' }]}>Hunger:</Text>
-            <Text style={[styles.statsValue, { color: '#f39c12' }]}>{pet.state.hunger}%</Text>
+            <Text style={[styles.statsValue, { color: '#f39c12' }]}>{hunger}%</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Happiness:</Text>
-            <Text style={[styles.statsValue, { color: '#e67e22' }]}>{pet.state.happiness}%</Text>
+            <Text style={[styles.statsValue, { color: '#e67e22' }]}>{happiness}%</Text>
           </View>
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#e67e22' }]}>Care Mistakes:</Text>

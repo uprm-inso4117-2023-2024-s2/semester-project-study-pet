@@ -33,6 +33,17 @@ const CreatePetScreen = ({ navigation }) => {
   const difficultyOptions = ["easy", "medium", "hard"];
   const typeOptions = ["frog", "dog", "cat", "bunny", "penguin", "pig", "bear"];
 
+  // Define background colors for each pet type
+  const petBackgrounds = {
+    frog: "#7DCEA0",
+    dog: "#D7BDE2",
+    cat: "#F7DC6F",
+    bunny: "#A9CCE3",
+    penguin: "#F1948A",
+    pig: "#F5B7B1",
+    bear: "#E59866"
+  };
+
   const validateDate = (dateString) => {
     const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
     return regex.test(dateString);
@@ -59,23 +70,27 @@ const CreatePetScreen = ({ navigation }) => {
     console.log("New Pet:", newPet);
 
     navigation.navigate('Create study set', { petType: newPet.name, difficulty: newPet.difficulty });
-    navigation.navigate('Create study set', { petType: newPet.name });
+    
   
     AsyncStorage.setItem('selectedDifficulty', difficulty); // Save selected difficulty
   
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#f0f0f0" }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: petBackgrounds[type] }}>
       <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 20, color: "blue" }}>Create a New Pet</Text>
+      <Image
+    source={petImages[type]}
+    style={{ width: 100, height: 100, marginBottom: 10 }}
+  />
       <TextInput
-        style={{ width: 300, height: 40, borderWidth: 1, borderRadius: 5, borderWidth: 2, borderColor: '#3498db', marginBottom: 10, paddingHorizontal: 10, backgroundColor: "#fff9c4", color: "#3498db" }}
+        style={{ width: 300, height: 40, borderWidth: 2, borderColor: '#3498db', marginBottom: 10, paddingHorizontal: 10, backgroundColor: "#fff9c4", color: "#3498db" }}
         placeholder="Pet Name"
         value={petName}
         onChangeText={(text) => setPetName(text)}
       />
       <TextInput
-        style={{ width: 300, height: 40, borderWidth: 1, borderRadius: 5, borderWidth: 2, borderColor: '#e67e22', marginBottom: 10, paddingHorizontal: 10, backgroundColor: "#fff9c4", color: "#e67e22" }}
+        style={{ width: 300, height: 40, borderWidth: 2, borderColor: '#e67e22', marginBottom: 10, paddingHorizontal: 10, backgroundColor: "#fff9c4", color: "#e67e22" }}
         placeholder="Exam Date (dd/mm/yyyy)"
         value={examDate}
         onChangeText={(text) => {

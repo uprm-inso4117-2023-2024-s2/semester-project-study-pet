@@ -6,8 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Function to shuffle an array (Fisher-Yates shuffle algorithm)
 export const shuffleArray = (array) => {
-  let currentIndex = array.length,  randomIndex;
-  
+  let currentIndex = array.length, randomIndex;
+
   // While there remain elements to shuffle...
   while (currentIndex !== 0) {
 
@@ -75,8 +75,22 @@ const MiniGame = (isAsleep) => {
       return maxQuestions.slice(0, numberToShow);
     };
 
-    setQuestions(filteredQuestions());
-  };
+
+const MiniGame = ({ isAsleep }) => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [score, setScore] = useState(0);
+  const [happiness, setHappiness] = useState(0);
+  const [selectedDifficulty, setSelectedDifficulty] = useState('medium'); // The selectedDifficulty has to be changed to the current pet difficulty
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    setQuestions(filteredQuestions(questionsData, selectedDifficulty));
+  }, [selectedDifficulty]);
+
+  // Function to handle answer selection  const [happiness, setHappiness] = useState(0);
+
 
   const handleAnswerSelection = (selectedAnswerIndex) => {
     const currentQuestion = questions[currentQuestionIndex];
@@ -92,26 +106,27 @@ const MiniGame = (isAsleep) => {
   };
 
 
-    useEffect(() => {
-      const loadHappinessData = async () => {
-          try {
-              const loadedHappiness = await loadHappiness();
-              setHappiness(loadedHappiness);
-          } catch (error) {
-              console.error('Error loading happiness data:', error);
-          }
-      };
+  useEffect(() => {
+    const loadHappinessData = async () => {
+      try {
+        const loadedHappiness = await loadHappiness();
+        setHappiness(loadedHappiness);
+      } catch (error) {
+        console.error('Error loading happiness data:', error);
+      }
+    };
+
     loadHappinessData();
   }, []);
 
   useEffect(() => {
-    if (gameOver&&!isAsleep) {
+    
       const newHappiness = happiness + score;
       const cappedHappiness = Math.min(newHappiness, 100);
       setHappiness(cappedHappiness);
       saveHappiness(cappedHappiness);
     }
-  }, [gameOver, score, happiness]);
+  , [gameOver, score, happiness]);
 
   if (gameOver) {
     return (
@@ -141,6 +156,7 @@ const MiniGame = (isAsleep) => {
       </View>
     );
   }
+}
 
   if (questions.length > 0 && currentQuestionIndex < questions.length) {
     return (
@@ -171,22 +187,30 @@ const MiniGame = (isAsleep) => {
     return <View><Text>Loading questions...</Text></View>;
   }
 };
-
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'top',
     justifyContent: 'center',
     paddingHorizontal: 20,
-    backgroundColor: 'transparent', 
+    backgroundColor: 'transparent',
   },
-  difficultyContainer: {
-    textAlign: 'center',
-    fontSize: '24px',
+  titleContainer: {
+    marginTop: 10,
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 15,
+    marginVertical: 10,
+    marginHorizontal: 8,
+  },
+  titleText: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: 'black',
     fontFamily: 'Jua-Regular',
-    marginBottom: 30,
-    width: '100%',
-    justifyContent: 'center',
+    textAlign: 'center',
+    textAlignVertical: 'top',
   },
   gameContainer: {
     backgroundColor: 'white',
@@ -239,7 +263,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     fontFamily: 'Jua-Regular',
-    color: '#FF69B4', 
+    color: '#FF69B4',
   },
   resultText: {
     fontSize: 24,
@@ -251,20 +275,20 @@ const styles = StyleSheet.create({
   hrow: {
     flexDirection: 'row',
     alignItems: 'center',
-},
-frogStyle: {
+  },
+  frogStyle: {
     width: 200,
     height: 200,
     marginTop: 5,
     marginBottom: 20,
-},
-image: {
+  },
+  image: {
     width: 50,
     height: 50,
     marginTop: 20,
     resizeMode: 'contain',
-},
-statText: {
+  },
+  statText: {
     fontSize: 26,
     marginRight: 5,
     fontFamily: 'Jua-Regular',

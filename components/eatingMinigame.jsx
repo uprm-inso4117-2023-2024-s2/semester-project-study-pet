@@ -2,7 +2,8 @@ import { React, useState, useEffect } from 'react';
 import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { loadHappiness, saveHappiness } from './happinessStorage';
 import { loadHunger, saveHunger } from './hungerStorage';
-import questionsData from '../assets/data/questions_EatingMinigame.json'
+import questionsData from '../assets/data/questions_EatingMinigame.json';
+import Pet from './Pet';
 
 // Function to shuffle an array (Fisher-Yates shuffle algorithm)
 const shuffleArray = (array) => {
@@ -23,7 +24,8 @@ const shuffleArray = (array) => {
     return array;
 }
 
-const MiniGame = ({ isAsleep }) => {
+const MiniGame = () => {
+    const p = new Pet();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -70,6 +72,7 @@ const MiniGame = ({ isAsleep }) => {
         const currentQuestion = questions[currentQuestionIndex];
         if (selectedAnswerIndex === currentQuestion.correctAnswerIndex) {
             setScore(score + 1);
+            console.log("Score:", score);
         }
 
         if (currentQuestionIndex === questions.length - 1) {
@@ -106,24 +109,49 @@ const MiniGame = ({ isAsleep }) => {
     }, []);
 
     useEffect(() => {
-        if (gameOver && !isAsleep) {
-            const newHunger = hunger - score * 10;
-            const cappedHunger = Math.max(newHunger, 0); // Cap hunger at 0
-            setHunger(cappedHunger);
-            saveHunger(cappedHunger);
-        }
-    }, [gameOver, score, hunger]);
+        if (gameOver) {
+            // Calculate hunger and happiness based on the difficulty factor and score
+            let hungerIncrement = 0;
+            let happinessIncrement = 0;
 
-    // Update happiness only when the game is over and ensure it doesn't exceed 100
-    useEffect(() => {
-        if (gameOver && !isAsleep) {
-            const newHappiness = happiness + score;
-            const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
+            switch (selectedDifficulty) {
+                case "easy":
+                    hungerIncrement = score * 15; // Adjust as needed
+                    happinessIncrement = score * 10; // Adjust as needed
+                    break;
+                case "medium":
+                    hungerIncrement = score * 10; // Adjust as needed
+                    happinessIncrement = score * 3; // Adjust as needed
+                    break;
+                case "hard":
+                    hungerIncrement = score * 5; // Adjust as needed
+                    happinessIncrement = score * 2; // Adjust as needed
+                    break;
+                default:
+                    break;
+            }
+
+            const newHunger = hunger - hungerIncrement;
+            const newHappiness = happiness + happinessIncrement;
+
+            // Cap hunger at 0
+            const cappedHunger = Math.max(newHunger, 0);
+            // Cap happiness at 100
+            const cappedHappiness = Math.min(newHappiness, 100);
+
+            console.log("Happiness increment:", happinessIncrement);
+            console.log("New happiness:", newHappiness);
+            console.log("Capped happiness:", cappedHappiness);
+
+            // Update hunger and happiness
+            setHunger(cappedHunger);
             setHappiness(cappedHappiness);
+
+            // Save updated hunger and happiness
+            saveHunger(cappedHunger);
             saveHappiness(cappedHappiness);
         }
-    }, [gameOver, score, happiness]);
-
+    }, [gameOver, score, selectedDifficulty]);
 
     if (gameOver) {
         return (

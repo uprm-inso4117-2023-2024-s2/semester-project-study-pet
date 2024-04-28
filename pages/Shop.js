@@ -14,7 +14,7 @@ import { allShopItems, allShopCategories } from "../utils/shopAssets";
 
 const Shop = ({ studyPoints, setStudyPoints }) => {
   const [dummy] = useFonts({
-    "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
+    // "Jua-Regular": require("../assets/fonts/Jua-Regular.ttf"),
   });
   const [category, setCategory] = useState("All");
   const [items, setItems] = useState(allShopItems);
