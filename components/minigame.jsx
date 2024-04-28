@@ -74,7 +74,7 @@ const MiniGame = (isAsleep) => {
       const numberToShow = Math.ceil(maxQuestions.length * fraction);
       return maxQuestions.slice(0, numberToShow);
     };
-
+    setQuestions(filteredQuestions());
 
 
   // Function to handle answer selection  const [happiness, setHappiness] = useState(0);
