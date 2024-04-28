@@ -132,7 +132,7 @@ const BathGame = ({ isAsleep }) => {
       setHappiness(cappedHappiness);
       saveHappiness(cappedHappiness);
     }
-  }, [gameOver, score, happiness]);
+  }, [gameOver, score]);
 
   if (gameOver) {
     return (

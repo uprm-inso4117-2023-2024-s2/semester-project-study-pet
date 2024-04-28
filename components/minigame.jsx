@@ -119,7 +119,7 @@ const MiniGame = ({ isAsleep }) => {
       setHappiness(cappedHappiness);
       saveHappiness(cappedHappiness);
     }
-  }, [gameOver, score, happiness, selectedDifficulty]);
+  }, [gameOver, score, selectedDifficulty]);
 
   if (gameOver) {
     return (
