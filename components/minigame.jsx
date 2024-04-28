@@ -175,7 +175,7 @@ const MiniGame = (isAsleep) => {
     return <View><Text>Loading questions...</Text></View>;
   }
 };
-}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
