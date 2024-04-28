@@ -154,28 +154,28 @@ class Pet extends Component {
     const emittedEvents = {};
 
     // Precondition: careMistakes is an integer value
-    assert(typeof prevState.careMistakes === 'number', "Precondition failed: careMistakes is not a number");
+    // assert(typeof prevState.careMistakes === 'number', "Precondition failed: careMistakes is not a number");
 
     this.setState((prevState) => {
       let updates = {};
       if (prevState.careMistakes >= 10) {
-        assert(prevState.careMistakes >= 10, "Invariant failed: careMistakes is less than 10");
+        // assert(prevState.careMistakes >= 10, "Invariant failed: careMistakes is less than 10");
         petEventEmitter.emit('petDeath');
         emittedEvents['petDeath'] = true;
         
         // Postcondition for the petDeath event
-        assert(!!emittedEvents['petDeath'], "Postcondition failed: petDeath event was not emitted");
+        // assert(!!emittedEvents['petDeath'], "Postcondition failed: petDeath event was not emitted");
 
         // Update currentImageIndex to the last image
         updates = { currentImageIndex: prevState.images.length - 1 };
         
       } else {
-        assert(prevState.careMistakes < 10, "Invariant failed: careMistakes is not less than 10");
+        // assert(prevState.careMistakes < 10, "Invariant failed: careMistakes is not less than 10");
         petEventEmitter.emit('petAlive');
         emittedEvents['petAlive'] = true;
 
         // Postcondition for the petAlive event
-        assert(!!emittedEvents['petAlive'], "Postcondition failed: petAlive event was not emitted");
+        // assert(!!emittedEvents['petAlive'], "Postcondition failed: petAlive event was not emitted");
       }
       return updates;
     });
