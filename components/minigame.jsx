@@ -5,7 +5,7 @@ import questionsData from '../assets/data/questions.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Function to shuffle an array (Fisher-Yates shuffle algorithm)
-const shuffleArray = (array) => {
+export const shuffleArray = (array) => {
   let currentIndex = array.length,  randomIndex;
   
   // While there remain elements to shuffle...
@@ -23,7 +23,7 @@ const shuffleArray = (array) => {
   return array;
 }
 
-const MiniGame = () => {
+const MiniGame = (isAsleep) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -105,7 +105,7 @@ const MiniGame = () => {
   }, []);
 
   useEffect(() => {
-    if (gameOver) {
+    if (gameOver&&!isAsleep) {
       const newHappiness = happiness + score;
       const cappedHappiness = Math.min(newHappiness, 100);
       setHappiness(cappedHappiness);
@@ -115,7 +115,7 @@ const MiniGame = () => {
 
   if (gameOver) {
     return (
-      <View style={styles.container}>
+      <View style={styles.container}data-testid="gameContainer">
         <View style={styles.gameContainer}>
           <View style={styles.gameOverContainer}>
             <Text style={styles.finishedText}>Finished!</Text>
@@ -128,6 +128,7 @@ const MiniGame = () => {
             />
             <View style={styles.hrow}>
               <Text style={styles.statText}>
+                
                 Happiness: {happiness}
               </Text>
               <Image
@@ -157,6 +158,7 @@ const MiniGame = () => {
               onPress={() => handleAnswerSelection(index)}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
+              testID='answerButton'
             >
               <Text style={styles.answerText}>{answer}</Text>
             </TouchableOpacity>
