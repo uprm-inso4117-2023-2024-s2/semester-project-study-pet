@@ -43,6 +43,7 @@ function PlayerStats({ route }) {
   const pet = new Pet(); 
 
   return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
     <LinearGradient colors={['#fcf188', '#fffbcf']} style={styles.container}>
       {/* Player Icon */}
       <View style={styles.pawContainer}>
@@ -53,8 +54,9 @@ function PlayerStats({ route }) {
       </View>
 
       {/* PlayerStats Section */}
-      <View style={styles.statsContainer}>
-        <ScrollView contentContainerStyle={styles.statsContent}>
+      
+        <View style={styles.statsContainer}>
+        
           <View style={styles.statsBox}>
             <Text style={[styles.statsLabel, { color: '#3498db' }]}>Player Name:</Text>
             <Text style={[styles.statsValue, { color: '#3498db' }]}>{pet.state.name}</Text>
@@ -72,8 +74,9 @@ function PlayerStats({ route }) {
             <Text style={[styles.statsLabel, { color: '#3498db' }]}>Pets Owned:</Text>
             <Text style={[styles.statsValue, { color: '#3498db' }]}>{petCount}/3</Text>
           </View>
-        </ScrollView>
-      </View>
+        </View>
+      
+      
 
       {/* Example buttons to simulate interactions */}
       <TouchableOpacity onPress={handleFlashcardAnswer} style={styles.actionButton}>
@@ -86,6 +89,7 @@ function PlayerStats({ route }) {
         <Text style={styles.actionButtonText}>Adopt a Pet</Text>
       </TouchableOpacity>
     </LinearGradient>
+    </ScrollView>
   );
 }
 
