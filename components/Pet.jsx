@@ -71,7 +71,7 @@ class Pet extends Component {
       name: 'Firulai',
 
       growthlvl: 3, // growth level in which stages are based on
-      hunger: 0,
+      hunger: 11,
       happiness: 0,
       lastInteractionTime: new Date(),
       careMistakes: 0,
@@ -118,6 +118,7 @@ class Pet extends Component {
   componentDidMount() {
     loadHunger();
     loadHappiness();
+    saveHappiness(0);
     // this.loadHappinessFromStorage();
     // this.loadHungerFromStorage();
     this.loadSleepScheduleFromStorage();
