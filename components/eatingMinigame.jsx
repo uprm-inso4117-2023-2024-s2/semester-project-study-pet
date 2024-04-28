@@ -169,7 +169,7 @@ const MiniGame = () => {
 
                         <View style={styles.hrow}>
                             <Text style={styles.statText}>
-                                Hunger: {p.state.hunger}
+                                Hunger: {hunger}
                             </Text>
                             <Image
                                 style={styles.image}

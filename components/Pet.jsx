@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { petEventEmitter } from '../pages/EventEmitter';
 import { saveHappiness, loadHappiness } from './happinessStorage';
-import { loadHunger } from './hungerStorage';
+import { loadHunger, saveHunger } from './hungerStorage';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import { saveSleep, loadSleepTime, loadSleep } from './sleepScheduleStorage';
 import { isPetAsleep } from '../utils/sleepSchedule';

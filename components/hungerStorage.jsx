@@ -6,6 +6,7 @@ export const saveHunger = async (hunger) => {
     try {
         // Hunger cant go below 0
         const cappedHunger = Math.max(hunger, 0);
+        console.log("saveHunger from storage:", cappedHunger)
         await AsyncStorage.setItem(HUNGER_KEY, cappedHunger.toString());
     } catch (error) {
         console.error('Error saving happiness value:', error);
@@ -15,6 +16,7 @@ export const saveHunger = async (hunger) => {
 export const loadHunger = async () => {
     try {
         const hunger = await AsyncStorage.getItem(HUNGER_KEY);
+        console.log("loadHunger from storage:", hunger)
         return hunger !== null ? parseInt(hunger) : 0;
     } catch (error) {
         console.error('Error loading happiness value:', error);
