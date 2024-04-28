@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, TouchableOpacity, Modal, Image } from "react-native";
-import frogImage from '../components/PetImages/FrogImages/adultfrog.png';
+import frogImage from '../components/PetImages/FrogImages/animatedFrog.gif';
 import dogImage from '../components/PetImages/DogImages/animatedDog.png';
 import catImage from '../components/PetImages/CatImages/animatedCat.png';
 import bunnyImage from '../components/PetImages/BunnyImages/animatedBunny.png';
