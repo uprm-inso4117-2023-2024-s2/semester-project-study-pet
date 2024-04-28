@@ -19,6 +19,7 @@ export const loadSleepTime = async () => {
     try {
         const sleepTime = await AsyncStorage.getItem(SLEEP_TIME_KEY);
         return sleepTime !== null ? sleepTime : '23:00';
+        // return '04:00'; // uncomment and comment above lines to simulate trigger of pet sleep. Adjust the hour here for a past time based on your current time.
     } catch (error) {
         console.error('Error loading sleep time:', error);
         return '23:00';
@@ -40,6 +41,7 @@ export const loadSleep = async () => {
     try {
         const sleep = await AsyncStorage.getItem(SLEEP_KEY);
         return sleep !== null ? sleep : 'false';
+        // return 'true'; // uncomment and comment above lines to simulate trigger of pet sleep.
     } catch (error) {
         console.error('Error loading sleep value:', error);
         return 'false';

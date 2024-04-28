@@ -2,7 +2,7 @@ import {React,  useState, useEffect } from 'react';
 import { Image,View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { loadHappiness, saveHappiness } from './happinessStorage';
 
-const BathGame = () => {
+const BathGame = ({ isAsleep }) => {
   const [flashcards, setFlashcards] = useState([]);
   const [userHand, setUserHand] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -109,7 +109,7 @@ const BathGame = () => {
 }, []);
 
 useEffect(() => {
-  if (gameOver) {
+  if (gameOver && !isAsleep) {
       const newHappiness = score  + happiness;
       const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
       setHappiness(cappedHappiness);

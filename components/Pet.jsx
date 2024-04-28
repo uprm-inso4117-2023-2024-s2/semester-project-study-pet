@@ -209,11 +209,11 @@ class Pet extends Component {
       } // Stop growth after adult stage
     }, 0);
 
-    // Check for sleep time every minute
+    // Check for sleep time every half a second
     const sleepInterval = setInterval(() => {
       const isAsleep = isPetAsleep(this.state.sleepTime);
       this.setState({ isAsleep }, () => this.saveSleepToStorage(isAsleep));
-    }, 1000 * 60);
+    }, 500);
   }
 
   loadHappinessFromStorage = async () => {
@@ -320,7 +320,7 @@ class Pet extends Component {
       <View>
         {images && images.length > 0 && (
           <View style={{ alignItems: 'center', position: 'relative' }}>
-            {isAsleep ? <Text>Your pet is asleep Zz</Text> :
+            {isAsleep ? <Text id='pet-asleep-message'>Your pet is asleep Zz</Text> :
               <Image source={currentImage} style={styles.image} />
             }
           </View>
