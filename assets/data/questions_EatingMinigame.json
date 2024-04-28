@@ -1,0 +1,27 @@
+[
+    {
+        "question": "What is the chemical symbol for oxygen?",
+        "answers": ["H2O", "O2", "CO2", "N2"],
+        "correctAnswerIndex": 1
+    },
+    {
+        "question": "Which planet is known as the Red Planet?",
+        "answers": ["Mars", "Jupiter", "Venus", "Saturn"],
+        "correctAnswerIndex": 0
+    },
+    {
+        "question": "What is the process of converting light energy into chemical energy in plants?",
+        "answers": ["Respiration", "Transpiration", "Photosynthesis", "Fermentation"],
+        "correctAnswerIndex": 2
+    },
+    {
+        "question": "What gas do humans exhale during respiration?",
+        "answers": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+        "correctAnswerIndex": 1
+    },
+    {
+        "question": "What is the largest mammal on Earth?",
+        "answers": ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
+        "correctAnswerIndex": 1
+    }
+]

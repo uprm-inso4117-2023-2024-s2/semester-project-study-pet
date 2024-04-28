@@ -6,6 +6,10 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 
 module.exports = {
   preset: "jest-expo",
+  testEnvironment: "jsdom",
+  moduleNameMapper: {
+    '\.(jpg|jpeg|png|gif|webp|svg)$': "../mocks/fileMock.js",
+  },
   transformIgnorePatterns: [
     "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
   ],
@@ -14,4 +18,6 @@ module.exports = {
     "**/?(*.)+(spec|test).[tj]s?(x)"
   ],
   clearMocks: true,
+  preset: "react-native",
+  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
 };

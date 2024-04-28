@@ -2,33 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { loadHappiness, saveHappiness } from './happinessStorage';
 import { loadHunger, saveHunger } from './hungerStorage';
-const questionsData = [
-    {
-        question: 'What is the chemical symbol for oxygen?',
-        answers: ['H2O', 'O2', 'CO2', 'N2'],
-        correctAnswerIndex: 1,
-    },
-    {
-        question: 'Which planet is known as the Red Planet?',
-        answers: ['Mars', 'Jupiter', 'Venus', 'Saturn'],
-        correctAnswerIndex: 0,
-    },
-    {
-        question: 'What is the process of converting light energy into chemical energy in plants?',
-        answers: ['Respiration', 'Transpiration', 'Photosynthesis', 'Fermentation'],
-        correctAnswerIndex: 2,
-    },
-    {
-        question: 'What gas do humans exhale during respiration?',
-        answers: ['Oxygen', 'Carbon Dioxide', 'Nitrogen', 'Hydrogen'],
-        correctAnswerIndex: 1,
-    },
-    {
-        question: 'What is the largest mammal on Earth?',
-        answers: ['Elephant', 'Blue Whale', 'Giraffe', 'Hippopotamus'],
-        correctAnswerIndex: 1,
-    },
-];
+import questionsData from '../assets/data/questions_EatingMinigame.json'
 
 // Function to shuffle an array (Fisher-Yates shuffle algorithm)
 const shuffleArray = (array) => {
@@ -49,7 +23,7 @@ const shuffleArray = (array) => {
     return array;
 }
 
-const MiniGame = () => {
+const MiniGame = ({ isAsleep }) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -132,7 +106,7 @@ const MiniGame = () => {
     }, []);
 
     useEffect(() => {
-        if (gameOver) {
+        if (gameOver && !isAsleep) {
             const newHunger = hunger - score * 10;
             const cappedHunger = Math.max(newHunger, 0); // Cap hunger at 0
             setHunger(cappedHunger);
@@ -142,7 +116,7 @@ const MiniGame = () => {
 
     // Update happiness only when the game is over and ensure it doesn't exceed 100
     useEffect(() => {
-        if (gameOver) {
+        if (gameOver && !isAsleep) {
             const newHappiness = happiness + score;
             const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
             setHappiness(cappedHappiness);
@@ -225,6 +199,7 @@ const MiniGame = () => {
                             onPress={() => handleAnswerSelection(index)}
                             onMouseEnter={() => setHoveredIndex(index)}
                             onMouseLeave={() => setHoveredIndex(null)}
+                            testID='answerButton'
                         >
                             <Text style={styles.answerText}>{answer}</Text>
                         </TouchableOpacity>
