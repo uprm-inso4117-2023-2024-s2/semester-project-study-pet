@@ -72,7 +72,7 @@ class Pet extends Component {
 
       growthlvl: 3, // growth level in which stages are based on
       hunger: 0,
-      happiness: 100,
+      happiness: 0,
       lastInteractionTime: new Date(),
       careMistakes: 0,
       pettype: 'frog',
@@ -116,8 +116,10 @@ class Pet extends Component {
   }
 
   componentDidMount() {
-    this.loadHappinessFromStorage();
-    this.loadHungerFromStorage();
+    loadHunger();
+    loadHappiness();
+    // this.loadHappinessFromStorage();
+    // this.loadHungerFromStorage();
     this.loadSleepScheduleFromStorage();
 
     // Simulate happiness increasing over time
@@ -216,28 +218,29 @@ class Pet extends Component {
     }, 500);
   }
 
-  loadHappinessFromStorage = async () => {
-    try {
-      const happiness = await loadHappiness();
-      if (happiness !== null) {
-        this.setState({ happiness });
-      }
-    } catch (error) {
-      console.error('Error loading happiness value:', error);
-    }
-  };
+  // loadHappinessFromStorage = async () => {
+  //   try {
+  //     const happiness = await loadHappiness();
+  //     if (happiness !== null) {
+  //       this.setState({ happiness });
+  //       console.log("Happiness loaded from storage: ", happiness)
+  //     }
+  //   } catch (error) {
+  //     console.error('Error loading happiness value:', error);
+  //   }
+  // };
 
-  loadHungerFromStorage = async () => {
-    try {
-      const hunger = await loadHunger();
-      if (hunger !== null) {
-        this.setState({ hunger });
-      }
-    }
-    catch (error) {
-      console.error('Error loading hunger value:', error);
-    }
-  };
+  // loadHungerFromStorage = async () => {
+  //   try {
+  //     const hunger = await loadHunger();
+  //     if (hunger !== null) {
+  //       this.setState({ hunger });
+  //     }
+  //   }
+  //   catch (error) {
+  //     console.error('Error loading hunger value:', error);
+  //   }
+  // };
 
   loadSleepScheduleFromStorage = async () => {
     try {
