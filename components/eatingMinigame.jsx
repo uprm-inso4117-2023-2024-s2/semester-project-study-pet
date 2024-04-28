@@ -109,7 +109,7 @@ const MiniGame = () => {
     }, []);
 
     useEffect(() => {
-        if (gameOver && score >= 1) {
+        if (gameOver) {
             // Calculate hunger and happiness based on the difficulty factor and score
             let hungerIncrement = 0;
             let happinessIncrement = 0;
@@ -180,7 +180,7 @@ const MiniGame = () => {
 
                         <View style={styles.hrow}>
                             <Text style={styles.statText}>
-                                Happiness: {p.state.happiness}
+                                Happiness: {happiness}
                             </Text>
                             <Image
                                 style={styles.image}

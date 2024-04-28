@@ -118,7 +118,6 @@ class Pet extends Component {
   componentDidMount() {
     loadHunger();
     loadHappiness();
-    saveHappiness(0);
     // this.loadHappinessFromStorage();
     // this.loadHungerFromStorage();
     this.loadSleepScheduleFromStorage();
