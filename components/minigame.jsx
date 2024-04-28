@@ -48,7 +48,7 @@ const MiniGame = (isAsleep) => {
   }, []);
 
   const loadQuestions = (selectedDifficulty) => {
-    const filteredQuestions = () => {
+   
       const shuffledQuestions = shuffleArray([...questionsData]); // Assuming shuffleArray is defined elsewhere
       //console.log("difficulty:", selectedDifficulty);
 
@@ -68,13 +68,13 @@ const MiniGame = (isAsleep) => {
           break;
         default:
           fraction = 1 / 3;
-      }
+      
 
       // Apply the fraction to the potentially shortened list of up to 9 questions
       const numberToShow = Math.ceil(maxQuestions.length * fraction);
       return maxQuestions.slice(0, numberToShow);
     };
-    setQuestions(filteredQuestions());
+  
 
 
   // Function to handle answer selection  const [happiness, setHappiness] = useState(0);
