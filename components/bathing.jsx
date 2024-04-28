@@ -126,7 +126,7 @@ const BathGame = ({ isAsleep }) => {
   }, []);
 
   useEffect(() => {
-    if (gameOver && !isAsleep) {
+    if (gameOver) {
       const newHappiness = happiness + calculateHappinessIncrease(score);
       const cappedHappiness = Math.min(newHappiness, 100); // Cap happiness at 100
       setHappiness(cappedHappiness);

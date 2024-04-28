@@ -95,7 +95,7 @@ const MiniGame = ({ isAsleep }) => {
 
   // Update happiness only when the game is over and ensure they don't exceed their maximum values
   useEffect(() => {
-    if (gameOver && !isAsleep) {
+    if (gameOver) {
       let happinessIncrement = 0;
 
       // Determine increments based on difficulty
